@@ -1,0 +1,19 @@
+{
+  "name": "expertfinder",
+  "version": "1.0.0",
+  "description": "an app that finds experts",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chavemar/ExpertFinder.git"
+  },
+  "author": "AboveAverageSolutions",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chavemar/ExpertFinder/issues"
+  },
+  "homepage": "https://github.com/chavemar/ExpertFinder#readme"
+}
