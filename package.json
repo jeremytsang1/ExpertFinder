@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/chavemar/ExpertFinder/issues"
   },
-  "homepage": "https://github.com/chavemar/ExpertFinder#readme"
+  "homepage": "https://github.com/chavemar/ExpertFinder#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^5.2.0",
+    "express-session": "^1.17.1",
+    "forever": "^3.0.2",
+    "request": "^2.88.2"
+  }
 }
