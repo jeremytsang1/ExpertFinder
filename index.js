@@ -26,10 +26,10 @@ app.set('port', 3000);
 app.use(express.static('public'));
 
 //specify route path
-app.use('/api', require('./routes/api/api'));
+// app.use('/api', require('./routes/api/api'));
 
 app.get('/', function(req,res){
-    res.render('home', context);
+    res.render('home');
   });
     
 
