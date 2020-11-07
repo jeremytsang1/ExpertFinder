@@ -31,7 +31,9 @@ app.use(express.static('public'));
 app.get('/', function(req,res){
     res.render('home');
   });
-    
+
+// Route for creating a new user account.
+app.use('/createProfile', require('./createProfile.js'));
 
 app.use(function(req,res){
   res.type('text/plain');
