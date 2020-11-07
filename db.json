@@ -1,0 +1,26 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "name": "John Doe",
+            "techSkills": ["Python", "Python"],
+            "coursework": ["CS161", "CS361"],
+            "industry": ["Web Development"],
+            "email": "johnDoe33@gmail.com",
+            "github": "github.com/johndoe6",
+            "linkedin": "linkedin.com/johndoe",
+            "twitter": "twitter.com/johndoe"
+        },
+        {
+            "id": 2,
+            "name": "Lena Gregory",
+            "techSkills": ["React", "Angular"],
+            "coursework": ["CS270"],
+            "industry": ["Networks"],
+            "email": "lgregory@gmail.com",
+            "github": "github.com/lenagregory",
+            "linkedin": "linkedin.com/lenagregory",
+            "twitter": "twitter.com/lenagregory"
+        }
+    ]    
+}
