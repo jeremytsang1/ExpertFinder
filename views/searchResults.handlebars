@@ -10,6 +10,7 @@
           {{#each users}} 
           <tr>
               <td>{{name}}</td> 
+              <td><button onclick="getContactInfo({{this.id}})">Get Contact Info</button></td>
           </tr> 
           {{/each}} 
       </tbody>  
