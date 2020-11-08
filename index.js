@@ -64,26 +64,26 @@ app.listen(app.get('port'), function(){
 /*searching for keywords*/
 function SearchButton(){
 	console.log("called");
-	var ExpertKeywords = document.querySelectorAll(".Keywords");
+	var test_dbs = document.querySelectorAll(".Keywords");
 	var SearchInput = document.getElementById('search-input').value.toLowerCase();
 	console.log("== Search",SearchInput);
 	
 	if(SearchInput != ""){
-		for(var i = 0; i < ExpertKeywords.length; i++){
+		for(var i = 0; i < test_db.length; i++){
 			
-			var Text = ExpertKeywords[i].children[0].children[1].textContent.toLowerCase();
+			var Text = test_db[i].children[0].children[1].textContent.toLowerCase();
 			
 			if(!Text.includes(SearchInput)){
-				ExpertKeywords[i].classList.add('hidden');
+				test_db[i].classList.add('hidden');
 			}
 			
 			if(Text.includes(SearchInput)){
-				ExpertKeywords[i].classList.remove('hidden');
+				test_db[i].classList.remove('hidden');
 			}
 		}		
 	} else{
 		for(var i = 0; i < ExpertKeywords.length; i++){
-				ExpertKeywords[i].classList.remove('hidden');
+				test_db[i].classList.remove('hidden');
 		}
 	}
 }
