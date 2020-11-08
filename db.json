@@ -1,0 +1,31 @@
+{
+    "Users": [
+        {
+            "Id": 1,
+            "Name": "John Doe",
+            "TechSkills": ["Python", "Java"],
+            "Coursework": ["CS161", "CS361"],
+            "Industry": ["Web Development"],
+            "ContactInfo": {
+                "Email": "johnDoe33@gmail.com",
+                "Github": "github.com/johndoe6",
+                "Linkedin": "linkedin.com/johndoe",
+                "Stackoverflow": "stackoverflow.com/users/jdoe",
+                "Twitter": "twitter.com/johndoe"
+            }
+        },
+        {
+            "Id": 2,
+            "Name": "Lena Gregory",
+            "TechSkills": ["React", "Angular"],
+            "Coursework": ["CS270"],
+            "Industry": ["Networks"],
+            "ContactInfo": {
+                "Email": "lgregory@gmail.com",
+                "Github": "github.com/lenagregory",
+                "Linkedin": "linkedin.com/lenagregory",
+                "Twitter": "twitter.com/lenagregory"
+            }
+        }
+    ]    
+}

@@ -20,10 +20,11 @@ var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
-app.set('port', 3000);
+app.set('port', 3500);
 
 //init public folder
 app.use(express.static('public'));
+app.use('/searchResults', require('./searchResults.js'));
 
 //specify route path
 // app.use('/api', require('./routes/api/api'));
