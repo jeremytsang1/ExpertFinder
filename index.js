@@ -22,13 +22,14 @@ var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
-app.set('port', 3000);
+app.set('port', 3500);
 
 //Allow CORS for testing
 app.use(cors())
 
 //init public folder
 app.use("/public", express.static('./public/'));
+app.use('/searchResults', require('./searchResults.js'));
 
 // specify route path for expert-api
 app.use('/api', require('./routes/api/experts-api'));
@@ -40,6 +41,8 @@ app.get('/', function(req,res){
 app.get('/expertDisplay', function(req,res){
   res.render('expertDisplay');
 });
+// Route for creating a new user account.
+app.use('/createProfile', require('./createProfile.js'));
 
 app.use(function(req,res){
   res.type('text/plain');
