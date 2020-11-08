@@ -46,4 +46,20 @@
     border-color: #000;
 }
 
+body main {
+}
+.ExpertsProfile {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: space-around;
+}
+.ExpertsProfile .Keywords {
+    margin-top: 40px;
+    margin-right: 40px;
+    margin-bottom: 40px;
+    margin-left: 40px;
+    padding-bottom: 0px;
+}
+
 /* -------------------------------------------------------------------------- */
