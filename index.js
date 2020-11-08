@@ -1,7 +1,7 @@
 var express = require('express');
 
 var app = express();
-
+var cors = require('cors')
 var path = require('path');
 //Body Parser middleware
 var bodyParser = require('body-parser');
@@ -12,6 +12,8 @@ var request = require('request');
 
 var session = require('express-session');
 
+var router = require('./routes/api/experts-api');
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -20,18 +22,25 @@ var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
-app.set('port', 3000);
+app.set('port', 3500);
+
+//Allow CORS for testing
+app.use(cors())
 
 //init public folder
-app.use(express.static('public'));
+app.use("/public", express.static('./public/'));
+app.use('/searchResults', require('./searchResults.js'));
 
-//specify route path
-// app.use('/api', require('./routes/api/api'));
+// specify route path for expert-api
+app.use('/api', require('./routes/api/experts-api'));
 
 app.get('/', function(req,res){
     res.render('home');
   });
 
+app.get('/expertDisplay', function(req,res){
+  res.render('expertDisplay');
+});
 // Route for creating a new user account.
 app.use('/createProfile', require('./createProfile.js'));
 

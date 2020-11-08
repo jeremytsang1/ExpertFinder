@@ -31,11 +31,11 @@
     width: 15%;
 }
 
-#profile-creation-form .submit, .cancel  {
+#profile-creation-form .submit, #profile-creation-form .cancel {
     width: 100%;
 }
 
-#profile-creation-form .btn-success, .btn {
+#profile-creation-form .btn-success, #profile-creation-form .btn {
     background-color: #333E50;
     color: #FFFFFF;
 }
