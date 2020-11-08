@@ -60,3 +60,44 @@ app.use(function(err, req, res, next){
 app.listen(app.get('port'), function(){
   console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
 });
+
+/*searching for keywords*/
+function SearchButton(){
+	console.log("called");
+	var ExpertKeywords = document.querySelectorAll(".Keywords");
+	var SearchInput = document.getElementById('search-input').value.toLowerCase();
+	console.log("== Search",SearchInput);
+	
+	if(SearchInput != ""){
+		for(var i = 0; i < ExpertKeywords.length; i++){
+			
+			var Text = ExpertKeywords[i].children[0].children[1].textContent.toLowerCase();
+			
+			if(!Text.includes(SearchInput)){
+				ExpertKeywords[i].classList.add('hidden');
+			}
+			
+			if(Text.includes(SearchInput)){
+				ExpertKeywords[i].classList.remove('hidden');
+			}
+		}		
+	} else{
+		for(var i = 0; i < ExpertKeywords.length; i++){
+				ExpertKeywords[i].classList.remove('hidden');
+		}
+	}
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+
+  var searchButton = document.getElementById('search-button');
+  if (searchButton) {
+    searchButton.addEventListener('click', SearchButton);
+  }
+
+  var searchInput = document.getElementById('search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', SearchButton);
+  }
+
+});
