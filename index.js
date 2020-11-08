@@ -24,7 +24,6 @@ app.set('port', 3500);
 
 //init public folder
 app.use(express.static('public'));
-app.use('/static', express.static('public')); // for the jsscript, AJAX
 app.use('/searchResults', require('./searchResults.js'));
 
 //specify route path

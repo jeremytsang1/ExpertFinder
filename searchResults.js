@@ -16,9 +16,9 @@ module.exports = function(){
             // Converting to JSON 
             const dbUsers = JSON.parse(data); 
             //console.log(users); // Print users  
-            context.users = dbUsers.users;
-            console.log("In function getAllUsers. Printing context")
-            console.log(context)
+            context.users = dbUsers.Users;
+            // console.log("In function getAllUsers. Printing context")
+            // console.log(context)
             complete();
         }); 
         // const db_users = require('./db.json');
@@ -26,7 +26,9 @@ module.exports = function(){
     }
 
 
-    function getContactInfoById(res, context, id, complete){
+    //FIXME function not in us at the moment. Needs to be completed for potential future use
+    function getUserById(res, context, id, complete){
+        callbackCount2 = 0;
         allUsers = {}
         // Read db.json file 
         fs.readFile("db.json", function(err, data) { 
@@ -38,49 +40,35 @@ module.exports = function(){
             // Converting to JSON 
             const dbUsers = JSON.parse(data); 
             allUsers = dbUsers.users;
+            complete2()
         });
 
-        // search all users to match ID. if a match then save the contact information
-
-        complete();    
+        // force syncronous flow (make sre getUsers() function finishes executing before proceedding to next line of of code)
+        function complete2(){
+            callbackCount2++;
+            if(callbackCount2 >= 1){
+                 // search all users to match ID. if a match then save the contact information
+                // console.log("Inside getuserById in callbackCount2");
+                // console.log(allUsers)
+                // FIXME add alrorithm here to return user info based on ID
+                complete();    
+            }
+        }
     }
 
 
     router.get('/', function(req, res){
         var callbackCount = 0;
         var context = {};
-        context.jsscripts = ["getContactInfo.js"];
-        console.log(context)
+        context.jsscripts = []; // add script names here to load in web page if needed
+        //console.log(context)
         getAllUsers(res, context, complete);
-        // context.jsscripts = ["deleteClass.js","deleteClub.js","updateClub.js", "updateClass.js"];
-        // var mysql = req.app.get('mysql');
-        // getClasses(res, mysql, context, complete);
-        // getClubs(res, mysql, context, complete);
 
-        // force syncronous flow (make sre getUsers() function finishes executing before proceedding to next line of of code)
         function complete(){
             callbackCount++;
             if(callbackCount >= 1){
-                console.log("In get method");
-                console.log(context);
-                res.render('searchResults', context)
-            }
-        }
-    });
-
-    // Display contact info for specific user ID
-    router.get('/:id/contactInfo', function(req, res){
-        console.log("inside router.get(searchResults/:id/contactInfo)")
-        var callbackCount = 0;
-        var context = {};
-        getContactInfoById(res, context, id, complete)
-
-        // force syncronous flow (make sre getUsers() function finishes executing before proceedding to next line of of code)
-        function complete(){
-            callbackCount++;
-            if(callbackCount >= 1){
-                console.log("In get method");
-                console.log(context);
+                // console.log("In get method");
+                // console.log(context);
                 res.render('searchResults', context)
             }
         }

@@ -1,29 +1,30 @@
 {
-    "users": [
+    "Users": [
         {
-            "id": 1,
-            "name": "John Doe",
-            "techSkills": ["Python", "Python"],
-            "coursework": ["CS161", "CS361"],
-            "industry": ["Web Development"],
-            "contactInfo": {
-                "email": "johnDoe33@gmail.com",
-                "github": "github.com/johndoe6",
-                "linkedin": "linkedin.com/johndoe",
-                "twitter": "twitter.com/johndoe"
+            "Id": 1,
+            "Name": "John Doe",
+            "TechSkills": ["Python", "Java"],
+            "Coursework": ["CS161", "CS361"],
+            "Industry": ["Web Development"],
+            "ContactInfo": {
+                "Email": "johnDoe33@gmail.com",
+                "Github": "github.com/johndoe6",
+                "Linkedin": "linkedin.com/johndoe",
+                "Stackoverflow": "stackoverflow.com/users/jdoe",
+                "Twitter": "twitter.com/johndoe"
             }
         },
         {
-            "id": 2,
-            "name": "Lena Gregory",
-            "techSkills": ["React", "Angular"],
-            "coursework": ["CS270"],
-            "industry": ["Networks"],
-            "contactInfo": {
-                "email": "lgregory@gmail.com",
-                "github": "github.com/lenagregory",
-                "linkedin": "linkedin.com/lenagregory",
-                "twitter": "twitter.com/lenagregory"
+            "Id": 2,
+            "Name": "Lena Gregory",
+            "TechSkills": ["React", "Angular"],
+            "Coursework": ["CS270"],
+            "Industry": ["Networks"],
+            "ContactInfo": {
+                "Email": "lgregory@gmail.com",
+                "Github": "github.com/lenagregory",
+                "Linkedin": "linkedin.com/lenagregory",
+                "Twitter": "twitter.com/lenagregory"
             }
         }
     ]    
