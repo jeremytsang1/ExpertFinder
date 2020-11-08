@@ -34,14 +34,9 @@ router.post('/experts',function(req,res){
                     } else {
                         console.log("search inconclusive")
                     }
-                    
-                    
+                      
                     }
                 }
-                
-
-                
-            
         }
                 // Object.keys(courses).forEach(c => {
                 //     // if the keyword matches the course history
