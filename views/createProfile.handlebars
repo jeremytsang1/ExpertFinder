@@ -76,27 +76,31 @@
       <div class="col-6">
         <div class="form-group">
           <label for="profile-creation-skills">Skills</label>
-          <input class="form-control" id="profile-creation-skills" name="skills" type="text" value=""/>
+          <div class="form-inline multi-input">
+            <input class="form-control" id="profile-creation-skills" name="skills" type="text" value=""/>
+            <button class="btn">Add</button>
+          </div>
         </div>
-        <button id="profile-creation-skills-button">Add</button>
       </div>
       <!-- courses -->
       <div class="col-6">
         <div class="form-group">
           <label for="profile-creation-courses">Courses</label>
-          <input class="form-control" id="profile-creation-courses" name="courses" type="text" value=""/>
+          <div class="form-inline multi-input">
+            <input class="form-control" id="profile-creation-courses" name="courses" type="text" value=""/>
+            <button class="btn">Add</button>
+          </div>
         </div>
-        <button id="profile-creation-courses-button">Add</button>
       </div>
     </div>
 
     <!-- register and cancel buttons -->
     <div class="row">
-      <div class="col-8">
-        <button type="submit">Register</button>
+      <div class="col-md-7">
+        <button class="btn btn-success submit" type="submit">Register</button>
       </div>
-      <div class="col-4">
-        <button>Cancel</button>
+      <div class="col-md-5">
+        <button class="btn cancel">Cancel</button>
       </div>
     </div>
 
