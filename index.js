@@ -1,7 +1,7 @@
 var express = require('express');
 
 var app = express();
-
+var cors = require('cors')
 var path = require('path');
 //Body Parser middleware
 var bodyParser = require('body-parser');
@@ -11,6 +11,8 @@ var request = require('request');
 // var mysql = require('./dbcon.js');
 
 var session = require('express-session');
+
+var router = require('./routes/api/experts-api');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -22,16 +24,22 @@ app.set('view engine', 'handlebars');
 
 app.set('port', 3000);
 
-//init public folder
-app.use(express.static('public'));
+//Allow CORS for testing
+app.use(cors())
 
-//specify route path
-// app.use('/api', require('./routes/api/api'));
+//init public folder
+app.use("/public", express.static('./public/'));
+
+// specify route path for expert-api
+app.use('/api', require('./routes/api/experts-api'));
 
 app.get('/', function(req,res){
     res.render('home');
   });
-    
+
+app.get('/expertDisplay', function(req,res){
+  res.render('expertDisplay');
+});
 
 app.use(function(req,res){
   res.type('text/plain');
