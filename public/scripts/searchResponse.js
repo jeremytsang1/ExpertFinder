@@ -9,7 +9,7 @@ function searchSubmit(event) {
 
     payload.keyword = document.getElementById("search-input").value;
     
-    req.open('POST', 'http://localhost:3000/api/experts', true);
+    req.open('POST', 'http://localhost:3500/api/experts', true);
     req.setRequestHeader('Content-Type', 'application/json');
     req.addEventListener('load', function(){
         if(req.status >= 200 && req.status < 400){
