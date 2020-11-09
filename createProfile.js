@@ -1,7 +1,7 @@
 module.exports = function() {
   let express = require('express');
   let router = express.Router();
-  const users = require("./users");
+
 
 
   router.get('/', function(req, res) {
