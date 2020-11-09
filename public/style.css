@@ -51,7 +51,12 @@
 /* Styles for search results page */
 #searchResults {
     border-style: solid;
-    
+    padding-bottom: 10px;    
+}
+
+#searchResults td {
+    padding-bottom: 20px;
+    padding-top: 20px;
 }
 
 #resultsTable {
