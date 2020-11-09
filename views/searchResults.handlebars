@@ -19,18 +19,18 @@
   <tbody>
     {{#each users}} 
       <tr id="searchResults">
-          <td>{{this.Name}}</td> 
+          <td class="userDetails">{{this.Name}}</td> 
           {{!-- modal example source: https://getbootstrap.com/docs/4.0/components/modal/ --}}
           <!-- Button trigger modal -->
-          <td>{{this.Industry}}</td>
+          <td class="userDetails">{{this.Industry}}</td>
    
 
-          <td>{{this.Coursework}}</td>
+          <td class="userDetails">{{this.Coursework}}</td>
      
 
-          <td>{{this.TechSkills}}</td>
+          <td class="userDetails">{{this.TechSkills}}</td>
 
-          <td>
+          <td class="userDetails">
             <div id="getInfoButton">
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter{{this.Id}}">Get Info</button>
 
