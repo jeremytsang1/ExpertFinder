@@ -47,3 +47,18 @@
 }
 
 /* -------------------------------------------------------------------------- */
+
+/* Styles for search results page */
+#searchResults {
+    border-style: solid;
+    padding-bottom: 10px;    
+}
+
+#searchResults .userDetails {
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+#resultsTable {
+    margin-left: 15px;
+}
