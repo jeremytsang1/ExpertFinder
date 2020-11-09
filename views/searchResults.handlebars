@@ -4,11 +4,17 @@
 <h3>[TO BE COMPLETED] In this page the profiles will appear after a search based on OSU coursework or tech stack has been executed by the application user.</h3>
 
 <table>
+ 	<col style="width:15%">
+ 	<col style="width:15%">
+	<col style="width:15%">
+	<col style="width:15%">
+
   <thead>
       <th>Name</th>
       <th>Industry</th>
       <th>Coursework</th>
       <th>Skills</th>
+      <th>More Info</th>
   </thead>
   <tbody>
     {{#each users}} 
@@ -16,7 +22,14 @@
           <td>{{this.Name}}</td> 
           {{!-- modal example source: https://getbootstrap.com/docs/4.0/components/modal/ --}}
           <!-- Button trigger modal -->
-          
+          <td>{{this.Industry}}</td>
+   
+
+          <td>{{this.Coursework}}</td>
+     
+
+          <td>{{this.TechSkills}}</td>
+
           <td>
             <div>
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter{{this.Id}}">Get Info</button>
