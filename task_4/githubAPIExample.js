@@ -37,5 +37,24 @@ function makeGitHubURL() {
 }
 
 function registerGitHubCallback(req) {
-  // TODO
+  req.addEventListener("load", () => {
+    let outputElt = document.querySelector("#output-repos");
+
+    if (req.status >= 200 && req.status < 400) { // Search successful.
+      let res = JSON.parse(req.responseText);
+      outputElt.textContent = listGitHubRepos(res)
+    } else { // Search failed.
+
+      outputElt.textContent = "No public repos found for that username!";
+    }
+  });
+}
+
+function listGitHubRepos(res) {
+  let output = [];
+
+  res.forEach(repo => {
+    output.push(`${repo['name']}: ${repo['html_url']}`)
+  });
+  return output.join('\n\n');
 }
