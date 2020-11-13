@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+from unidecode import unidecode
 
 
 class OSUCourseScraper():
@@ -42,16 +43,39 @@ class OSUDepartmentScraper():
             url suffix of the form /courses/<DEPT_CODE>
 
         """
-        self.url = f'{OSUDepartmentScraper.DEPT_URL_BASE}/{url_suffix}'
-
         # Perfom string manipulation on the suffix to get the code.
         self.dept_code = [url_component for url_component in url_suffix.split('/')
                           if url_component != ''][-1]
 
+        # Construct the URL to scrape from.
+        self.url = f'{OSUDepartmentScraper.DEPT_URL_BASE}/{url_suffix}'
+
+        # Get the HTML document page and read it with BeautifulSoup.
+        self.source = requests.get(self.url).text
+        self.soup = BeautifulSoup(self.source, 'lxml')
+
+        # Get course information for each course.
         self.courses = self.scrape_courses()
 
     def scrape_courses(self):
-        pass
+        print(f"Scraping dept: {self.dept_code}")
+        # Strong tags contain the course title.
+        strong_tags = self.soup.select(OSUDepartmentScraper.CSS_SELECTOR_FOR_COURSES)
+        return [self._process_course_title(tag.text) for tag in strong_tags]
+
+    def _process_course_title(self, title):
+        processing_operations = [
+            # Decode persistent ASCII characters.
+            unidecode,
+            # Remove extra whitespace outside.
+            str.strip,
+            # Remove extra whitespace inside.
+            lambda string: string.replace('  ', ' '),
+        ]
+        result = title
+        for function in processing_operations:
+            result = function(result)
+        return result
 
     def get_courses(self):
         return self.courses
@@ -59,7 +83,3 @@ class OSUDepartmentScraper():
 
 if __name__ == '__main__':
     osu_scraper = OSUCourseScraper()
-
-    # Print all the department codes
-    for scraper in osu_scraper.dept_scrapers:
-        print(scraper.dept_code)
