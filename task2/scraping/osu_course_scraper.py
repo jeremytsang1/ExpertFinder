@@ -25,7 +25,6 @@ class OSUCourseScraper():
         # Get the <ul> containing all the department links. Each element is the
         # list of deparments for a specific letter of the alphabet.
         a_tags = self.soup.select(self.CSS_SELECTOR_FOR_DEPTS)
-        print('foo')
         return [OSUDepartmentScraper(anchor.attrs['href']) for anchor in a_tags]
 
 
