@@ -3,7 +3,9 @@ import requests
 
 
 class OSUCourseScraper():
-    '''Defines a class for downloading course names from the OSU website.'''
+    """Defines a class for downloading all course names from the OSU website.
+
+    """
 
     # CONSTANTS
     COURSE_DESCRIPTIONS_URL = 'https://catalog.oregonstate.edu/courses'
@@ -28,15 +30,28 @@ class OSUCourseScraper():
 
 
 class OSUDepartmentScraper():
+    """Class responsible for scraping course information for a given department."""
     DEPT_URL_BASE = 'https://catalog.oregonstate.edu'
 
     def __init__(self, url_suffix):
+        """Downloads all course info for a given department page.
+
+        Parameters
+        ----------
+        url_suffix: str
+            url suffix of the form /courses/<DEPT_CODE>
+
+        """
         self.url = f'{OSUDepartmentScraper.DEPT_URL_BASE}/{url_suffix}'
+
+        # Perfom string manipulation on the suffix to get the code.
         self.dept_code = [url_component for url_component in url_suffix.split('/')
                           if url_component != ''][-1]
 
 
 if __name__ == '__main__':
     osu_scraper = OSUCourseScraper()
+
+    # Print all the department codes
     for scraper in osu_scraper.dept_scrapers:
         print(scraper.dept_code)
