@@ -8,8 +8,19 @@ function main() {
     document.querySelector("#submit-github-username").addEventListener("click", (event) => {
       // Generate the GET request URL.
       let url = makeGitHubURL();
-      console.log(url);
 
+      // Create the request to https://api.github.com asynchronously
+      let req = new XMLHttpRequest();
+      req.open("GET", url, true);
+
+      // Determine action to take with the response.
+      registerGitHubCallback(req);
+
+      // Send off the request.
+      req.send(null);
+
+      // Prevent from reloading page when clicking submit button.
+      even.preventDefault();
     });
   });
 }
@@ -25,3 +36,6 @@ function makeGitHubURL() {
   return `${API_URL_PREFIX}/${username}/${API_URL_SUFFIX}`
 }
 
+function registerGitHubCallback(req) {
+  // TODO
+}
