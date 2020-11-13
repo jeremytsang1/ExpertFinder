@@ -20,7 +20,7 @@ function main() {
       req.send(null);
 
       // Prevent from reloading page when clicking submit button.
-      even.preventDefault();
+      event.preventDefault();
     });
   });
 }
