@@ -42,7 +42,7 @@ app.get('/expertDisplay', function(req,res){
   res.render('expertDisplay');
 });
 // Route for creating a new user account.
-app.use('/createProfile', require('./createProfile.js'));
+app.use('/createProfile', require('./routes/createProfile.js'));
 
 app.use(function(req,res){
   res.type('text/plain');
