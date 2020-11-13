@@ -2,7 +2,13 @@ main();
 
 // -----------------------------------------------------------------------------
 
+/**
+ * Add an event listener to the submit button so that whenever the button is
+ * clicked we make an XHR request to GitHub's REST API. Provided a successful
+ * response, the repo names and URLS will then be displayed in the output <div>
+ */
 function main() {
+
 
   document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("#submit-github-username").addEventListener("click", (event) => {
@@ -25,9 +31,12 @@ function main() {
   });
 }
 
-
 // -----Helper functions-------------------------------------------------------
 
+/**
+ * Scans the search field to create the URL to make the GET request to.
+ * @return {string} URL for a given GitHub username.
+ */
 function makeGitHubURL() {
   const API_URL_PREFIX = "https://api.github.com/users";
   const API_URL_SUFFIX = "repos";
@@ -36,6 +45,12 @@ function makeGitHubURL() {
   return `${API_URL_PREFIX}/${username}/${API_URL_SUFFIX}`
 }
 
+/**
+ * Given a request modifies the output DOM element to show the response content
+ * or warns the user their search was unsuccessful.
+ * @param {XMLHttpRequest} req - request to GitHub REST API
+ * @return {undefined} none
+ */
 function registerGitHubCallback(req) {
   req.addEventListener("load", () => {
     // DOM element whose .textContent will be modified with depending on status of
@@ -43,19 +58,24 @@ function registerGitHubCallback(req) {
     let outputElt = document.querySelector("#output-repos");
 
     if (req.status >= 200 && req.status < 400) { // Search successful.
-      let res = JSON.parse(req.responseText);
-      outputElt.textContent = listGitHubRepos(res)
+      let repos = JSON.parse(req.responseText);
+      outputElt.textContent = listGitHubRepos(repos)
     } else { // Search failed.
       outputElt.textContent = "No public repos found for that username!";
     }
   });
 }
 
-function listGitHubRepos(res) {
+/**
+ * Make a single string of the repo names and urls. One pair of name urls per line.
+ * @param {[Object]} repos - JSON parsed array from the GitHub REST API response.
+ * @return {string} Single string of repo names and URLS.
+ */
+function listGitHubRepos(repos) {
   let output = [];  // Each element will represent output for a specific repo.
 
   // Get the repo name and URL from the response object.
-  res.forEach(repo => {
+  repos.forEach(repo => {
     output.push(`${repo['name']}: ${repo['html_url']}`)
   });
 
