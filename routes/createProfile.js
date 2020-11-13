@@ -5,7 +5,6 @@ module.exports = function() {
 
 
   router.get('/', function(req, res) {
-    console.log(users);
     res.render('createProfile');
   });
     
