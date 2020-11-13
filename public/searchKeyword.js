@@ -2,6 +2,7 @@
 function SearchButton(){
 	console.log("called");
 	var test_db = require('./test_db');
+	var searchResults =  document.querySelectorAll(".userDetails")
 	var SearchInput = document.getElementById('search-input').value.toLowerCase();
 	console.log("== Search",SearchInput);
 	
