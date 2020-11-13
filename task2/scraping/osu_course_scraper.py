@@ -1,0 +1,42 @@
+from bs4 import BeautifulSoup
+import requests
+
+
+class OSUCourseScraper():
+    '''Defines a class for downloading course names from the OSU website.'''
+
+    # CONSTANTS
+    COURSE_DESCRIPTIONS_URL = 'https://catalog.oregonstate.edu/courses'
+    CSS_SELECTOR_FOR_DEPTS = '.az_sitemap >  ul > li > a'
+
+    def __init__(self, json_filename=None):
+        # Get the HTML document page and read it with BeautifulSoup.
+        self.source = requests.get(OSUCourseScraper.COURSE_DESCRIPTIONS_URL).text
+        self.soup = BeautifulSoup(self.source, 'lxml')
+
+        # List of results.
+        self.dept_scrapers = self.scrape_departments()
+
+        # TODO: Write results to file
+
+    def scrape_departments(self):
+        # Get the <ul> containing all the department links. Each element is the
+        # list of deparments for a specific letter of the alphabet.
+        a_tags = self.soup.select(self.CSS_SELECTOR_FOR_DEPTS)
+        print('foo')
+        return [OSUDepartmentScraper(anchor.attrs['href']) for anchor in a_tags]
+
+
+class OSUDepartmentScraper():
+    DEPT_URL_BASE = 'https://catalog.oregonstate.edu'
+
+    def __init__(self, url_suffix):
+        self.url = f'{OSUDepartmentScraper.DEPT_URL_BASE}/{url_suffix}'
+        self.dept_code = [url_component for url_component in url_suffix.split('/')
+                          if url_component != ''][-1]
+
+
+if __name__ == '__main__':
+    osu_scraper = OSUCourseScraper()
+    for scraper in osu_scraper.dept_scrapers:
+        print(scraper.dept_code)
