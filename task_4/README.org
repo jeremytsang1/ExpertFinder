@@ -1,6 +1,6 @@
 #+TITLE: Example Response from GitHub REST API
 * Calling the API
-- Make a get request to the following URL:
+- Make a GET request to the following URL:
   #+begin_example
 https://api.github.com/users/USERNAME_TO_SEARCH_FOR/repos
   #+end_example
