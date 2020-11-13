@@ -1,7 +1,7 @@
 /*searching for keywords*/
 function SearchButton(){
 	console.log("called");
-	var test_dbs = document.querySelectorAll(".Keywords");
+	var test_db = require('./test_db');
 	var SearchInput = document.getElementById('search-input').value.toLowerCase();
 	console.log("== Search",SearchInput);
 	
