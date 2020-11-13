@@ -32,6 +32,7 @@ class OSUCourseScraper():
 class OSUDepartmentScraper():
     """Class responsible for scraping course information for a given department."""
     DEPT_URL_BASE = 'https://catalog.oregonstate.edu'
+    CSS_SELECTOR_FOR_COURSES = ".courseblock > h2 > strong"
 
     def __init__(self, url_suffix):
         """Downloads all course info for a given department page.
@@ -47,6 +48,14 @@ class OSUDepartmentScraper():
         # Perfom string manipulation on the suffix to get the code.
         self.dept_code = [url_component for url_component in url_suffix.split('/')
                           if url_component != ''][-1]
+
+        self.courses = self.scrape_courses()
+
+    def scrape_courses(self):
+        pass
+
+    def get_courses(self):
+        return self.courses
 
 
 if __name__ == '__main__':
