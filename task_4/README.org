@@ -8,6 +8,8 @@ https://api.github.com/users/USERNAME_TO_SEARCH_FOR/repos
 Response from the API is formatted as a JSON. After parsing, it is a JS array
 where each array element is an object representing one of the user's public
 repos.
+
+The following is an example of one of the repo objects in the array.
 #+begin_src js
 {'id': 300758096,
  'node_id': 'MDEwOlJlcG9zaXRvcnkzMDA3NTgwOTY=',
