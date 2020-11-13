@@ -67,7 +67,10 @@ function registerGitHubCallback(req) {
 }
 
 /**
- * Make a single string of the repo names and urls. One pair of name urls per line.
+ * For sake of example make a single string of the repo names and urls. One
+ * pair of name urls per line. In the event of using this in the ExpertFinder
+ * site, will probably want to modify this function to use actual HTML elements
+ * instead of plain text.
  * @param {[Object]} repos - JSON parsed array from the GitHub REST API response.
  * @return {string} Single string of repo names and URLS.
  */
