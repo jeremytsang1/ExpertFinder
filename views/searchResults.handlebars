@@ -1,0 +1,102 @@
+
+<h2><title>Search Results</title></h2>
+
+<h3>[TO BE COMPLETED] In this page the profiles will appear after a search based on OSU coursework or tech stack has been executed by the application user.</h3>
+
+<table id="resultsTable">
+ 	<col style="width:15%"> 
+ 	<col style="width:15%">
+	<col style="width:15%">
+
+
+  <thead >
+      <th>Name</th>
+      <th>Industry</th>
+      <th>Coursework</th>
+      <th>Skills</th>
+      <th>More Info</th>
+  </thead>
+  <tbody>
+    {{#each users}} 
+      <tr id="searchResults">
+          <td class="userDetails">{{this.Name}}</td> 
+          {{!-- modal example source: https://getbootstrap.com/docs/4.0/components/modal/ --}}
+          <!-- Button trigger modal -->
+          <td class="userDetails">{{this.Industry}}</td>
+   
+
+          <td class="userDetails">{{this.Coursework}}</td>
+     
+
+          <td class="userDetails">{{this.TechSkills}}</td>
+
+          <td class="userDetails">
+            <div id="getInfoButton">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter{{this.Id}}">Get Info</button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModalCenter{{this.Id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">{{this.Name}}</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <table>
+                        <tbody>
+                            <tr>
+                              <th scope="row">Tech Skills:</th>
+                                {{#each this.TechSkills}}
+                                  <td> {{this}} </td>
+                                {{/each}}
+                            </tr>
+                            <tr>
+                              <th scope="row">Coursework:</th>
+                                {{#each this.Coursework}}
+                                  <td> {{this}} </td>
+                                {{/each}}
+                            </tr>
+                            <tr>
+                              <th scope="row">Industry:</th>
+                                {{#each this.Industry}}
+                                  <td> {{this}} </td>
+                                {{/each}}
+                            </tr>
+
+                            {{#each this.ContactInfo}}
+                            <tr>
+                              <th scope="row">{{@key}}:</th>
+                              <td>{{this}}</td>
+                            </tr>
+                            {{/each}}
+
+
+                        </tbody>  
+                      </table>
+                    </div>
+                    <div class="modal-footer">
+                      <div class="container">
+                        <div class="row">
+                          <div class="col text-center">
+                            <button class="btn btn-primary" data-dismiss="modal">OK, got it!</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+        </td>
+      </tr> 
+    {{/each}} 
+  </tbody>  
+</table> 
+<hr>
+<br>
+
+
