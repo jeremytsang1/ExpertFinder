@@ -10,26 +10,27 @@ class OSUCourseScraper():
 
     """
     FILE_NOT_FOUND = 'JSON file not found!'
+    JSON_FILE_FORMAT_INVALID = 'JSON file not formatted properly!'
     COURSE_DESCRIPTIONS_URL = 'https://catalog.oregonstate.edu/courses'
     CSS_SELECTOR_FOR_DEPTS = '.az_sitemap >  ul > li > a'
     DATABASE_KEY = 'KnownCoursework'
 
     def __init__(self, json_filename=None):
         # Get the HTML document page and read it with BeautifulSoup.
-        self.source = requests.get(OSUCourseScraper.COURSE_DESCRIPTIONS_URL).text
-        self.soup = BeautifulSoup(self.source, 'lxml')
+        self._source = requests.get(OSUCourseScraper.COURSE_DESCRIPTIONS_URL).text
+        self._soup = BeautifulSoup(self._source, 'lxml')
 
         # List of results.
-        self.dept_scrapers = self.scrape_departments()
+        self._dept_scrapers = self._scrape_departments()
 
-    def scrape_departments(self):
+    def _scrape_departments(self):
         # Get the <ul> containing all the department links. Each element is the
         # list of deparments for a specific letter of the alphabet.
-        a_tags = self.soup.select(self.CSS_SELECTOR_FOR_DEPTS)
+        a_tags = self._soup.select(self.CSS_SELECTOR_FOR_DEPTS)
         return [OSUDepartmentScraper(anchor.attrs['href']) for anchor in a_tags]
 
     @staticmethod
-    def read_json(filename):
+    def _read_json(filename):
         """Read database from json file.
 
         Parameters
@@ -49,9 +50,12 @@ class OSUCourseScraper():
         except FileNotFoundError:
             print(OSUCourseScraper.FILE_NOT_FOUND)
             return None
+        except json.JSONDecodeError:
+            print(OSUCourseScraper.JSON_FILE_FORMAT_INVALID)
+            return None
 
     @staticmethod
-    def write_json(filename, db):
+    def _write_json(filename, db):
         """Update the database file.
 
         Parameters
@@ -75,22 +79,7 @@ class OSUCourseScraper():
             print(OSUCourseScraper.FILE_NOT_FOUND)
             return False
 
-    def update_course_in_database(self, database_json):
-        # Read DB.
-        db = OSUCourseScraper.read_json(database_json)
-
-        if db is None:
-            print('Aborting database update!')
-            return
-
-        # Make sure courses in database are u
-        self.update_database_from_scraped_coures(db)
-
-        # Save DB.
-        OSUCourseScraper.write_json(database_json, db)
-        print(f'Wrote to {database_json}!')
-
-    def update_database_from_scraped_coures(self, db):
+    def _update_database_from_scraped_coures(self, db):
         """Adds any courses that weren't already present in the database to the
         database. Adds them as a list to db.[OSUCourseScraper.DATABASE_KEY] if
         key did not exist. Otherwise if it did and its value was a list, adds
@@ -109,16 +98,16 @@ class OSUCourseScraper():
         known_courses = db.get(OSUCourseScraper.DATABASE_KEY)
 
         if known_courses is None:  # No known courses. Use all scraped.
-            db[OSUCourseScraper.DATABASE_KEY] = self.get_all_scraped_courses(list)
-            OSUCourseScraper.alert_no_previous_courses_found(db)
+            db[OSUCourseScraper.DATABASE_KEY] = self._get_all_scraped_courses(list)
+            OSUCourseScraper._alert_no_previous_courses_found(db)
         elif type(known_courses) == list:  # Update known_courses.
-            new_courses = self.merge_courses(known_courses)
-            OSUCourseScraper.alert_updating_existing_courses(new_courses)
+            new_courses = self._merge_courses(known_courses)
+            OSUCourseScraper._alert_updating_existing_courses(new_courses)
         else:
             raise TypeError('db[OSUCourseScraper.DATABASE_KEY] exists but its '
                             'value is not of type list.')
 
-    def merge_courses(self, known_courses):
+    def _merge_courses(self, known_courses):
         """Add mutates known_courses by adding the courses found from scraping that
         were not already in the database list to said list.
 
@@ -136,7 +125,7 @@ class OSUCourseScraper():
         # Determine which courses from the scraping were not already in the
         # database.
         known_set = set(known_courses)
-        scraped_set = set(self.get_all_scraped_courses(set))
+        scraped_set = set(self._get_all_scraped_courses(set))
         scraped_and_not_known = scraped_set - known_set
 
         # Add said courses to the database by mutating the existing database
@@ -147,7 +136,7 @@ class OSUCourseScraper():
 
         return scraped_and_not_known
 
-    def get_all_scraped_courses(self, desired_type):
+    def _get_all_scraped_courses(self, desired_type):
         """Make an iterable of all the courses obtained through scraping.
 
         Allow specification of return type to avoid redundant conversion from
@@ -176,22 +165,22 @@ class OSUCourseScraper():
         ADDING_FUNCTION = {list: list.append, set: set.add}
 
         # Add the courses to the container
-        for scraper in self.dept_scrapers:
+        for scraper in self._dept_scrapers:
             for course in scraper.get_courses():
                 ADDING_FUNCTION[desired_type](scraped_courses, course)
 
         # Notify user how many deptartments and courses were found in the
         # scrape.
         print('',
-              f'Departments scraped: {len(self.dept_scrapers)}',
+              f'Departments scraped: {len(self._dept_scrapers)}',
               f'Courses scraped: {len(scraped_courses)}', sep='\n')
 
         return scraped_courses
 
-    def alert_no_previous_courses_found(db):
+    def _alert_no_previous_courses_found(db):
         print('\nNo known coursework found, adding all scraped courses to database.')
 
-    def alert_updating_existing_courses(new_courses_from_scraping):
+    def _alert_updating_existing_courses(new_courses_from_scraping):
         new_course_count = len(new_courses_from_scraping)
 
         new_course_count_line = (f'Found {new_course_count} new courses'
@@ -207,7 +196,43 @@ class OSUCourseScraper():
               sep='')
 
     def set_dept_scrapers(self, dept_scrapers):
-        self.dept_scrapers = dept_scrapers
+        """Setter for debugging."""
+        self._dept_scrapers = dept_scrapers
+
+    def get_dept_scrapers(self):
+        """Getter for debugging."""
+        return self._dept_scrapers
+
+    def update_course_in_database(self, database_json):
+        """Read the file database_json and add any courses that were not in its
+        OSUCourseScraper.DATABASE_KEY value. Assumes that the value is a Python
+        list (JS array). If the JSON have the OSUCourseScraper.DATABASE_KEY as
+        an attribute in the first place, the method will add one and then add
+        the scraped classes as a list (JS array).
+
+        Parameters
+        ----------
+        database_json: str
+            Filename of JSON file to add scraped courses to.
+
+        Returns
+        -------
+        None
+
+        """
+        # Read DB.
+        db = OSUCourseScraper._read_json(database_json)
+
+        if db is None:
+            print('Aborting database update!')
+            return
+
+        # Make sure courses in database are u
+        self._update_database_from_scraped_coures(db)
+
+        # Save DB.
+        OSUCourseScraper._write_json(database_json, db)
+        print(f'Wrote to {database_json}!')
 
 
 class OSUDepartmentScraper():
@@ -225,26 +250,28 @@ class OSUDepartmentScraper():
 
         """
         # Perfom string manipulation on the suffix to get the code.
-        self.dept_code = [url_component for url_component in url_suffix.split('/')
-                          if url_component != ''][-1]
+        self._dept_code = [url_component for url_component in url_suffix.split('/')
+                           if url_component != ''][-1]
 
         # Construct the URL to scrape from.
-        self.url = f'{OSUDepartmentScraper.DEPT_URL_BASE}/{url_suffix}'
+        self._url = f'{OSUDepartmentScraper.DEPT_URL_BASE}/{url_suffix}'
 
         # Get the HTML document page and read it with BeautifulSoup.
-        self.source = requests.get(self.url).text
-        self.soup = BeautifulSoup(self.source, 'lxml')
+        self._source = requests.get(self._url).text
+        self._soup = BeautifulSoup(self._source, 'lxml')
 
         # Get course information for each course.
-        self.courses = self.scrape_courses()
+        self._courses = self.scrape_courses()
 
     def scrape_courses(self):
-        print(f'Scraping dept: {self.dept_code}')
+        """Get all the course information from the department page."""
+        print(f'Scraping dept: {self._dept_code}')
         # Strong tags contain the course title.
-        strong_tags = self.soup.select(OSUDepartmentScraper.CSS_SELECTOR_FOR_COURSES)
+        strong_tags = self._soup.select(OSUDepartmentScraper.CSS_SELECTOR_FOR_COURSES)
         return [self._process_course_title(tag.text) for tag in strong_tags]
 
     def _process_course_title(self, title):
+        """String manipulation to process the course title with."""
         processing_operations = [
             # Decode persistent ASCII characters.
             unidecode,
@@ -259,7 +286,8 @@ class OSUDepartmentScraper():
         return result
 
     def get_courses(self):
-        return self.courses
+        """Getter."""
+        return self._courses
 
 
 if __name__ == '__main__':
