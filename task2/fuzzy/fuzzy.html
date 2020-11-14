@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Fuzzy Repo Test (JS)</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body>
+    <h1>Fuzzy Repo Test (JS)</h1>
+    <hr/>
+
+    <h2>Expected Search Terms</h2>
+    <div id="fuzzy-terms">hello</div>
+
+    <!-- Fuzzy Searching -->
+    <h3>Fuzzy Searching</h3>
+
+    <form>
+      <!-- SEARCH BAR -->
+      <div class="formGroup">
+	<label for="fuzzy-field">Search term</label>
+	<input id="fuzzy-field"
+               type="text"
+               name="fuzzy-field"
+               data-role="tagsinput"/>
+      </div>
+
+      <!-- SUBMIT BUTTON -->
+      <div class="formGroup">
+	<input id="fuzzy-submit" type="submit"/>
+      </div>
+    </form>
+
+    <h3>Output</h3>
+    <div id="fuzzy-output" style="white-space: pre-line"></div>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
+    <script src="fuzzy.js"></script>
+  </body>
+</html>

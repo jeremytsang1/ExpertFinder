@@ -5,7 +5,11 @@ module.exports = function() {
 
 
   router.get('/', function(req, res) {
-    res.render('createProfile');
+    // console.log(users);
+    context = {
+      jsscripts: ['public/scripts/courseAndSkillTags.js']
+    }
+    res.render('createProfile', context);
   });
     
   router.post('/', function(req, res) {
