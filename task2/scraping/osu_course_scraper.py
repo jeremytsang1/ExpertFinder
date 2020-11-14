@@ -70,7 +70,7 @@ class OSUCourseScraper():
         """
         try:
             with open(filename, 'w') as outfile:
-                json.dump(db, outfile)
+                json.dump(db, outfile, indent=2)
                 print(f'Write successful!')
             return True
         except FileNotFoundError:
