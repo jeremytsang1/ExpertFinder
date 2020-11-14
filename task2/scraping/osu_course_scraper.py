@@ -9,12 +9,10 @@ class OSUCourseScraper():
     """Defines a class for downloading all course names from the OSU website.
 
     """
-
-    # CONSTANTS
     FILE_NOT_FOUND = 'JSON file not found!'
     COURSE_DESCRIPTIONS_URL = 'https://catalog.oregonstate.edu/courses'
     CSS_SELECTOR_FOR_DEPTS = '.az_sitemap >  ul > li > a'
-    DATABASE_KEY = 'courses'
+    DATABASE_KEY = 'KnownCoursework'
 
     def __init__(self, json_filename=None):
         # Get the HTML document page and read it with BeautifulSoup.
@@ -71,7 +69,7 @@ class OSUCourseScraper():
         try:
             with open(filename, 'w') as outfile:
                 json.dump(db, outfile, indent=2)
-                print(f'Write successful!')
+                print(f'\nWrite successful!')
             return True
         except FileNotFoundError:
             print(OSUCourseScraper.FILE_NOT_FOUND)
@@ -85,22 +83,128 @@ class OSUCourseScraper():
             print('Aborting database update!')
             return
 
-        # Update DB.
-        db[OSUCourseScraper.DATABASE_KEY] = self.get_all_courses()
+        # Make sure courses in database are u
+        self.update_database_from_scraped_coures(db)
 
         # Save DB.
         OSUCourseScraper.write_json(database_json, db)
         print(f'Wrote to {database_json}!')
 
-    def get_all_courses(self):
-        course_list = []
+    def update_database_from_scraped_coures(self, db):
+        """Adds any courses that weren't already present in the database to the
+        database. Adds them as a list to db.[OSUCourseScraper.DATABASE_KEY] if
+        key did not exist. Otherwise if it did and its value was a list, adds
+        any courses that weren't alreaedy present.
+
+        Parameters
+        ----------
+        db: dict
+            Dictionary formed from JSON database.
+
+        Returns
+        -------
+        None
+
+        """
+        known_courses = db.get(OSUCourseScraper.DATABASE_KEY)
+
+        if known_courses is None:  # No known courses. Use all scraped.
+            db[OSUCourseScraper.DATABASE_KEY] = self.get_all_scraped_courses(list)
+            OSUCourseScraper.alert_no_previous_courses_found(db)
+        elif type(known_courses) == list:  # Update known_courses.
+            new_courses = self.merge_courses(known_courses)
+            OSUCourseScraper.alert_updating_existing_courses(new_courses)
+        else:
+            raise TypeError('db[OSUCourseScraper.DATABASE_KEY] exists but its '
+                            'value is not of type list.')
+
+    def merge_courses(self, known_courses):
+        """Add mutates known_courses by adding the courses found from scraping that
+        were not already in the database list to said list.
+
+        Parameters
+        ----------
+        known_courses: list of str
+            List of coursework already present in the database list.
+
+        Returns
+        -------
+        set of str
+            Courses that have just been added to the database's list.
+
+        """
+        # Determine which courses from the scraping were not already in the
+        # database.
+        known_set = set(known_courses)
+        scraped_set = set(self.get_all_scraped_courses(set))
+        scraped_and_not_known = scraped_set - known_set
+
+        # Add said courses to the database by mutating the existing database
+        # list. Choose appending over concatentation as the latter causes a new
+        # list to be constructed thereby leaving the database list unaltered.
+        for course in scraped_and_not_known:
+            known_courses.append(course)
+
+        return scraped_and_not_known
+
+    def get_all_scraped_courses(self, desired_type):
+        """Make an iterable of all the courses obtained through scraping.
+
+        Allow specification of return type to avoid redundant conversion from
+        list to set or vice versa.
+
+        Parameters
+        ----------
+        desired_type: type
+            Must be either `list` or `type`.
+
+        Returns
+        -------
+        list or set or str
+            All the courses gathered through the department scrapers.
+
+        """
+        if desired_type not in (list, set):
+            raise TypeError('desired_type must be either '
+                            '`list` (for the JSON) or '
+                            '`set` (for duplicate removal)')
+
+        # Make the container to store the courses.
+        scraped_courses = desired_type()
+
+        # Determine the method needed to add a course to the container.
+        ADDING_FUNCTION = {list: list.append, set: set.add}
+
+        # Add the courses to the container
         for scraper in self.dept_scrapers:
             for course in scraper.get_courses():
-                course_list.append(course)
-        print(f'Departments found: {len(self.dept_scrapers)}',
-              f'Courses found: {len(course_list)}',
-              sep='\n')
-        return course_list
+                ADDING_FUNCTION[desired_type](scraped_courses, course)
+
+        # Notify user how many deptartments and courses were found in the
+        # scrape.
+        print('',
+              f'Departments scraped: {len(self.dept_scrapers)}',
+              f'Courses scraped: {len(scraped_courses)}', sep='\n')
+
+        return scraped_courses
+
+    def alert_no_previous_courses_found(db):
+        print('\nNo known coursework found, adding all scraped courses to database.')
+
+    def alert_updating_existing_courses(new_courses_from_scraping):
+        new_course_count = len(new_courses_from_scraping)
+
+        new_course_count_line = (f'Found {new_course_count} new courses'
+                                 + ('.' if new_course_count == 0 else ':'))
+        new_courses_lines = '\n'.join(new_courses_from_scraping)
+        updating_database_line = ('' if len(new_courses_from_scraping) == 0
+                                  else 'Added said courses to database.')
+
+        print('\n',
+              new_course_count_line,
+              new_courses_lines,
+              updating_database_line,
+              sep='')
 
     def set_dept_scrapers(self, dept_scrapers):
         self.dept_scrapers = dept_scrapers
