@@ -6,7 +6,12 @@ module.exports = function() {
  
 
   router.get('/', function(req, res) {
-    res.render('createProfile');
+    var context = {
+      jsscripts: [
+        "public/scripts/skillCourseworkTags.js"
+      ]
+    };
+    res.render('createProfile', context);
   });
      
   router.post('/', function(req, res) {
