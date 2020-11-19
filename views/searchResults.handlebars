@@ -69,7 +69,16 @@
                             {{#each this.ContactInfo}}
                             <tr>
                               <th scope="row">{{@key}}:</th>
-                              <td>{{this}}</td>
+                              
+                              <td>
+                                {{!-- check if contact info is the email. If yes, use appropriate html code block --}}
+                                {{!-- https://stackoverflow.com/questions/34252817/handlebarsjs-check-if-a-string-is-equal-to-a-value --}}
+                                {{#ifEquals  @key "Email"}}
+                                  <a href = "mailto: {{this}}">{{this}}</a>
+                                {{else}}
+                                <a href="https://www.{{this}}" target="_blank">{{this}}</a>
+                                {{/ifEquals}}
+                              </td>
                             </tr>
                             {{/each}}
 
