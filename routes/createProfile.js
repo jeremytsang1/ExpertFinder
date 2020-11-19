@@ -19,11 +19,9 @@ module.exports = function() {
      // writing to a file code is based on https://stackabuse.com/writing-to-files-in-node-js/
     const fs = require('fs');
 
-    let newProfile = 'line1\n' + 
-                'line2\n' + 
-                'line3';
+    let newProfile = JSON.stringify(req.body);
 
-    // write to a new file named 2pac.txt
+    // write to a new file
     fs.writeFile('testDB.json', newProfile, (err) => {
         // throws an error, you could also catch it here
         if (err) throw err;
