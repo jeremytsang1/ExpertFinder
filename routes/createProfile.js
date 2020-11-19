@@ -7,7 +7,11 @@ module.exports = function() {
 
   router.get('/', function(req, res) {
     var context = {
+      cssstyles: [
+        "public/css/tagify.css"
+      ],
       jsscripts: [
+        "public/scripts/tagify.min.js",
         "public/scripts/skillCourseworkTags.js"
       ]
     };
