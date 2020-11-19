@@ -22,7 +22,7 @@ module.exports = function() {
     let newProfile = JSON.stringify(req.body);
 
     // write to a new file
-    fs.writeFile('testDB.json', newProfile, (err) => {
+    fs.appendFile('testDB.json', newProfile, (err) => {
         // throws an error, you could also catch it here
         if (err) throw err;
 
