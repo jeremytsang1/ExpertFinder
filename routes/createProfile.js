@@ -1,6 +1,6 @@
 module.exports = function() {
-  let express = require('express');
-  let router = express.Router();
+  var express = require('express');
+  var router = express.Router();
 
 
  
@@ -19,7 +19,7 @@ module.exports = function() {
      // writing to a file code is based on https://stackabuse.com/writing-to-files-in-node-js/
     const fs = require('fs');
 
-    let newProfile = JSON.stringify(req.body);
+    var newProfile = JSON.stringify(req.body);
 
     // write to a new file
     fs.appendFile('testDB.json', newProfile, (err) => {
