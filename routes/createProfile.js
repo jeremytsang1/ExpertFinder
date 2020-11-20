@@ -28,7 +28,19 @@ module.exports = function() {
         "public/scripts/skillCourseworkTags.js"
       ]
     };
-    res.render('createProfile', context);
+
+    // all elements must have `complete` as parameter as the last callback to
+    // complete will be the one responsible for rendering the template.
+    const CALLBACKS = [readDatabase];
+
+    renderAfterCallbacksComplete(res, 'createProfile', context, CALLBACKS);
+
+    // ------------------------------------------------------------------------
+    // Callback helpers for router.get('/').
+    function readDatabase(complete) {
+      complete();
+    }
+    // ------------------------------------------------------------------------
   });
      
   router.post('/', function(req, res) {
