@@ -1,6 +1,8 @@
 module.exports = function() {
   var express = require('express');
   var router = express.Router();
+  const fs = require('fs');
+  const DATABASE_FILENAME = 'db.json';
 
   function renderAfterCallbacksComplete(res, template, context, callbacks) {
     let callbacksCompletedCount = 0;
@@ -17,6 +19,14 @@ module.exports = function() {
     callbacks.forEach(callback => callback(complete))
   }
 
+  function handleFailedDatabaseReadAttempt(res, err) {
+    res.write(JSON.stringify(err));
+    res.end();
+  }
+
+  function addSkillsAndCourseWorkToContext(context, jsonData) {
+    // TODO: store the skills and coursework inside `context`
+  }
 
   router.get('/', function(req, res) {
     var context = {
@@ -38,7 +48,11 @@ module.exports = function() {
     // ------------------------------------------------------------------------
     // Callback helpers for router.get('/').
     function readDatabase(complete) {
-      complete();
+      fs.readFile(DATABASE_FILENAME, (err, data) => {
+        if (err) handleFailedDatabaseReadAttempt(res, err)
+        else addSkillsAndCourseWorkToContext(context, data)
+        complete();
+      });
     }
     // ------------------------------------------------------------------------
   });
