@@ -1,8 +1,6 @@
 module.exports = function() {
   var express = require('express');
   var router = express.Router();
-  const fs = require('fs');
-  const DATABASE_FILENAME = 'db.json';
   const INDUSTRY = 'Industry';
   const COURSEWORK = 'Coursework';
   const SKILLS = 'TechSkills';
@@ -63,22 +61,8 @@ module.exports = function() {
       ]
     };
 
-    // all elements must have `complete` as parameter as the last callback to
-    // complete will be the one responsible for rendering the template.
-    const CALLBACKS = [readDatabase];
+    res.render('createProfile', context);
 
-    runCallbacksAndRender(res, 'createProfile', context, CALLBACKS);
-
-    // ------------------------------------------------------------------------
-    // Callback helpers for router.get('/').
-    function readDatabase(complete) {
-      fs.readFile(DATABASE_FILENAME, (err, data) => {
-        if (err) handleFailedDatabaseReadAttempt(res, err)
-        else addExistingCategoryPropertiesToContext(context, data)
-        complete();
-      });
-    }
-    // ------------------------------------------------------------------------
   });
      
   router.post('/', function(req, res) {
