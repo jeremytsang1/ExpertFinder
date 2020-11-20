@@ -40,13 +40,13 @@ function extractCategoryAryElts(users, category) {
 // Routes
 
 router.get('/', (req, res) => {
-  var context = {a: 1, b: 2, c: 3};
+  var context = {};
 
   // all elements must have `complete` as parameter as the last callback to
   // complete will be the one responsible for rendering the template.
   const CALLBACKS = [readDatabase];
 
-  res.send(JSON.stringify(context));
+  callbackUtil.runCallbacksAndSend(res, context, CALLBACKS)
 
   // --------------------------------------------------------------------------
   // Callback helpers for router.get('/')
