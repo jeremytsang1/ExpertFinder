@@ -6,7 +6,6 @@ module.exports = function(){
 
     // souce: https://www.geeksforgeeks.org/how-to-read-and-write-json-file-using-node-js/
     function getAllUsers(res, context, complete){
-        // Read db.json file 
         fs.readFile("db.json", function(err, data) { 
             // Check for errors 
             if(err){
@@ -15,14 +14,9 @@ module.exports = function(){
             }
             // Converting to JSON 
             const dbUsers = JSON.parse(data); 
-            //console.log(users); // Print users  
             context.users = dbUsers.Users;
-            // console.log("In function getAllUsers. Printing context")
-            // console.log(context)
             complete();
         }); 
-        // const db_users = require('./db.json');
-        // console.log(db_users);
     }
 
 
@@ -60,7 +54,7 @@ module.exports = function(){
     router.get('/', function(req, res){
         var callbackCount = 0;
         var context = {};
-        context.jsscripts = []; // add script names here to load in web page if needed
+        context.jsscripts = ["jquery.js"]; // add script names here to load in web page if needed
         //console.log(context)
         getAllUsers(res, context, complete);
 
