@@ -59,6 +59,8 @@ app.get('/expertDisplay', function(req,res){
 // Route for creating a new user account.
 app.use('/createProfile', require('./routes/createProfile.js'));
 
+app.use('/suggestions', require('./routes/api/suggestions.js'));
+
 app.use(function(req,res){
   res.type('text/plain');
   res.status(404);
