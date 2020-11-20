@@ -2,8 +2,8 @@ function profileCreationFormMain() {
   const REGISTER_BUTTON = document.querySelector("button.submit");
   const CANCEL_BUTTON = document.querySelector("button.cancel");
 
-  return [REGISTER_BUTTON, CANCEL_BUTTON];
+  CANCEL_BUTTON.addEventListener("click", () => window.location.href = "/");
 
 }
 
-buttons = profileCreationFormMain();
+profileCreationFormMain();
