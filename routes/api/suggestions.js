@@ -11,6 +11,7 @@ const COURSEWORK = 'Coursework';
 const SKILLS = 'TechSkills';
 const USERS = 'Users';
 const CATEGORIES = 'Categories';
+const KNOWN = 'Known';
 
 // ----------------------------------------------------------------------------
 // Helpers
@@ -26,15 +27,24 @@ function addExistingCategoryPropertiesToContext(context, jsonData) {
   context[CATEGORIES] = {}
 
   categories.forEach(category => {
-    context[CATEGORIES][category] = extractCategoryAryElts(DB[USERS], category)
+    context[CATEGORIES][category] = extractCategoryAryElts(DB, category)
   });
 }
 
-function extractCategoryAryElts(users, category) {
+function extractCategoryAryElts(DB, category) {
   extracted = new Set();
+  users = DB[USERS]
   users.forEach(user => user[category].forEach(elt => extracted.add(elt)));
+  addPreexistingSuggestions(DB, category, extracted);
   return [...extracted];  // Use array since `Set` doesn't work with JSON
 }
+
+function addPreexistingSuggestions(DB, category, extracted) {
+  if (DB[KNOWN] !== undefined) {
+    DB[KNOWN][category].forEach(suggestion => extracted.add(suggestion));
+  }
+}
+
 
 // ----------------------------------------------------------------------------
 // Routes
