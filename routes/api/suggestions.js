@@ -4,8 +4,36 @@ const router = express.Router();
 const DATABASE_FILENAME = 'db.json';
 const fs = require('fs');
 
+// User Specific Constants
+const INDUSTRY = 'Industry';
+const COURSEWORK = 'Coursework';
+const SKILLS = 'TechSkills';
+const USERS = 'Users';
+const CATEGORIES = 'Categories';
+
 // ----------------------------------------------------------------------------
 // Helpers
+
+function handleFailedDatabaseReadAttempt(res, err) {
+  res.write(JSON.stringify(err));
+  res.end();
+}
+
+function addExistingCategoryPropertiesToContext(context, jsonData) {
+  const DB = JSON.parse(jsonData)
+  const categories = [INDUSTRY, COURSEWORK, SKILLS];
+  context[CATEGORIES] = {}
+
+  categories.forEach(category => {
+    context[CATEGORIES][category] = extractCategoryAryElts(DB[USERS], category)
+  });
+}
+
+function extractCategoryAryElts(users, category) {
+  extracted = new Set();
+  users.forEach(user => user[category].forEach(elt => extracted.add(elt)));
+  return [...extracted];  // Use array since `Set` doesn't work with JSON
+}
 
 // ----------------------------------------------------------------------------
 // Routes

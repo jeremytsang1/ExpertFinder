@@ -1,11 +1,6 @@
 module.exports = function() {
   var express = require('express');
   var router = express.Router();
-  const INDUSTRY = 'Industry';
-  const COURSEWORK = 'Coursework';
-  const SKILLS = 'TechSkills';
-  const USERS = 'Users';
-  const CATEGORIES = 'Categories';
 
   function runCallbacksAndRender(res, template, context, callbacks) {
     if (callbacks.length == 0) res.render(template, context); // render immediately
@@ -27,27 +22,6 @@ module.exports = function() {
       // Check if callback is the last callback to complete
       if (callbacksCompletedCount == callbacks.length) res.render(template, context);
     }
-  }
-
-  function handleFailedDatabaseReadAttempt(res, err) {
-    res.write(JSON.stringify(err));
-    res.end();
-  }
-
-  function addExistingCategoryPropertiesToContext(context, jsonData) {
-    const DB = JSON.parse(jsonData)
-    const categories = [INDUSTRY, COURSEWORK, SKILLS];
-    context[CATEGORIES] = {}
-
-    categories.forEach(category => {
-      context[CATEGORIES][category] = extractCategoryAryElts(DB[USERS], category)
-    });
-  }
-
-  function extractCategoryAryElts(users, category) {
-    extracted = new Set();
-    users.forEach(user => user[category].forEach(elt => extracted.add(elt)));
-    return [...extracted];  // Use array since `Set` doesn't work with JSON
   }
 
   router.get('/', function(req, res) {
