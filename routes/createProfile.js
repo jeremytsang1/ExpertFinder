@@ -19,7 +19,8 @@ module.exports = function() {
   });
 
   router.get('/success', (req, res) => {
-    const context = {};
+    const context = {"email": req.query.email};
+
     res.render('createProfileSuccess', context)
   })
      
@@ -49,7 +50,7 @@ module.exports = function() {
     console.log("PPPPPOOOOOOOSSSSSTTT");
     var context = {};
     // context.dataList = qParams;
-    res.redirect('createProfile/success');
+    res.redirect(`createProfile/success?email=${req.body.email}`);
     res.end();
   });
 

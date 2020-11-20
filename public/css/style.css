@@ -74,6 +74,25 @@
 }
 
 /* -------------------------------------------------------------------------- */
+/* Styles for profile creation success page */
+.todo {
+    color: red;
+}
+
+.success-email {
+    color: #546D80;
+}
+
+a.btn.home {
+    background-color: #333E50;
+}
+
+.jumbotron {
+    background-color: #E9ECF5;
+}
+
+
+/* -------------------------------------------------------------------------- */
 
 /* Styles for search results page */
 #searchResults {
