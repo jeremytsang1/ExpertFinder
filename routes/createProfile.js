@@ -29,8 +29,20 @@ module.exports = function() {
     res.end();
   }
 
-  function addSkillsAndCourseWorkToContext(context, jsonData) {
-    // TODO: store the skills and coursework inside `context`
+  function addExistingCategoryPropertiesToContext(context, jsonData) {
+    const DB = JSON.parse(jsonData)
+    const categories = [INDUSTRY, COURSEWORK, SKILLS];
+    context[CATEGORIES] = {}
+
+    categories.forEach(category => {
+      context[CATEGORIES][category] = extractCategoryAryElts(DB[USERS], category)
+    });
+  }
+
+  function extractCategoryAryElts(users, category) {
+    extracted = new Set();
+    users.forEach(user => user[category].forEach(elt => extracted.add(elt)));
+    return [...extracted];  // Use array since `Set` doesn't work with JSON
   }
 
   router.get('/', function(req, res) {
@@ -55,7 +67,7 @@ module.exports = function() {
     function readDatabase(complete) {
       fs.readFile(DATABASE_FILENAME, (err, data) => {
         if (err) handleFailedDatabaseReadAttempt(res, err)
-        else addSkillsAndCourseWorkToContext(context, data)
+        else addExistingCategoryPropertiesToContext(context, data)
         complete();
       });
     }
