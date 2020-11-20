@@ -60,12 +60,23 @@
       </div>
     </div>
 
-    <!-- industry -->
+    <!-- Stack Overflow and Industry -->
     <div class="row">
+      <!-- Stack Overflow -->
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="profile-creation-stackoverflow">Stack Overflow</label>
+          <input class="form-control" id="profile-creation-stackoverflow" name="stackoverflow" type="text" value=""/>
+        </div>
+      </div>
+      <!-- industry -->
       <div class="col-md-6">
         <div class="form-group">
           <label for="profile-creation-industry">Industry</label>
-          <input class="form-control" id="profile-creation-industry" name="industry" type="text" value=""/>
+          <div class="form-inline multi-input">
+            <input class="form-control" id="profile-creation-industry" name="skills" type="text" value=""/>
+            <button class="btn">Add</button>
+          </div>
         </div>
       </div>
     </div>
@@ -75,9 +86,9 @@
       <!-- skills -->
       <div class="col-md-6">
         <div class="form-group">
-          <label for="profile-creation-skills">Skills</label>
+          <label for="profile-creation-techskills">Skills</label>
           <div class="form-inline multi-input">
-            <input class="form-control" id="profile-creation-skills" name="skills" type="text" value=""/>
+            <input class="form-control" id="profile-creation-techskills" name="skills" type="text" value=""/>
             <button class="btn">Add</button>
           </div>
         </div>
@@ -85,9 +96,9 @@
       <!-- courses -->
       <div class="col-md-6">
         <div class="form-group">
-          <label for="profile-creation-courses">Courses</label>
+          <label for="profile-creation-coursework">Courses</label>
           <div class="form-inline multi-input">
-            <input class="form-control" id="profile-creation-courses" name="courses" type="text" value=""/>
+            <input class="form-control" id="profile-creation-coursework" name="courses" type="text" value=""/>
             <button class="btn">Add</button>
           </div>
         </div>
