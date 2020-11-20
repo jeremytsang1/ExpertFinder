@@ -58,7 +58,7 @@ function profileCreationTagsMain() {
 
   function createTagify(cat, suggestions) {
     return new Tagify(INPUTS.get(cat), {
-      whitelist: suggestions[cat],
+      whitelist: suggestions[cat].sort(),
       maxTags: 5
     });
   }
