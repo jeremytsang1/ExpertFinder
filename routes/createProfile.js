@@ -52,7 +52,7 @@ module.exports = function() {
       ],
       jsscripts: [
         "public/scripts/tagify.min.js",
-        "public/scripts/skillCourseworkTags.js"
+        "public/scripts/profileCreationTags.js"
       ]
     };
 
