@@ -5,7 +5,7 @@
 
   <!-- form for account creation -->
   <form id="profile-creation-form" action="/createProfile" method="POST">
-
+    <h2>Contact Info</h2>
     <!-- first name and last name -->
     <div class="row">
       <!-- field for first name -->
@@ -69,39 +69,32 @@
           <input class="form-control" id="profile-creation-stackoverflow" name="stackoverflow" type="text" value=""/>
         </div>
       </div>
-      <!-- industry -->
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="profile-creation-industry">Industry</label>
-          <div class="form-inline multi-input">
-            <input class="form-control" id="profile-creation-industry" name="skills" type="text" value=""/>
-            <button class="btn">Add</button>
-          </div>
-        </div>
-      </div>
     </div>
 
-    <!-- skills and courses -->
-    <div class="row">
-      <!-- skills -->
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="profile-creation-techskills">Skills</label>
-          <div class="form-inline multi-input">
-            <input class="form-control" id="profile-creation-techskills" name="skills" type="text" value=""/>
-            <button class="btn">Add</button>
-          </div>
-        </div>
+    <!-- industry, skills, and courses -->
+    <h2>Expertise</h2>
+    <p>
+      <span class="deemphasized">Select existing suggestions, or type your own and press <code>TAB</code>!</span>
+    </p>
+    <!-- industry -->
+    <div class="form-group">
+      <label for="profile-creation-industry">Industry</label>
+      <div class="form-inline multi-input">
+        <input class="form-control" id="profile-creation-industry" name="skills" type="text" value=""/>
       </div>
-      <!-- courses -->
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="profile-creation-coursework">Courses</label>
-          <div class="form-inline multi-input">
-            <input class="form-control" id="profile-creation-coursework" name="courses" type="text" value=""/>
-            <button class="btn">Add</button>
-          </div>
-        </div>
+    </div>
+    <!-- skills -->
+    <div class="form-group">
+      <label for="profile-creation-techskills">Skills</label>
+      <div class="form-inline multi-input">
+        <input class="form-control" id="profile-creation-techskills" name="skills" type="text" value=""/>
+      </div>
+    </div>
+    <!-- courses -->
+    <div class="form-group">
+      <label for="profile-creation-coursework">Courses</label>
+      <div class="form-inline multi-input">
+        <input class="form-control" id="profile-creation-coursework" name="courses" type="text" value=""/>
       </div>
     </div>
 

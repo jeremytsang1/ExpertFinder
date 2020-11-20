@@ -45,6 +45,9 @@
     background-color: #FFFFFF;
     border-color: #000;
 }
+
+.deemphasized { color: #a9a9a9; font-size: 0.9em; }
+
 /* -------------------------------------------------------------------------- */
 /* Styles for tagify*/
 /* Taken from official tagify repo:
