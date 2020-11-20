@@ -1,7 +1,14 @@
-const SKILL_INPUT = document.getElementById("profile-creation-skills");
-const COURSEWORK_INPUT = document.getElementById("profile-creation-courses");
+const INPUT_ID_PREFIX = "profile-creation-";
+const INDUSTRY = "Industry";
+const SKILLS = "TechSkills";
+const COURSEWORK = "Coursework";
+const CATEGORIES = [INDUSTRY, SKILLS, COURSEWORK];
 
-const SKILL_TAGIFY = new Tagify(SKILL_INPUT);
-const COURSEWORK_TAGIFY = new Tagify(COURSEWORK_INPUT);
+let inputs = new Map();
+let tagifies = new Map();
 
-console.log("hello world");
+CATEGORIES.forEach(cat => {
+  input = document.querySelector(`#${INPUT_ID_PREFIX}${cat.toLowerCase()}`);
+  inputs.set(cat, input);
+  tagifies.set(cat, new Tagify(input));
+});
