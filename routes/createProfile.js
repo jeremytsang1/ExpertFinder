@@ -3,6 +3,11 @@ module.exports = function() {
   var router = express.Router();
   const fs = require('fs');
   const DATABASE_FILENAME = 'db.json';
+  const INDUSTRY = 'Industry';
+  const COURSEWORK = 'Coursework';
+  const SKILLS = 'TechSkills';
+  const USERS = 'Users';
+  const CATEGORIES = 'Categories';
 
   function renderAfterCallbacksComplete(res, template, context, callbacks) {
     let callbacksCompletedCount = 0;
