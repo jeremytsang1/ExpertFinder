@@ -45,6 +45,30 @@
     background-color: #FFFFFF;
     border-color: #000;
 }
+/* -------------------------------------------------------------------------- */
+/* Styles for tagify*/
+/* Taken from official tagify repo:
+   https://github.com/yairEO/tagify/blob/bd4cb069b1cacb6b8bdd34457de5f86752015a9c/index.html#L579*/
+.tags-look .tagify__dropdown__item{
+  display: inline-block;
+  border-radius: 3px;
+  padding: .3em .5em;
+  border: 1px solid #CCC;
+  background: #F3F3F3;
+  margin: .2em;
+  font-size: .85em;
+  color: black;
+  transition: 0s;
+}
+
+.tags-look .tagify__dropdown__item--active{
+  color: black;
+}
+
+.tags-look .tagify__dropdown__item:hover{
+  background: lightyellow;
+  border-color: gold;
+}
 
 /* -------------------------------------------------------------------------- */
 
@@ -66,4 +90,3 @@
 .showMoreLessBtn {
     padding: 0;
 }
-  
