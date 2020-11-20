@@ -17,6 +17,11 @@ module.exports = function() {
     res.render('createProfile', context);
 
   });
+
+  router.get('/success', (req, res) => {
+    const context = {};
+    res.render('createProfileSuccess', context)
+  })
      
   router.post('/', function(req, res) {
     var qParams = [];
@@ -44,7 +49,8 @@ module.exports = function() {
     console.log("PPPPPOOOOOOOSSSSSTTT");
     var context = {};
     // context.dataList = qParams;
-    res.render('createProfile', context);
+    res.redirect('createProfile/success');
+    res.end();
   });
 
   //   document.getElementById('register').addEventListener('click', saveUserData);
