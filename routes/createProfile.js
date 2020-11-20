@@ -9,6 +9,11 @@ module.exports = function() {
   const USERS = 'Users';
   const CATEGORIES = 'Categories';
 
+  function runCallbacksAndRender(res, template, context, callbacks) {
+    if (callbacks.length == 0) res.render(template, context); // render immediately
+    else renderAfterCallbacksComplete(res, template, context, callbacks);
+  }
+
   function renderAfterCallbacksComplete(res, template, context, callbacks) {
     let callbacksCompletedCount = 0;
 
@@ -60,7 +65,7 @@ module.exports = function() {
     // complete will be the one responsible for rendering the template.
     const CALLBACKS = [readDatabase];
 
-    renderAfterCallbacksComplete(res, 'createProfile', context, CALLBACKS);
+    runCallbacksAndRender(res, 'createProfile', context, CALLBACKS);
 
     // ------------------------------------------------------------------------
     // Callback helpers for router.get('/').
