@@ -29,5 +29,10 @@
             },
             "ProfilePicture": "/public/images/female-default-profile-img.jpg"
         }
-    ]    
+    ],
+    "Known": {
+        "TechSkills": [],
+        "Industry": [],
+        "Coursework": []
+    }
 }
