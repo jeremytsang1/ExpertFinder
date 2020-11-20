@@ -2,8 +2,21 @@ module.exports = function() {
   var express = require('express');
   var router = express.Router();
 
+  function renderAfterCallbacksComplete(res, template, context, callbacks) {
+    let callbacksCompletedCount = 0;
 
- 
+    // relies on closure for callbacksCompletedCount
+    function complete() {
+      callbacksCompletedCount++;
+      if (callbacksCompletedCount == callbacks.length) {
+        res.render(template, context);
+      }
+    }
+
+    // run all the callbacks and render when they've all completed
+    callbacks.forEach(callback => callback(complete))
+  }
+
 
   router.get('/', function(req, res) {
     var context = {
