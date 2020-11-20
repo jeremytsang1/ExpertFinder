@@ -8,21 +8,13 @@ function profileCreationTagsMain() {
   const CATEGORIES_KEY = "Categories";
   const INPUTS = gatherInputs();
 
-  document.addEventListener("DOMContentLoaded", () => {
-    let req = new XMLHttpRequest();
-
-    req.open("GET", URL, true);
-
-    registerSuggestionsCallback(req);
-
-    req.send(null);
-  });
+  getSuggestionsFromServer();
 
   // --------------------------------------------------------------------------
   // Helper functions (keep nested to keep namespace clean)
 
   function gatherInputs() {
-    let inputs = new Map();
+    const inputs = new Map();
 
     CATEGORIES.forEach(cat => {
       input = document.querySelector(`#${INPUT_ID_PREFIX}${cat.toLowerCase()}`);
@@ -30,6 +22,17 @@ function profileCreationTagsMain() {
     });
     return inputs;
   }
+
+  function getSuggestionsFromServer() {
+    const req = new XMLHttpRequest();
+
+    req.open("GET", URL, true);
+
+    registerSuggestionsCallback(req);
+
+    req.send(null);
+  }
+
 
   function registerSuggestionsCallback(req) {
     req.addEventListener("load", () => {
@@ -39,9 +42,9 @@ function profileCreationTagsMain() {
   }
 
   function handleSuccessfulRequest(req) {
-    let res = JSON.parse(req.responseText);
-    let suggestions = res[CATEGORIES_KEY];
-    let tagifies = new Map();
+    const res = JSON.parse(req.responseText);
+    const suggestions = res[CATEGORIES_KEY];
+    const tagifies = new Map();
 
     CATEGORIES.forEach(cat => {  // Fill the map.
       tagify = createTagify(cat, suggestions);
