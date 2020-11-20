@@ -38,51 +38,70 @@
               <div class="modal fade" id="exampleModalCenter{{this.Id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">{{this.Name}}</h5>
+                    <div class="modal-body">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
-                    </div>
-                    <div class="modal-body">
+                      <div>
+                        <div class="text-center">
+                          <img src="{{this.ProfilePicture}}" class="img-thumbnail img-fluid " alt="...">
+                        </div>
+                        <div class="text-center">
+                          <h3 class="modal-title" id="exampleModalLongTitle">{{this.Name}}</h3>
+                        </div>
+                      </div>
                       <table>
                         <tbody>
                             <tr>
                               <th scope="row">Tech Skills:</th>
-                                {{#each this.TechSkills}}
-                                  <td> {{this}} </td>
-                                {{/each}}
+                                <td> {{this.TechSkills}} </td>
                             </tr>
                             <tr>
                               <th scope="row">Coursework:</th>
-                                {{#each this.Coursework}}
-                                  <td> {{this}} </td>
-                                {{/each}}
+                                <td>{{this.Coursework}}</td>
                             </tr>
                             <tr>
                               <th scope="row">Industry:</th>
-                                {{#each this.Industry}}
-                                  <td> {{this}} </td>
-                                {{/each}}
+                                  <td> {{this.Industry}} </td>
                             </tr>
 
+                            {{!-- check if contact info is the email. If yes, use appropriate html code block --}}
+                            {{!-- https://stackoverflow.com/questions/34252817/handlebarsjs-check-if-a-string-is-equal-to-a-value --}}
                             {{#each this.ContactInfo}}
-                            <tr>
-                              <th scope="row">{{@key}}:</th>
-                              
-                              <td>
-                                {{!-- check if contact info is the email. If yes, use appropriate html code block --}}
-                                {{!-- https://stackoverflow.com/questions/34252817/handlebarsjs-check-if-a-string-is-equal-to-a-value --}}
-                                {{#ifEquals  @key "Email"}}
-                                  <a href = "mailto: {{this}}">{{this}}</a>
-                                {{else}}
-                                <a href="https://www.{{this}}" target="_blank">{{this}}</a>
-                                {{/ifEquals}}
-                              </td>
-                            </tr>
+                              {{#ifEquals  @key "Email"}}
+                                <tr>
+                                  <th scope="row">{{@key}}:</th>
+                                  <td>
+                                      <a href = "mailto: {{this}}">{{this}}</a>
+                                  </td>
+                                </tr>
+                              {{else}}
+                                <tr class="collapse collapseme{{../Id}}">
+                                  <th scope="row">{{@key}}:</th>
+                                  <td>
+                                      <a href="https://www.{{this}}" target="_blank">{{this}}</a>
+                                  </td>
+                                </tr>
+                              {{/ifEquals}}
                             {{/each}}
 
 
+                            <tr>
+                              <td>
+                                <button id="" class="btn btn-link showMoreLessBtn" data-toggle="collapse" data-target=".collapseme{{Id}}" data-text-alt="-Show Less">
+                                  +Show More
+                                </button>
+                              </td>
+                            </tr>
+
+                            {{!-- <tr class="collapse collapseme">
+                              <td>
+                                <button type="button" class="btn" data-toggle="collapse" aria-expanded="true" data-target=".collapseme" aria-expanded="true">
+                                  -Show Less
+                                </button>
+                              </td>
+                            </tr> --}}
+ 
                         </tbody>  
                       </table>
                     </div>
@@ -105,6 +124,11 @@
     {{/each}} 
   </tbody>  
 </table> 
+
+
+
+
+
 <hr>
 <br>
 
