@@ -1,16 +1,16 @@
-function runCallbacksAndRender(res, template, context, callbacks) {
+function runCallbacksAndSend(res, template, context, callbacks) {
   if (callbacks.length == 0) res.render(template, context); // render immediately
-  else renderAfterCallbacksComplete(res, template, context, callbacks);
+  else sendAfterCallbacksComplete(res, template, context, callbacks);
 }
 
-function renderAfterCallbacksComplete(res, template, context, callbacks) {
+function sendAfterCallbacksComplete(res, template, context, callbacks) {
   let callbacksCompletedCount = 0;
 
-  // run all the callbacks and render when they've all completed
+  // run all the callbacks and send when they've all completed
   callbacks.forEach(callback => callback(complete))
 
   // ------------------------------------------------------------------------
-  // Helper functions for renderAfterCallbacksComplete()
+  // Helper functions for sendAfterCallbacksComplete()
 
   // relies on closure for callbacksCompletedCount
   function complete() {
@@ -21,6 +21,6 @@ function renderAfterCallbacksComplete(res, template, context, callbacks) {
 }
 
 module.exports = {
-  runCallbacksAndRender,
-  renderAfterCallbacksComplete
+  runCallbacksAndSend,
+  sendAfterCallbacksComplete
 }
