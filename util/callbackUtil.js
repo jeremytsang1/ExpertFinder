@@ -19,3 +19,8 @@ function renderAfterCallbacksComplete(res, template, context, callbacks) {
     if (callbacksCompletedCount == callbacks.length) res.render(template, context);
   }
 }
+
+module.exports = {
+  runCallbacksAndRender,
+  renderAfterCallbacksComplete
+}

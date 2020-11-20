@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const DATABASE_FILENAME = 'db.json';
 const fs = require('fs');
+const callbackUtil = require('../../util/callbackUtil');
 
 // User Specific Constants
 const INDUSTRY = 'Industry';
