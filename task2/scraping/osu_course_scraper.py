@@ -9,15 +9,17 @@ class OSUCourseScraper():
     """Defines a class for downloading all course names from the OSU website.
 
     """
+    ABORTING = 'Aborting database update!'
     FILE_NOT_FOUND = 'JSON file not found!'
     JSON_FILE_FORMAT_INVALID = 'JSON file not formatted properly!'
     COURSE_DESCRIPTIONS_URL = 'https://catalog.oregonstate.edu/courses'
     CSS_SELECTOR_FOR_DEPTS = '.az_sitemap >  ul > li > a'
-    DATABASE_KEY = 'KnownCoursework'
+    PREEXISTING_KEY = "Known"
+    DATABASE_KEY = 'Coursework'
 
     def __init__(self, json_filename=None):
         # Get the HTML document page and read it with BeautifulSoup.
-        self._source = requests.get(OSUCourseScraper.COURSE_DESCRIPTIONS_URL).text
+        self._source = (requests.get(OSUCourseScraper.COURSE_DESCRIPTIONS_URL).text)
         self._soup = BeautifulSoup(self._source, 'lxml')
 
         # List of results.
@@ -43,6 +45,7 @@ class OSUCourseScraper():
         dict
             Database. None if can't find file.
         """
+        print('Reading from database')
         try:
             with open(filename, 'r') as infile:
                 db = json.load(infile)
@@ -70,6 +73,7 @@ class OSUCourseScraper():
         bool
             True if succesfully wrote else False
         """
+        print('Writing to database.')
         try:
             with open(filename, 'w') as outfile:
                 json.dump(db, outfile, indent=2)
@@ -77,9 +81,22 @@ class OSUCourseScraper():
             return True
         except FileNotFoundError:
             print(OSUCourseScraper.FILE_NOT_FOUND)
+            print(OSUCourseScraper.ABORTING)
             return False
 
-    def _update_database_from_scraped_coures(self, db):
+    def get_preexisting_dict(self, db):
+        if type(db) != dict:
+            return None
+
+        preexisting = db.get(OSUCourseScraper.PREEXISTING_KEY, None)
+        if preexisting is None:
+            return None
+        elif type(preexisting) != dict:
+            return None
+        else:
+            return preexisting
+
+    def _update_database_from_scraped_coures(self, preexisting):
         """Adds any courses that weren't already present in the database to the
         database. Adds them as a list to db.[OSUCourseScraper.DATABASE_KEY] if
         key did not exist. Otherwise if it did and its value was a list, adds
@@ -95,17 +112,19 @@ class OSUCourseScraper():
         None
 
         """
-        known_courses = db.get(OSUCourseScraper.DATABASE_KEY)
+        known_courses = preexisting.get(OSUCourseScraper.DATABASE_KEY, None)
+        success = True
 
         if known_courses is None:  # No known courses. Use all scraped.
-            db[OSUCourseScraper.DATABASE_KEY] = self._get_all_scraped_courses(list)
-            OSUCourseScraper._alert_no_previous_courses_found(db)
+            preexisting[OSUCourseScraper.DATABASE_KEY] = self._get_all_scraped_courses(list)
+            OSUCourseScraper._alert_no_previous_courses_found(preexisting)
         elif type(known_courses) == list:  # Update known_courses.
             new_courses = self._merge_courses(known_courses)
             OSUCourseScraper._alert_updating_existing_courses(new_courses)
         else:
-            raise TypeError('db[OSUCourseScraper.DATABASE_KEY] exists but its '
-                            'value is not of type list.')
+            success = False
+            raise TypeError  # not a list
+        return success
 
     def _merge_courses(self, known_courses):
         """Add mutates known_courses by adding the courses found from scraping that
@@ -224,15 +243,28 @@ class OSUCourseScraper():
         db = OSUCourseScraper._read_json(database_json)
 
         if db is None:
-            print('Aborting database update!')
+            print(OSUCourseScraper.ABORTING)
             return
 
-        # Make sure courses in database are u
-        self._update_database_from_scraped_coures(db)
+        # Make sure preexisting section exists
+        preexisting = self.get_preexisting_dict(db)
+        if preexisting is None:
+            print('Known database incorrectly formatted.',
+                  OSUCourseScraper.ABORTING)
+            return
+
+        # Make sure courses in database are up to date
+        try:
+            update_successful = self._update_database_from_scraped_coures(preexisting)
+        except TypeError:
+            update_successful = False
+            print('db[OSUCourseScraper.DATABASE_KEY] exists but its '
+                  'value is not of type list.')
 
         # Save DB.
-        OSUCourseScraper._write_json(database_json, db)
-        print(f'Wrote to {database_json}!')
+        if update_successful:
+            OSUCourseScraper._write_json(database_json, db)
+            print(f'Wrote to {database_json}!')
 
 
 class OSUDepartmentScraper():
