@@ -4,12 +4,22 @@ function profileCreationTagsMain() {
   const SKILLS = "TechSkills";
   const COURSEWORK = "Coursework";
   const CATEGORIES = [INDUSTRY, SKILLS, COURSEWORK];
+  const URL = "/suggestions";
+  const CATEGORIES_KEY = "Categories";
+  const INPUTS = gatherInputs();
 
-  let inputs = gatherInputs();
-  let tagifies = initializeTagifies(inputs);
+  document.addEventListener("DOMContentLoaded", () => {
+    let req = new XMLHttpRequest();
+
+    req.open("GET", URL, true);
+
+    registerSuggestionsCallback(req);
+
+    req.send(null);
+  });
 
   // --------------------------------------------------------------------------
-  // Helper functions (keep nested as not to pollute namespace).
+  // Helper functions (keep nested to keep namespace clean)
 
   function gatherInputs() {
     let inputs = new Map();
@@ -21,13 +31,33 @@ function profileCreationTagsMain() {
     return inputs;
   }
 
-  function initializeTagifies(inputs) {
+  function registerSuggestionsCallback(req) {
+    req.addEventListener("load", () => {
+      if (req.status >= 200 && req.status < 400) handleSuccessfulRequest(req);
+      else handleFailedRequest(req);
+    });
+  }
+
+  function handleSuccessfulRequest(req) {
+    let res = JSON.parse(req.responseText);
+    let suggestions = res[CATEGORIES_KEY];
     let tagifies = new Map();
 
-    inputs.forEach((val, key, map) => {
-      tagifies.set(key, new Tagify(val));
+    CATEGORIES.forEach(cat => {  // Fill the map.
+      tagify = createTagify(cat, suggestions);
+      tagifies.set(cat, tagify);
     });
-    return tagifies;
+  }
+
+  function handleFailedRequest(req) {
+    console.log("Could not get suggestions!");
+  }
+
+  function createTagify(cat, suggestions) {
+    return new Tagify(INPUTS.get(cat), {
+      whitelist: suggestions[cat],
+      maxTags: 5
+    });
   }
 }
 
