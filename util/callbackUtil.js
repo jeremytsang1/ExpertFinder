@@ -1,5 +1,5 @@
 function runCallbacksAndSend(res, context, callbacks) {
-  if (callbacks.length == 0) res.send(send, context); // send immediately
+  if (callbacks.length == 0) res.send(JSON.stringify(context)); // send immediately
   else sendAfterCallbacksComplete(res, context, callbacks);
 }
 
@@ -16,7 +16,7 @@ function sendAfterCallbacksComplete(res, context, callbacks) {
   function complete() {
     callbacksCompletedCount++;
     // Check if callback is the last callback to complete
-    if (callbacksCompletedCount == callbacks.length) res.send(context);
+    if (callbacksCompletedCount == callbacks.length) res.send(JSON.stringify(context));
   }
 }
 
