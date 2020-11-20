@@ -9,7 +9,8 @@ module.exports = function() {
       ],
       jsscripts: [
         "public/scripts/tagify.min.js",
-        "public/scripts/profileCreationTags.js"
+        "public/scripts/profileCreationTags.js",
+        "public/scripts/profileCreationForm.js"
       ]
     };
 
