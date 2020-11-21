@@ -7,6 +7,7 @@ class DatabaseField {
   createLabel() {
     let label = document.createElement("label");
     label.setAttribute('id', this.idVal());
+    label.textContent = this.humanReadable;
     return label;
   }
 
