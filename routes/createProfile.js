@@ -11,6 +11,7 @@ module.exports = function() {
         "profileCreationDatabaseField.js",
         "profileCreationStructure.js",
         "tagify.min.js",
+        "profileCreationTagifyCategory.js",
         "profileCreationTags.js",
         "profileCreationForm.js"
       ]
