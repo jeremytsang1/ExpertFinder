@@ -22,6 +22,7 @@ class ProfileCreationDatabaseField {
       "id": `${this.idVal()}`,
       "class": "form-control",
       "type": "text",
+      "name": this.sourceName()
     }
   }
 
