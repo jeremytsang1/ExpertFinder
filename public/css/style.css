@@ -225,5 +225,9 @@ a.btn.home {
   background-color: #fff;
   color: #333;
   border: 1px solid #333;
-  b
+  border-radius: 5px;
+  padding: 10px;
+  margin-right: 20px;
+  cursor: pointer;
+}
 
