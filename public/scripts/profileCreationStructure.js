@@ -1,7 +1,3 @@
-function createFormGroup() {
-
-}
-
 class DatabaseField {
   constructor(humanReadable, inputAttr) {
     this.humanReadable = humanReadable;
@@ -15,13 +11,22 @@ class DatabaseField {
   }
 
   createInput() {
-    input = document.createElement("label");
+    let input = document.createElement("label");
+    for (let key in this.inputAttr) input.setAttribute(key, this.inputAttr[key]);
     return input;
+  }
+
+  defaultAttributes() {
+    return  {
+      "id": `${this.idVal()}`,
+      "class": "form-control",
+      "type": "text",
+    }
   }
 
   makeInputAttributes(inputAttr) {
     // Use provided ID if it was specified in the inputAttr
-    return {...{id: `${this.idVal}`}, ...inputAttr};
+    return {...this.defaultAttributes(), ...inputAttr};
   }
 
   sourceName() {
@@ -41,5 +46,15 @@ class DatabaseField {
   }
 }
 
-ts = new DatabaseField("Tech Skills");
+fn = new DatabaseField("First Name", {"required": "required"});
+ln = new DatabaseField("Last Name", {"required": "required"});
+em = new DatabaseField("Email", {"type": "email", "required": "required"});
+tw = new DatabaseField("Twitter");
+gh = new DatabaseField("GitHub");
+li = new DatabaseField("LinkedIn");
 so = new DatabaseField("Stack Overflow");
+pp = new DatabaseField("Profile Picture", {"type": "file"});
+// ----------------------------------------------------------------------------
+nd = new DatabaseField("Industry");
+ts = new DatabaseField("Tech Skills");
+cw = new DatabaseField("Coursework");
