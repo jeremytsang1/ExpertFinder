@@ -1,0 +1,42 @@
+
+<div id="suggested-edits-form" class="container">
+  <h1>Suggest Edits</h1>
+  
+  <!--Suggest Edits for Expert Form-->
+  <form id="suggested-edits-form" action="/suggestEdits" method= "POST">
+  <h2>What would you like to suggest edits for?</h2>
+  <div class="btn-group">
+  <button>First Name</button>
+  <button>Last Name</button>
+  <button>Email</button>
+  <button>Twitter</button>
+  <button>Github</button>
+  <button>LinkedIn</button>
+  <button>Stack Overflow</button>
+  <button>Industry</button>
+  <button>Skills</button>
+  <button>Courses</button>
+  </div>
+  
+<div id="modal-backdrop" class="hidden"></div>
+<div id="suggest-edits-modal" class="hidden">
+  <div class="modal-dialog">
+
+    <div class="modal-header">
+      <h3>Suggest an Edit</h3>
+      <button type="button" class="modal-close-button">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="suggest-edit-input-element">
+        <label for="suggest-edit-input"></label>
+        <input type="edit" id="suggest-edit-input">
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="modal-cancel-button">Cancel</button>
+      <button type="button" class="modal-accept-button">Send to Expert</button>
+    </div>
+
+  
