@@ -115,5 +115,22 @@ a.btn.home {
 
 /* -------------------------------------------------------------------------- */
 
-/* Styles for suggest edits form */
+/* Styles for suggest edits*/
+
+#suggest-edits-button {
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  height: 60px;
+  width: 60px;
+  border: none;
+  border-radius: 30px;
+  font-size: 30px;
+  background-color: #ff1010;
+  color: #1261A0;
+  cursor: pointer;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+
 
