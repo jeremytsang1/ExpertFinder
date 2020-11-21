@@ -79,8 +79,7 @@ function makeStandardGroups(standardFields) {
 function profileCreationStructureMain() {
 
   const STANDARD_FIELDS = [
-    new DatabaseField("First Name", {"required": "required"}),
-    new DatabaseField("Last Name", {"required": "required"}),
+    new DatabaseField("Name", {"required": "required"}),
     new DatabaseField("Email", {"type": "email", "required": "required"}),
     new DatabaseField("Twitter"),
     new DatabaseField("GitHub"),
