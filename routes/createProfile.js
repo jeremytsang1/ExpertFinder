@@ -8,6 +8,7 @@ module.exports = function() {
         "public/css/tagify.css"
       ],
       jsscripts: [
+        "profileCreationDatabaseField.js",
         "profileCreationStructure.js",
         "tagify.min.js",
         "profileCreationTags.js",

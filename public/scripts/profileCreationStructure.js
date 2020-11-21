@@ -1,52 +1,3 @@
-class DatabaseField {
-  constructor(humanReadable, inputAttr) {
-    this.humanReadable = humanReadable;
-    this.inputAttr = this.makeInputAttributes(inputAttr);
-  }
-
-  createLabel() {
-    let label = document.createElement("label");
-    label.setAttribute('for', this.idVal());
-    label.textContent = this.humanReadable;
-    return label;
-  }
-
-  createInput() {
-    let input = document.createElement("input");
-    for (let key in this.inputAttr) input.setAttribute(key, this.inputAttr[key]);
-    return input;
-  }
-
-  defaultAttributes() {
-    return  {
-      "id": `${this.idVal()}`,
-      "class": "form-control",
-      "type": "text",
-    }
-  }
-
-  makeInputAttributes(inputAttr) {
-    // Use provided ID if it was specified in the inputAttr
-    return {...this.defaultAttributes(), ...inputAttr};
-  }
-
-  sourceName() {
-    return this.humanReadable.replace(' ', '-').toLowerCase();
-  }
-
-  idVal() {
-    return `${DatabaseField.ID_PREFIX}${this.sourceName()}`;
-  }
-
-  static get ID_PREFIX () {
-    return "profile-creation-";
-  }
-
-  static makeID(databaseName) {
-    return `${DatabaseField.ID_PREFIX()}${databaseName}`;
-  }
-}
-
 function createElt(eltType, ...classes) {
   const ELT = document.createElement(eltType);
   classes.forEach(className => ELT.className += ` ${className}`);
@@ -97,19 +48,19 @@ function makeTagifyGroups(tagifyFields) {
 function profileCreationStructureMain() {
 
   const STANDARD_FIELDS = [
-    new DatabaseField("Name", {"required": "required"}),
-    new DatabaseField("Email", {"type": "email", "required": "required"}),
-    new DatabaseField("Twitter"),
-    new DatabaseField("GitHub"),
-    new DatabaseField("LinkedIn"),
-    new DatabaseField("Stack Overflow"),
-    new DatabaseField("Profile Picture", {"type": "file"})
+    new ProfileCreationDatabaseField("Name", {"required": "required"}),
+    new ProfileCreationDatabaseField("Email", {"type": "email", "required": "required"}),
+    new ProfileCreationDatabaseField("Twitter"),
+    new ProfileCreationDatabaseField("GitHub"),
+    new ProfileCreationDatabaseField("LinkedIn"),
+    new ProfileCreationDatabaseField("Stack Overflow"),
+    new ProfileCreationDatabaseField("Profile Picture", {"type": "file"})
   ];
 
   const TAGIFY_FIELDS = [
-    new DatabaseField("Tech Skills"),
-    new DatabaseField("Coursework"),
-    new DatabaseField("Industry")
+    new ProfileCreationDatabaseField("Tech Skills"),
+    new ProfileCreationDatabaseField("Coursework"),
+    new ProfileCreationDatabaseField("Industry")
   ];
 
   makeStandardGroups(STANDARD_FIELDS);
