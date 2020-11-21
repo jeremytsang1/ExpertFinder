@@ -47,15 +47,26 @@ class DatabaseField {
   }
 }
 
-fn = new DatabaseField("First Name", {"required": "required"});
-ln = new DatabaseField("Last Name", {"required": "required"});
-em = new DatabaseField("Email", {"type": "email", "required": "required"});
-tw = new DatabaseField("Twitter");
-gh = new DatabaseField("GitHub");
-li = new DatabaseField("LinkedIn");
-so = new DatabaseField("Stack Overflow");
-pp = new DatabaseField("Profile Picture", {"type": "file"});
-// ----------------------------------------------------------------------------
-nd = new DatabaseField("Industry");
-ts = new DatabaseField("Tech Skills");
-cw = new DatabaseField("Coursework");
+function profileCreationStructureMain() {
+  const STANDARD_FIELDS = [
+    new DatabaseField("First Name", {"required": "required"}),
+    new DatabaseField("Last Name", {"required": "required"}),
+    new DatabaseField("Email", {"type": "email", "required": "required"}),
+    new DatabaseField("Twitter"),
+    new DatabaseField("GitHub"),
+    new DatabaseField("LinkedIn"),
+    new DatabaseField("Stack Overflow"),
+    new DatabaseField("Profile Picture", {"type": "file"})
+  ];
+
+  const TAGIFY_FIELDS = [
+    nd = new DatabaseField("Industry"),
+    ts = new DatabaseField("Tech Skills"),
+    cw = new DatabaseField("Coursework")
+  ];
+
+  makeFields(STANDARD_FIELDS, TAGIFY_FIELDS);
+  prepareTagifyFields(TAGIFY_FIELDS);
+}
+
+profileCreationStructureMain();
