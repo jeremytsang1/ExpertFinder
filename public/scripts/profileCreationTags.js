@@ -29,10 +29,7 @@ function profileCreationTagsMain() {
   function handleSuccessfulRequest(req) {
     const res = JSON.parse(req.responseText);
     const suggestions = res[CATEGORIES_KEY];
-
-    CATEGORIES.forEach(cat => {
-      cat.createTagify(suggestions[cat.dbName])
-    });
+    CATEGORIES.forEach(cat => cat.createTagify(suggestions[cat.dbName]));
   }
 
   function handleFailedRequest(req) {
