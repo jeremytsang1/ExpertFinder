@@ -6,7 +6,7 @@ class DatabaseField {
 
   createLabel() {
     let label = document.createElement("label");
-    label.setAttribute('id', this.idVal());
+    label.setAttribute('for', this.idVal());
     label.textContent = this.humanReadable;
     return label;
   }
@@ -76,6 +76,24 @@ function makeStandardGroups(standardFields) {
   });
 }
 
+function prepareTagifyFormGroup(tagifyField) {
+  let formGroup = createFormGroup(tagifyField);
+  let input = formGroup.querySelector('input');
+
+  input.remove();
+  formGroup.appendChild(createElt("div", "form-inline", "multi-input"))
+  formGroup.lastElementChild.appendChild(input);
+  return formGroup;
+}
+
+function makeTagifyGroups(tagifyFields) {
+  const DIV_TO_ADD_TO = document.querySelector(".tagify-fields");
+
+  tagifyFields.forEach(tagifyField => {
+    DIV_TO_ADD_TO.appendChild(prepareTagifyFormGroup(tagifyField));
+  });
+}
+
 function profileCreationStructureMain() {
 
   const STANDARD_FIELDS = [
@@ -89,9 +107,9 @@ function profileCreationStructureMain() {
   ];
 
   const TAGIFY_FIELDS = [
-    nd = new DatabaseField("Industry"),
-    ts = new DatabaseField("Tech Skills"),
-    cw = new DatabaseField("Coursework")
+    new DatabaseField("Tech Skills"),
+    new DatabaseField("Coursework"),
+    new DatabaseField("Industry")
   ];
 
   makeStandardGroups(STANDARD_FIELDS);
