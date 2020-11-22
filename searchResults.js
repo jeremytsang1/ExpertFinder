@@ -6,7 +6,7 @@ module.exports = function(){
 
     // souce: https://www.geeksforgeeks.org/how-to-read-and-write-json-file-using-node-js/
     function getAllUsers(res, context, complete){
-        fs.readFile("db.json", function(err, data) { 
+        fs.readFile("database/db.json", function(err, data) { 
             // Check for errors 
             if(err){
                 res.write(JSON.stringify(err));
@@ -14,7 +14,7 @@ module.exports = function(){
             }
             // Converting to JSON 
             const dbUsers = JSON.parse(data); 
-            context.users = dbUsers.Users;
+            context.experts = dbUsers.Experts;
             complete();
         }); 
     }
