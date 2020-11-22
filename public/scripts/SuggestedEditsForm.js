@@ -1,7 +1,7 @@
-var modalAcceptButton = document.getElementsByClassName("modal-accept-button")[0];
-modalAcceptButton.addEventListener("click", sendEmail);
+var SuggestEditsButton = document.getElementsByClassName("suggest-edits-button")[0];
+SuggestEditsButton.addEventListener("click", updateForm);
 
-function sendEmail(event)
+function updateForm(event)
 {
 
 }
