@@ -35,7 +35,6 @@ router.get('/', (req, res) => {
     fs.readFile(DATABASE_FILENAME, (err, data) => {
       if (err) handleFailedDatabaseReadAttempt(res, err)
       else categories.forEach(cat => cat.addSuggestionsToContext(context, data))
-      console.log(context);
       complete();
     });
   }
