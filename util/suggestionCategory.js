@@ -22,13 +22,13 @@ class SuggestionCategory {
     return context;
   }
 
-  static isValidDB(DB) {
-    return ((DB[SuggestionCategory.KNOWN] !== undefined) &&
+  isValidDB(DB) {
+    return ((DB[SuggestionCategory.KNOWN_KEY] !== undefined) &&
             (this.premades(DB) !== undefined))
   }
 
   premades(DB) {
-    return DB[SuggestionCategory.KNOWN][this.catKey];
+    return DB[SuggestionCategory.KNOWN_KEY][this.catKey];
   }
 
   addSuggestionsToContext(context, jsonData) {
