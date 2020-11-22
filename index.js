@@ -12,7 +12,6 @@ var request = require('request');
 
 var session = require('express-session');
 
-var router = require('./routes/api/experts-api');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -24,18 +23,20 @@ var handlebars = require('express-handlebars');
 //See https://www.npmjs.com/package/express-handlebars
 var hbs = handlebars.create({
   // Specify helpers which are only registered on this instance.
-  helpers: {
-      // for testing
-      // foo: function () { return 'FOO!'; },
-      // bar: function () { return 'BAR!'; },
-      ifEquals: function(arg1, arg2, options) {
-        console.log("Testing ", arg1, " == ", arg2, ": ", arg1 == arg2)
-        return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
-    }
-  }
+  // helpers: {
+  //     // for testing
+  //     // foo: function () { return 'FOO!'; },
+  //     // bar: function () { return 'BAR!'; },
+  //     ifEquals: function(arg1, arg2, options) {
+  //       console.log("Testing ", arg1, " == ", arg2, ": ", arg1 == arg2)
+  //       return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+  //   }
+  // }
 });
-app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
+app.engine('handlebars', hbs.engine);
+
+// app.set('views', path.join(__dirname, 'views'))
 
 app.set('port', 3500);
 
@@ -47,7 +48,6 @@ app.use("/public", express.static('./public/'));
 app.use('/searchResults', require('./searchResults.js'));
 
 // specify route path for expert-api
-app.use('/api', require('./routes/api/experts-api'));
 
 app.get('/', function(req,res){
     res.render('home');
@@ -58,8 +58,9 @@ app.get('/expertDisplay', function(req,res){
 });
 // Route for creating a new user account.
 app.use('/createProfile', require('./routes/createProfile.js'));
-
 app.use('/suggestions', require('./routes/api/suggestions.js'));
+var expertSearch = require('./routes/expertSearch.js');
+app.use('/expertSearch', expertSearch);
 
 app.use(function(req,res){
   res.type('text/plain');
