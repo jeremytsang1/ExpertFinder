@@ -6,6 +6,12 @@ const fs = require('fs');
 const callbackUtil = require('../../util/callbackUtil');
 const suggestionUtil = require('../../util/suggestionCategory');
 
+
+function handleFailedDatabaseReadAttempt(err, data) {
+  console.log(err);
+}
+
+
 // ----------------------------------------------------------------------------
 // Routes
 
