@@ -41,7 +41,7 @@ module.exports = function() {
     var newProfile = JSON.stringify(req.body);
 
     // write to a new file
-    fs.appendFile('testDB.json', newProfile, (err) => {
+    fs.appendFile('database/dbTesting.json', newProfile, (err) => {
         // throws an error, you could also catch it here
         if (err) throw err;
 
