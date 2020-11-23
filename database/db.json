@@ -1,1 +1,47 @@
-{"Experts":[{"Id":1,"Name":"John Doe","TechSkills":["Python","Java"],"Coursework":[{"course_num":"CS161","course_name":"Intro to Computer Science I"},{"course_num":"CS162","course_name":"Intro to Computer Science II"},{"course_num":"CS290","course_name":"Web Development"}],"Industry":["Web Development"],"ContactInfo":{"Email":"johnDoe33@gmail.com","Github":"github.com/johndoe6","Linkedin":"linkedin.com/johndoe","Stackoverflow":"stackoverflow.com/users/jdoe","Twitter":"twitter.com/johndoe"},"ProfilePicture":"/public/images/male-default-profile-img.jpg"},{"Id":2,"Name":"Lena Gregory","TechSkills":["React","Angular"],"Coursework":[{"course_num":"CS161","course_name":"Intro to Computer Science I"},{"course_num":"CS162","course_name":"Intro to Computer Science II"},{"course_num":"C271","course_name":"Computer Architecture and Assembly Language"},{"course_num":"CS340","course_name":"Introduction to Databases"},{"course_num":"CS372","course_name":"Intro to Computer Networks"}],"Industry":["Networks","Software Development"],"ContactInfo":{"Email":"lgregory@gmail.com","Github":"github.com/lenagregory","Linkedin":"linkedin.com/lenagregory","Twitter":"twitter.com/lenagregory"},"ProfilePicture":"/public/images/female-default-profile-img.jpg"},{"Id":3,"Name":"potato","TechSkills":[""],"Coursework":[""],"Industry":[""],"ContactInfo":{"Email":"email@domain.com","Github":"","Linkedin":"","Twitter":""},"ProfilePicture":""},{"Id":4,"Name":"totato","TechSkills":[""],"Coursework":[""],"Industry":[""],"ContactInfo":{"Email":"k@d.com","Github":"","Linkedin":"","Twitter":""},"ProfilePicture":""}],"Known":{"TechSkills":[],"Industry":[],"Coursework":[]},"NextID":5}
+{
+    "Experts": [
+        {
+            "Id": 1,
+            "Name": "John Doe",
+            "TechSkills": ["Python", "Java"],
+            "Coursework": [{"course_num":"CS161","course_name": "Intro to Computer Science I"},
+                            {"course_num":"CS162","course_name": "Intro to Computer Science II"},
+                            {"course_num":"CS290","course_name": "Web Development"}
+                        ],
+            "Industry": ["Web Development"],
+            "ContactInfo": {
+                "Email": "johnDoe33@gmail.com",
+                "Github": "github.com/johndoe6",
+                "Linkedin": "linkedin.com/johndoe",
+                "Stackoverflow": "stackoverflow.com/users/jdoe",
+                "Twitter": "twitter.com/johndoe"
+            },
+            "ProfilePicture": "/public/images/male-default-profile-img.jpg"
+        },
+        {
+            "Id": 2,
+            "Name": "Lena Gregory",
+            "TechSkills": ["React", "Angular"],
+            "Coursework": [{"course_num":"CS161","course_name": "Intro to Computer Science I"},
+                {"course_num":"CS162","course_name": "Intro to Computer Science II"},
+                {"course_num":"C271","course_name": "Computer Architecture and Assembly Language"},
+                {"course_num":"CS340","course_name": "Introduction to Databases"},
+                {"course_num":"CS372","course_name": "Intro to Computer Networks"}
+            ],
+            "Industry": ["Networks", "Software Development"],
+            "ContactInfo": {
+                "Email": "lgregory@gmail.com",
+                "Github": "github.com/lenagregory",
+                "Linkedin": "linkedin.com/lenagregory",
+                "Twitter": "twitter.com/lenagregory"
+            },
+            "ProfilePicture": "/public/images/female-default-profile-img.jpg"
+        }
+    ],
+    "Known": {
+        "TechSkills": [],
+        "Industry": [],
+        "Coursework": []
+    },
+  "NextID": 3
+}
