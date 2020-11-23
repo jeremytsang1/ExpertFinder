@@ -85,7 +85,7 @@ module.exports = function() {
 
     // JSON.parse(req.body) will have data from the <form>
     let db = JSON.parse(data); //  will have old data from the database.
-    let newUser = {"Id":db['NextID'],"Name":uF["name"],"TechSkills":uF['tech-skills'],"Coursework":uF['coursework'],"Industry":uF['industry'],"ContactInfo":{"Email":uF['email'],"Github":uF['github'],"Linkedin":uF['linkedin'],"Twitter":uF['twitter']},"ProfilePicture":uF['profile-picture']};
+    let newUser = {"Id":db['NextID'],"Name":uF["name"],"TechSkills":[uF['tech-skills']],"Coursework":[ uF['coursework'] ],"Industry": [ uF['industry'] ],"ContactInfo":{"Email":uF['email'],"Github":uF['github'],"Linkedin":uF['linkedin'],"Twitter":uF['twitter']},"ProfilePicture":uF['profile-picture']};
 
     // db['Experts'] = [];
     // console.log(db['Experts']);
