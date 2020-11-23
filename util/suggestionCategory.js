@@ -1,7 +1,8 @@
 class SuggestionCategory {
-  constructor(catKey) {
+  constructor(catKey, processingFunction) {
     this.catKey = catKey;
     this.suggestions = new Set();
+    this.processingFunction = processingFunction;
   }
 
   static get JSON_SUGGESTIONS_OBJ_KEY () {
@@ -13,7 +14,7 @@ class SuggestionCategory {
   }
 
   static get USER_KEY () {
-    return "Users";
+    return "Experts";
   }
 
   static prepareContext() {
@@ -22,13 +23,13 @@ class SuggestionCategory {
     return context;
   }
 
-  static isValidDB(DB) {
-    return ((DB[SuggestionCategory.KNOWN] !== undefined) &&
+  isValidDB(DB) {
+    return ((DB[SuggestionCategory.KNOWN_KEY] !== undefined) &&
             (this.premades(DB) !== undefined))
   }
 
   premades(DB) {
-    return DB[SuggestionCategory.KNOWN][this.catKey];
+    return DB[SuggestionCategory.KNOWN_KEY][this.catKey];
   }
 
   addSuggestionsToContext(context, jsonData) {
@@ -46,15 +47,20 @@ class SuggestionCategory {
 
   extractUserSuggestions(users) {
     users.forEach(user => user[this.catKey].forEach(elt => {
-      this.suggestions.add(elt)
+      this.suggestions.add(this.readElt(elt))
     }));
   }
 
   getPremadeSuggestions(DB) {
-    if (SuggestionCategory.isValidDB(DB)) {
-      this.premades(DB).forEach(premade => this.suggestions.add(premade));
+    if (this.isValidDB(DB)) {
+      this.premades(DB).forEach(elt => this.suggestions.add(this.readElt(elt)));
     }
   }
+
+  readElt(elt) {
+    return this.processingFunction(elt)
+  }
+
 }
 module.exports = {
   SuggestionCategory

@@ -23,15 +23,15 @@ var handlebars = require('express-handlebars');
 //See https://www.npmjs.com/package/express-handlebars
 var hbs = handlebars.create({
   // Specify helpers which are only registered on this instance.
-  // helpers: {
+  helpers: {
   //     // for testing
   //     // foo: function () { return 'FOO!'; },
   //     // bar: function () { return 'BAR!'; },
-  //     ifEquals: function(arg1, arg2, options) {
-  //       console.log("Testing ", arg1, " == ", arg2, ": ", arg1 == arg2)
-  //       return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
-  //   }
-  // }
+      ifEquals: function(arg1, arg2, options) {
+        console.log("Testing ", arg1, " == ", arg2, ": ", arg1 == arg2)
+        return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+    }
+  }
 });
 app.set('view engine', 'handlebars');
 app.engine('handlebars', hbs.engine);
@@ -50,7 +50,8 @@ app.use('/searchResults', require('./searchResults.js'));
 // specify route path for expert-api
 
 app.get('/', function(req,res){
-    res.render('home');
+  const context = {jsscripts: ['searchResponse.js']};
+  res.render('home', context);
   });
 
 app.get('/expertDisplay', function(req,res){
