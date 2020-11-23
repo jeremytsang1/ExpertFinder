@@ -17,7 +17,7 @@
       <th>More Info</th>
   </thead>
   <tbody>
-    {{#each users}} 
+    {{#each experts}} 
       <tr id="searchResults">
           <td class="userDetails">{{this.Name}}</td> 
           {{!-- modal example source: https://getbootstrap.com/docs/4.0/components/modal/ --}}
@@ -57,11 +57,14 @@
                                 <td> {{this.TechSkills}} </td>
 				<button type="button" class="suggest-edits-button">Suggest Edit</button>
                             </tr>
-                            <tr>
+                            {{!-- <tr>
                               <th scope="row">Coursework:</th>
                                 <td>{{this.Coursework}}</td>
+
+                            </tr> --}}
 				<button type="button" class="suggest-edits-button">Suggest Edit</button>
                             </tr>
+
                             <tr>
                               <th scope="row">Industry:</th>
                                   <td> {{this.Industry}} </td>

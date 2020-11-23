@@ -1,10 +1,13 @@
 {
-    "Users": [
+    "Experts": [
         {
             "Id": 1,
             "Name": "John Doe",
             "TechSkills": ["Python", "Java"],
-            "Coursework": ["CS161", "CS361"],
+            "Coursework": [{"course_num":"CS161","course_name": "Intro to Computer Science I"},
+                            {"course_num":"CS162","course_name": "Intro to Computer Science II"},
+                            {"course_num":"CS290","course_name": "Web Development"}
+                        ],
             "Industry": ["Web Development"],
             "ContactInfo": {
                 "Email": "johnDoe33@gmail.com",
@@ -19,8 +22,13 @@
             "Id": 2,
             "Name": "Lena Gregory",
             "TechSkills": ["React", "Angular"],
-            "Coursework": ["CS270"],
-            "Industry": ["Networks"],
+            "Coursework": [{"course_num":"CS161","course_name": "Intro to Computer Science I"},
+                {"course_num":"CS162","course_name": "Intro to Computer Science II"},
+                {"course_num":"C271","course_name": "Computer Architecture and Assembly Language"},
+                {"course_num":"CS340","course_name": "Introduction to Databases"},
+                {"course_num":"CS372","course_name": "Intro to Computer Networks"}
+            ],
+            "Industry": ["Networks", "Software Development"],
             "ContactInfo": {
                 "Email": "lgregory@gmail.com",
                 "Github": "github.com/lenagregory",

@@ -13,7 +13,8 @@ module.exports = function() {
         "tagify.min.js",
         "profileCreationTagifyCategory.js",
         "profileCreationTags.js",
-        "profileCreationForm.js"
+        "profileCreationForm.js",
+        "searchResponse.js"
       ]
     };
 
