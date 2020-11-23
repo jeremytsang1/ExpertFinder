@@ -10,5 +10,5 @@ router.post('/', function (req, res) {
   context.experts = db_interface.getExperts(search_keyword)
   res.render('searchResults', context)
 })
-
+return router
 }
