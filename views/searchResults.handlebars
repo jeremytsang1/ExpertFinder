@@ -24,7 +24,11 @@
           <td class="userDetails">{{this.Industry}}</td>
    
 
-          <td class="userDetails">{{this.Coursework}}</td>
+          <td class="userDetails">
+            {{#each this.Coursework}}
+            {{this.course_num}}: {{course_name}},
+            {{/each}}
+          </td>
      
 
           <td class="userDetails">{{this.TechSkills}}</td>
@@ -53,14 +57,14 @@
                         <tbody>
                             <tr>
                               <th scope="row">Tech Skills:</th>
-                                <td> {{this.TechSkills}} </td>
+                                <td> <input id="foobar" type="text" value={{this.TechSkills}} </td>
 				<button type="button" class="suggest-edits-button">Suggest Edit</button>
                             </tr>
-                            {{!-- <tr>
-                              <th scope="row">Coursework:</th>
-                                <td>{{this.Coursework}}</td>
-
-                            </tr> --}}
+                            <tr>
+                              {{#each this.Coursework}}
+                                {{this.course_num}}: {{course_name}},
+                              {{/each}}
+                            </tr>
 				<button type="button" class="suggest-edits-button">Suggest Edit</button>
                             </tr>
 
@@ -122,5 +126,4 @@
 </table> 
 <hr>
 <br>
-
 
