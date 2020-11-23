@@ -111,7 +111,7 @@ module.exports = function() {
   function writeDatabase(req, res, data, completeWrite) {
     // TODO: decide what to put in the file to update it
     var db = createNewUser(req, data)
-    fs.writeFile(DATABASE_FILENAME, JSON.stringify(db), err => {
+    fs.writeFile(DATABASE_FILENAME, JSON.stringify(db, null, 4), err => {
       if (err) {
         console.log(err);
       } else {
