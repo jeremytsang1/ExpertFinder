@@ -10,8 +10,9 @@ module.exports = function() {
     context.jsscripts = ["jquery.js"]
     context.experts = db_interface.getExperts(search_keyword);
     console.log(context)
+        // res.send(context)
+    res.set('Content-type', 'text/html')
     res.render('searchResults', context);
-    //res.send(context)
   });
 
   return router;
