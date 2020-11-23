@@ -1,4 +1,3 @@
-
 <h2><title>Search Results</title></h2>
 
 <h3>[TO BE COMPLETED] In this page the profiles will appear after a search based on OSU coursework or tech stack has been executed by the application user.</h3>
@@ -25,7 +24,11 @@
           <td class="userDetails">{{this.Industry}}</td>
    
 
-          <td class="userDetails">{{this.Coursework}}</td>
+          <td class="userDetails">
+            {{#each this.Coursework}}
+            {{this.course_num}}: {{course_name}},
+            {{/each}}
+          </td>
      
 
           <td class="userDetails">{{this.TechSkills}}</td>
@@ -54,18 +57,20 @@
                         <tbody>
                             <tr>
                               <th scope="row">Tech Skills:</th>
-                                 <td> <input id = "foobar" type="text" value={{this.TechSkills}} </td>
-				 <button type="button" class="suggest-edits-button">Suggest Edit</button>
+                                <td> {{this.TechSkills}} </td>
+				<button type="button" class="suggest-edits-button">Suggest Edit</button>
                             </tr>
-                              <tr>
-                              <th scope="row">Coursework:</th>
-			         <td> <input id = "foobar" type="text" value={{this.Coursework}} </td>
-			         <button type="button" class="suggest-edits-button">Suggest Edit</button>
+                            <tr>
+                              {{#each this.Coursework}}
+                                {{this.course_num}}: {{course_name}},
+                              {{/each}}
+                            </tr>
+				<button type="button" class="suggest-edits-button">Suggest Edit</button>
                             </tr>
 
                             <tr>
                               <th scope="row">Industry:</th>
-                                  <td> <input id = "foobar" type="text" value={{this.Industry}} </td>
+                                  <td> {{this.Industry}} </td>
 				  <button type="button" class="suggest-edits-button">Suggest Edit</button>
                             </tr>
 
@@ -121,5 +126,4 @@
 </table> 
 <hr>
 <br>
-
 
