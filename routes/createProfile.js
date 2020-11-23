@@ -80,12 +80,26 @@ module.exports = function() {
 
     let userForm = [JSON.stringify(req.body)];
     uF = JSON.parse(userForm)
-    console.log(uF); 
-    console.log("NAME =", uF['name'])
+    // console.log(uF); 
+    // console.log("NAME =", uF['name'])
+
+    let techSkills = JSON.parse(uF['tech-skills']); 
+    console.log('TECH SKILLS', techSkills);
+
+    let techArray = Object.values(techSkills);
+
+    console.log(techArray);
+
+    // function () {
+    //   for (i=0; i < techSkills.length; i++) {
+    //     techArray.push(techSkills[i])
+    //   }
+    // };
+
 
     // JSON.parse(req.body) will have data from the <form>
     let db = JSON.parse(data); //  will have old data from the database.
-    let newUser = {"Id":db['NextID'],"Name":uF["name"],"TechSkills":[uF['tech-skills']],"Coursework":[ uF['coursework'] ],"Industry": [ uF['industry'] ],"ContactInfo":{"Email":uF['email'],"Github":uF['github'],"Linkedin":uF['linkedin'],"Twitter":uF['twitter']},"ProfilePicture":uF['profile-picture']};
+    let newUser = {"Id":db['NextID'],"Name":uF["name"],"TechSkills": uF['tech-skills'],"Coursework": uF['coursework'],"Industry": uF['industry'],"ContactInfo":{"Email":uF['email'],"Github":uF['github'],"Linkedin":uF['linkedin'],"Twitter":uF['twitter']},"ProfilePicture":uF['profile-picture']};
 
     // db['Experts'] = [];
     // console.log(db['Experts']);
@@ -95,7 +109,7 @@ module.exports = function() {
     db['Experts'].push(newUser);
     db['NextID']++;
     console.log("NEXT ID:", db['NextID'])
-    return db;
+    return db; 
   }
 
   function writeDatabase(req, res, data, completeWrite) {
