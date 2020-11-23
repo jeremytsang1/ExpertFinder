@@ -44,8 +44,8 @@ module.exports = function() {
 
     var newProfile = JSON.stringify(req.body);
 
-    console.log(req.body);
-    console.log("PPPPPOOOOOOOSSSSSTTT");
+    // console.log(req.body);
+    // console.log("PPPPPOOOOOOOSSSSSTTT");
     var context = {};
     // context.dataList = qParams;
 
@@ -77,12 +77,24 @@ module.exports = function() {
   });
 
   function createNewUser(req, data) {
+
+    let userForm = [JSON.stringify(req.body)];
+    uF = JSON.parse(userForm)
+    console.log(uF); 
+    console.log("NAME =", uF['name'])
+
     // JSON.parse(req.body) will have data from the <form>
     let db = JSON.parse(data); //  will have old data from the database.
-    let newUser = {};
+    let newUser = {"Id":db['NextID'],"Name":uF["name"],"TechSkills":uF['tech-skills'],"Coursework":uF['coursework'],"Industry":uF['industry'],"ContactInfo":{"Email":uF['email'],"Github":uF['github'],"Linkedin":uF['linkedin'],"Twitter":uF['twitter']},"ProfilePicture":uF['profile-picture']};
+
+    // db['Experts'] = [];
+    // console.log(db['Experts']);
+
+    
     // add stuff to newUser
-    db['Expert'].push(newUser);
+    db['Experts'].push(newUser);
     db['NextID']++;
+    console.log("NEXT ID:", db['NextID'])
     return db;
   }
 
