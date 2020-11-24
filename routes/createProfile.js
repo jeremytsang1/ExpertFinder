@@ -81,7 +81,10 @@ module.exports = function() {
     let userForm = [JSON.stringify(req.body)];
     uF = JSON.parse(userForm)
 
-    let processTagify = (tagifyData) => JSON.parse(tagifyData).map(elt => elt['value']);
+    let processTagify = (tagifyData) => {
+      if (tagifyData !== "") return JSON.parse(tagifyData).map(elt => elt['value']);
+      else [];
+    };
 
     // JSON.parse(req.body) will have data from the <form>
     let db = JSON.parse(data); //  will have old data from the database.

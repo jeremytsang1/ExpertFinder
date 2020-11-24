@@ -1,11 +1,11 @@
 <!-- Search form -->
-<form>
+<form action='/searchResults' method="POST">
   <div class="form-group">
     <label for="search-input">Search for Experts by Keyword</label>
-    <input type="text" class="form-control" id="search-input" placeholder="Enter keyword">
+    <input name="keyword" type="text" class="form-control" id="search-input" placeholder="Enter keyword">
   </div>
   
-  <button type="submit" class="btn btn-primary" id='submit-search-button' >Submit</button>
+  <button type="submit" class="btn btn-primary" id='submit-search-button'>Submit</button>
 </form>
 
 <div id="search-results" style="display: hidden;">
