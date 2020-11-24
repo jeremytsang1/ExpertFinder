@@ -3,14 +3,13 @@ const express = require('express');
 const router = express.Router();
 const DATABASE_FILENAME = 'database/db.json';
 const fs = require('fs');
-const callbackUtil = require('../../util/callbackUtil');
+const {runCallbacks} = require('../../util/callbackUtil');
 const suggestionUtil = require('../../util/suggestionCategory');
-
+const {Callback} = require('../../util/callback');
 
 function handleFailedDatabaseReadAttempt(err, data) {
   console.log(err);
 }
-
 
 // ----------------------------------------------------------------------------
 // Routes
@@ -30,19 +29,23 @@ router.get('/', (req, res) => {
 
   // all elements must have `complete` as parameter as the last callback to
   // complete will be the one responsible for rendering the template.
-  const CALLBACKS = [readDatabase];
+  const CALLBACKS = [new Callback(readDatabase, sentContextAsJSON)];
 
-  callbackUtil.runCallbacksAndSend(res, context, CALLBACKS)
+  runCallbacks(CALLBACKS)
 
   // --------------------------------------------------------------------------
   // Callback helpers for router.get('/')
 
-  function readDatabase(complete) {
+  function readDatabase(complete, actionIfLastCallback) {
     fs.readFile(DATABASE_FILENAME, (err, data) => {
       if (err) handleFailedDatabaseReadAttempt(res, err)
       else categories.forEach(cat => cat.addSuggestionsToContext(context, data))
-      complete();
+      complete(actionIfLastCallback);
     });
+  }
+
+  function sentContextAsJSON() {
+    res.send(JSON.stringify(context));
   }
 });
 
