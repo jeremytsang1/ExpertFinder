@@ -132,10 +132,11 @@ module.exports = function() {
         "ProfilePicture": imgFileTargetPath // from readDatabase()
       };
 
-      // add stuff to newUser
+      // Chose to use NextID instead of length in case of expert deletion. If
+      // we alloweddeletion we may get duplicate IDs and accidentally overwrite
+      // an existing expert.
       database['Experts'].push(newUser);
       database['NextID']++;
-      console.log("NEXT ID:", database['NextID'])
       return database;
     }
   });
