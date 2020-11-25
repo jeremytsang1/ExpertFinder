@@ -31,23 +31,7 @@ module.exports = function() {
   })
      
   router.post('/', function(req, res) {
-    var qParams = [];
     var callbackCountRead = 0;
-
-    // for (var p in req.body) {
-        // qParams.push(JSON.stringify({'first-name':p, 'value':req.body[p]}))
-    // }
-    // console.log(qParams);
-
-     // writing to a file code is based on https://stackabuse.com/writing-to-files-in-node-js/
-
-
-    var newProfile = JSON.stringify(req.body);
-
-    // console.log(req.body);
-    // console.log("PPPPPOOOOOOOSSSSSTTT");
-    var context = {};
-    // context.dataList = qParams;
 
     readDatabase(completeRead);
 
