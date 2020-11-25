@@ -48,8 +48,8 @@ module.exports = function() {
   router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) {
     let callbacks = [new Callback(readDatabase, runCallbacksAfterRead)];
     let db = undefined;
-    const tmpPath = (req.file) ? req.file.path : null;
-    let targetPath = undefined;
+    const IMG_FILE_TMP_PATH = (req.file) ? req.file.path : null;
+    let imgFileTargetPath = undefined;
 
     Callback.runCallbacks(callbacks);
 
@@ -62,7 +62,7 @@ module.exports = function() {
         if (err) handleError(err, res);  // failed read of database file
         else {
           db = JSON.parse(data);
-          targetPath = `${IMG_DIR}/profile-picture-user-id-${db['NextID']}.png`;
+          imgFileTargetPath = `${IMG_DIR}/profile-picture-user-id-${db['NextID']}.png`;
           complete(actionIfLastCallback);
         }
       });
@@ -93,9 +93,9 @@ module.exports = function() {
     function saveImage(complete, actionIfLastCallback) {
       // TODO
       console.log("Saving image from user creation form to server.");
-      if (tmpPath === null) complete(actionIfLastCallback);
+      if (IMG_FILE_TMP_PATH === null) complete(actionIfLastCallback);
       else {
-        fs.rename(tmpPath, targetPath, err =>  {
+        fs.rename(IMG_FILE_TMP_PATH, imgFileTargetPath, err =>  {
           if (err) handleError()
           else {
             complete(actionIfLastCallback);
