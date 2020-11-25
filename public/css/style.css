@@ -48,6 +48,10 @@
 
 .deemphasized { color: #a9a9a9; font-size: 0.9em; }
 
+#profile-creation-form {
+    padding-bottom: 6em;
+}
+
 /* -------------------------------------------------------------------------- */
 /* Styles for tagify*/
 /* Taken from official tagify repo:
