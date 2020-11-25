@@ -48,6 +48,7 @@ module.exports = function() {
   router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) {
     let callbacks = [new Callback(readDatabase, runCallbacksAfterRead)];
     let db = undefined;
+    const USER_FORM = JSON.parse([JSON.stringify(req.body)]);
     const IMG_FILE_TMP_PATH = (req.file) ? req.file.path : null;
     let imgFileTargetPath = undefined;
 
@@ -82,7 +83,7 @@ module.exports = function() {
 
     function writeDatabase(complete, actionIfLastCallback) {
       console.log("Writing user creation form data to database.");
-      db = createNewUser(req, db); // uses db from enclosing scope
+      db = createNewUser(db); // uses db from enclosing scope
 
       fs.writeFile(DATABASE_FILENAME, JSON.stringify(db, null, 4), err => {
         if (err) handleError(err, res);
@@ -117,40 +118,36 @@ module.exports = function() {
 
     // -------------------------
     // 2nd level callback helpers
+    function createNewUser(database) {
+      let processTagify = (tagifyData) => {
+        if (tagifyData !== "") return JSON.parse(tagifyData).map(elt => elt['value']);
+        else [];
+      };
+
+      // JSON.parse(req.body) will have data from the <form>
+
+      let newUser = {
+        "Id":database['NextID'],
+        "Name":USER_FORM["name"],
+        "TechSkills":processTagify(USER_FORM['tech-skills']),
+        "Coursework":processTagify(USER_FORM['coursework']),
+        "Industry": processTagify(USER_FORM['industry']),
+        "ContactInfo":{
+          "Email":USER_FORM['email'],
+          "Github":USER_FORM['github'],
+          "Linkedin":USER_FORM['linkedin'],
+          "Twitter":USER_FORM['twitter']
+        },
+        "ProfilePicture": imgFileTargetPath // from readDatabase()
+      };
+
+      // add stuff to newUser
+      database['Experts'].push(newUser);
+      database['NextID']++;
+      console.log("NEXT ID:", database['NextID'])
+      return database;
+    }
   });
-
-  function createNewUser(req, database) {
-    let userForm = [JSON.stringify(req.body)];
-    uF = JSON.parse(userForm)
-
-    let processTagify = (tagifyData) => {
-      if (tagifyData !== "") return JSON.parse(tagifyData).map(elt => elt['value']);
-      else [];
-    };
-
-    // JSON.parse(req.body) will have data from the <form>
-
-    let newUser = {
-      "Id":database['NextID'],
-      "Name":uF["name"],
-      "TechSkills":processTagify(uF['tech-skills']),
-      "Coursework":processTagify(uF['coursework']),
-      "Industry": processTagify(uF['industry']),
-      "ContactInfo":{
-        "Email":uF['email'],
-        "Github":uF['github'],
-        "Linkedin":uF['linkedin'],
-        "Twitter":uF['twitter']
-      },
-      "ProfilePicture":uF['profile-picture']
-    };
-
-    // add stuff to newUser
-    database['Experts'].push(newUser);
-    database['NextID']++;
-    console.log("NEXT ID:", database['NextID'])
-    return database;
-  }
 
   return router;
 }();
