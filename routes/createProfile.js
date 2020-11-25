@@ -118,7 +118,7 @@ module.exports = function() {
     function createNewUser(database) {
       let processTagify = (tagifyData) => {
         if (tagifyData !== "") return JSON.parse(tagifyData).map(elt => elt['value']);
-        else [];
+        else return [];
       };
 
       // JSON.parse(req.body) will have data from the <form>
