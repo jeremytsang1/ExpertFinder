@@ -47,10 +47,10 @@ module.exports = function() {
      
   router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) {
     let callbacks = [new Callback(readDatabase, runCallbacksAfterRead)];
-    let db = undefined;
+    let db = null;
     const USER_FORM = JSON.parse([JSON.stringify(req.body)]);
     const IMG_FILE_TMP_PATH = (req.file) ? req.file.path : null;
-    let imgFileTargetPath = undefined;
+    let imgFileTargetPath = null;
 
     Callback.runCallbacks(callbacks);
 
