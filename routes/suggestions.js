@@ -5,9 +5,13 @@ const DATABASE_FILENAME = 'database/db.json';
 const fs = require('fs');
 const suggestionUtil = require('../util/suggestionCategory');
 const {Callback} = require('../util/callback');
+const Validator = require('../util/suggestionValidator');
+const SUGGESTION_FIELDS = ['Industry', 'TechSkills', 'Coursework']
 
-function handleFailedDatabaseReadAttempt(err, data) {
+
+function handleError(err, res, msg) {
   console.log(err);
+  res.status(500).contentType("text/plain").end(msg);
 }
 
 // ----------------------------------------------------------------------------
@@ -33,10 +37,20 @@ router.get('/', (req, res) => {
 
   function readDatabase(complete, actionIfLastCallback) {
     fs.readFile(DATABASE_FILENAME, (err, data) => {
-      if (err) handleFailedDatabaseReadAttempt(res, err)
-      else categories.forEach(cat => cat.addSuggestionsToContext(context, data))
-      complete(actionIfLastCallback);
+      if (err) handleError(err, res, "Failed to read database!")
+      else {
+        try {handleProperlyFormattedDatabase(data)}
+        catch (formattingError) {handleError(formattingError, res,
+                                             "Database not properly formatted!");}
+      }
     });
+
+    function handleProperlyFormattedDatabase(data) {
+      const validator = new Validator.SuggestionValidator(SUGGESTION_FIELDS, JSON.parse(data));
+      validator.isDatabaseSafeForSuggestions()
+      categories.forEach(cat => cat.addSuggestionsToContext(context, data))
+      complete(actionIfLastCallback);
+    }
   }
 
   function sentContextAsJSON() {
