@@ -3,6 +3,12 @@ module.exports = function() {
   var router = express.Router();
   const DATABASE_FILENAME = 'database/db.json';
   const fs = require('fs');
+  const {Callback} = require('../util/callback');
+
+  function handleError(err, res) {
+    console.log(err);
+    res.status(500).contentType("text/plain").end("Something went wrong!");
+  }
 
   router.get('/', function(req, res) {
     var context = {
@@ -31,53 +37,69 @@ module.exports = function() {
   })
      
   router.post('/', function(req, res) {
-    var qParams = [];
-    var callbackCountRead = 0;
+    let callbacks = [new Callback(readDatabase, runCallbacksAfterRead)];
+    let db = undefined;
 
-    // for (var p in req.body) {
-        // qParams.push(JSON.stringify({'first-name':p, 'value':req.body[p]}))
-    // }
-    // console.log(qParams);
+    Callback.runCallbacks(callbacks);
 
-     // writing to a file code is based on https://stackabuse.com/writing-to-files-in-node-js/
+    // ------------------------------------------------------------------------
+    // 1st level of callbacks
 
-
-    var newProfile = JSON.stringify(req.body);
-
-    // console.log(req.body);
-    // console.log("PPPPPOOOOOOOSSSSSTTT");
-    var context = {};
-    // context.dataList = qParams;
-
-    readDatabase(completeRead);
-
-    function completeRead(req, res, data, completeWrite) {
-      callbackCountRead++;
-      if (callbackCountRead >= 1) {
-        writeDatabase(req, res, data, completeWrite);
-      }
-    }
-
-    function readDatabase(completeRead) {
-      var callbackCountWrite = 0;
-
+    // Read the database from the file and save store it in `db`.
+    function readDatabase(complete, actionIfLastCallback) {
       fs.readFile(DATABASE_FILENAME, (err, data) => {
-        if (err) console.log(err);  // failed read of database file
-        else completeRead(req, res, data, completeWrite);   // successful read of the database file
-      });
-
-      function completeWrite() {
-        callbackCountWrite++;
-        if (callbackCountWrite >= 1) {
-          res.redirect(`createProfile/success?email=${req.body.email}`);
-          res.end();
+        if (err) handleError(err, res);  // failed read of database file
+        else {
+          db = JSON.parse(data);
+          complete(actionIfLastCallback);
         }
-      }
+      });
     }
+
+    function runCallbacksAfterRead() {
+      let callbacks = [
+        new Callback(writeDatabase, redirectToSuccessPage),
+        new Callback(saveImage, redirectToSuccessPage),
+        new Callback(sendEmail, redirectToSuccessPage)
+      ];
+      Callback.runCallbacks(callbacks);
+    }
+
+    // ----------------------------------------
+    // 2nd level of callbacks
+
+    function writeDatabase(complete, actionIfLastCallback) {
+      console.log("Writing user creation form data to database.");
+      db = createNewUser(req, db); // uses db from enclosing scope
+
+      fs.writeFile(DATABASE_FILENAME, JSON.stringify(db, null, 4), err => {
+        if (err) handleError(err, res);
+        else complete(actionIfLastCallback);
+      });
+    }
+
+    function saveImage(complete, actionIfLastCallback) {
+      // TODO
+      console.log("Saving image from user creation form to server.");
+      complete(actionIfLastCallback);
+    }
+
+    function sendEmail(complete, actionIfLastCallback) {
+      // TODO
+      console.log("Sending activation email to user.");
+      complete(actionIfLastCallback);
+    }
+
+    function redirectToSuccessPage() {
+      res.redirect(`createProfile/success?email=${req.body.email}`);
+      res.end();
+    }
+
+    // -------------------------
+    // 2nd level callback helpers
   });
 
-  function createNewUser(req, data) {
-
+  function createNewUser(req, database) {
     let userForm = [JSON.stringify(req.body)];
     uF = JSON.parse(userForm)
 
@@ -87,10 +109,9 @@ module.exports = function() {
     };
 
     // JSON.parse(req.body) will have data from the <form>
-    let db = JSON.parse(data); //  will have old data from the database.
 
     let newUser = {
-      "Id":db['NextID'],
+      "Id":database['NextID'],
       "Name":uF["name"],
       "TechSkills":processTagify(uF['tech-skills']),
       "Coursework":processTagify(uF['coursework']),
@@ -105,27 +126,11 @@ module.exports = function() {
     };
 
     // add stuff to newUser
-    db['Experts'].push(newUser);
-    db['NextID']++;
-    console.log("NEXT ID:", db['NextID'])
-    return db;
+    database['Experts'].push(newUser);
+    database['NextID']++;
+    console.log("NEXT ID:", database['NextID'])
+    return database;
   }
-
-  function writeDatabase(req, res, data, completeWrite) {
-    // TODO: decide what to put in the file to update it
-    var db = createNewUser(req, data)
-    fs.writeFile(DATABASE_FILENAME, JSON.stringify(db, null, 4), err => {
-      if (err) {
-        console.log(err);
-      } else {
-        completeWrite();
-      }
-    });
-  }
-
-
-  //   document.getElementById('register').addEventListener('click', saveUserData);
-  // });
 
   return router;
 }();

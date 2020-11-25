@@ -3,7 +3,6 @@ const express = require('express');
 const router = express.Router();
 const DATABASE_FILENAME = 'database/db.json';
 const fs = require('fs');
-const {runCallbacks} = require('../../util/callbackUtil');
 const suggestionUtil = require('../../util/suggestionCategory');
 const {Callback} = require('../../util/callback');
 
@@ -31,7 +30,7 @@ router.get('/', (req, res) => {
   // complete will be the one responsible for rendering the template.
   const CALLBACKS = [new Callback(readDatabase, sentContextAsJSON)];
 
-  runCallbacks(CALLBACKS)
+  Callback.runCallbacks(CALLBACKS)
 
   // --------------------------------------------------------------------------
   // Callback helpers for router.get('/')
