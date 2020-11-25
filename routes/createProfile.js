@@ -2,8 +2,16 @@ module.exports = function() {
   var express = require('express');
   var router = express.Router();
   const DATABASE_FILENAME = 'database/db.json';
+  const IMG_DIR = 'public/images';
   const fs = require('fs');
+  const http = require("http");
+  const path = require("path");
+  const multer = require("multer");
+  const upload = multer({
+    dest: IMG_DIR  // directory to place temporary uploads
+  });
   const {Callback} = require('../util/callback');
+  const HTML_NAME_ATTR_OF_IMG_INPUT = "profile-picture"
 
   function handleError(err, res) {
     console.log(err);
@@ -36,9 +44,12 @@ module.exports = function() {
     res.render('createProfileSuccess', context)
   })
      
-  router.post('/', function(req, res) {
+  router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) {
     let callbacks = [new Callback(readDatabase, runCallbacksAfterRead)];
     let db = undefined;
+    const tmpPath = (req.file) ? req.file.path : null;
+    let userForm = [JSON.stringify(req.body)];
+    let targetPath = undefined;
 
     Callback.runCallbacks(callbacks);
 
@@ -51,6 +62,7 @@ module.exports = function() {
         if (err) handleError(err, res);  // failed read of database file
         else {
           db = JSON.parse(data);
+          targetPath = `${IMG_DIR}/profile-picture-user-id-${db['NextID']}.png`;
           complete(actionIfLastCallback);
         }
       });
@@ -81,7 +93,15 @@ module.exports = function() {
     function saveImage(complete, actionIfLastCallback) {
       // TODO
       console.log("Saving image from user creation form to server.");
-      complete(actionIfLastCallback);
+      if (tmpPath === null) complete(actionIfLastCallback);
+      else {
+        fs.rename(tmpPath, targetPath, err =>  {
+          if (err) handleError()
+          else {
+            complete(actionIfLastCallback);
+          }
+        });
+      }
     }
 
     function sendEmail(complete, actionIfLastCallback) {
