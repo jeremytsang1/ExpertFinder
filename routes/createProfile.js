@@ -92,7 +92,6 @@ module.exports = function() {
     }
 
     function saveImage(complete, actionIfLastCallback) {
-      // TODO
       console.log("Saving image from user creation form to server.");
       if (IMG_FILE_TMP_PATH === null) complete(actionIfLastCallback);
       else {
