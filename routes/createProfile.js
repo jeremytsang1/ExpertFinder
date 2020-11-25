@@ -3,12 +3,13 @@ module.exports = function() {
   var router = express.Router();
   const DATABASE_FILENAME = 'database/db.json';
   const IMG_DIR = 'public/images';
+  const IMG_DIR_TMP = `${IMG_DIR}/tmp`
   const fs = require('fs');
   const http = require("http");
   const path = require("path");
   const multer = require("multer");
   const upload = multer({
-    dest: IMG_DIR  // directory to place temporary uploads
+    dest: IMG_DIR_TMP  // directory to place temporary uploads
   });
   const {Callback} = require('../util/callback');
   const HTML_NAME_ATTR_OF_IMG_INPUT = "profile-picture"
