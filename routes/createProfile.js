@@ -3,6 +3,12 @@ module.exports = function() {
   var router = express.Router();
   const DATABASE_FILENAME = 'database/db.json';
   const fs = require('fs');
+  const {Callback} = require('../util/callback');
+
+  function handleError(err, res) {
+    console.log(err);
+    res.status(500).contentType("text/plain").end("Something went wrong!");
+  }
 
   router.get('/', function(req, res) {
     var context = {
@@ -31,32 +37,60 @@ module.exports = function() {
   })
      
   router.post('/', function(req, res) {
-    var callbackCountRead = 0;
+    let callbacks = [new Callback(readDatabase, runCallbacksAfterRead)];
+    let db = undefined;
 
-    readDatabase(completeRead);
+    Callback.runCallbacks(callbacks);
 
-    function completeRead(req, res, data, completeWrite) {
-      callbackCountRead++;
-      if (callbackCountRead >= 1) {
-        writeDatabase(req, res, data, completeWrite);
-      }
+    // ------------------------------------------------------------------------
+    // 1st level of callbacks
+
+    // Read the database from the file and save store it in `db`.
+    function readDatabase(complete, actionIfLastCallback) {
+      fs.readFile(DATABASE_FILENAME, (err, data) => {
+        if (err) handleError(err, res);  // failed read of database file
+        else {
+          db = JSON.parse(data);
+          complete(actionIfLastCallback);
+        }
+      });
     }
 
-    function readDatabase(completeRead) {
-      var callbackCountWrite = 0;
+    function runCallbacksAfterRead() {
+      console.log("-------------------------------------------------------------------------------");
+      console.log(db);
+      let callbacks = [
+        new Callback(writeDatabase, redirectToSuccessPage),
+        new Callback(saveImage, redirectToSuccessPage),
+        new Callback(sendEmail, redirectToSuccessPage)
+      ];
+      Callback.runCallbacks(callbacks);
+    }
 
-      fs.readFile(DATABASE_FILENAME, (err, data) => {
-        if (err) console.log(err);  // failed read of database file
-        else completeRead(req, res, data, completeWrite);   // successful read of the database file
-      });
+    // ----------------------------------------
+    // 2nd level of callbacks
 
-      function completeWrite() {
-        callbackCountWrite++;
-        if (callbackCountWrite >= 1) {
-          res.redirect(`createProfile/success?email=${req.body.email}`);
-          res.end();
-        }
-      }
+    function writeDatabase(complete, actionIfLastCallback) {
+      // TODO
+      console.log("Writing to database.");
+      complete(actionIfLastCallback);
+    }
+
+    function saveImage(complete, actionIfLastCallback) {
+      // TODO
+      console.log("Saving image to server.");
+      complete(actionIfLastCallback);
+    }
+
+    function sendEmail(complete, actionIfLastCallback) {
+      // TODO
+      console.log("Sending activation email to user.");
+      complete(actionIfLastCallback);
+    }
+
+    function redirectToSuccessPage() {
+      res.redirect(`createProfile/success?email=${req.body.email}`);
+      res.end();
     }
   });
 
@@ -106,8 +140,6 @@ module.exports = function() {
       }
     });
   }
-
-
   //   document.getElementById('register').addEventListener('click', saveUserData);
   // });
 
