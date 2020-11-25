@@ -97,9 +97,7 @@ module.exports = function() {
       else {
         fs.rename(IMG_FILE_TMP_PATH, imgFileTargetPath, err =>  {
           if (err) handleError()
-          else {
-            complete(actionIfLastCallback);
-          }
+          else complete(actionIfLastCallback);
         });
       }
     }
