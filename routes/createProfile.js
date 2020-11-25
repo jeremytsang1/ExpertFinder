@@ -49,7 +49,6 @@ module.exports = function() {
     let callbacks = [new Callback(readDatabase, runCallbacksAfterRead)];
     let db = undefined;
     const tmpPath = (req.file) ? req.file.path : null;
-    let userForm = [JSON.stringify(req.body)];
     let targetPath = undefined;
 
     Callback.runCallbacks(callbacks);
