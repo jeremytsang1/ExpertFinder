@@ -12,7 +12,7 @@ function getExperts(search){
             }
         }
         for (var course of expert.Coursework){
-            if (course.course_num.includes(keyword) || course.course_name.includes(keyword)){
+            if (course.includes(keyword)){
                 results.push(expert)
             }
         }
@@ -40,5 +40,3 @@ module.exports = {
     updateExperts,
     deleteExperts
 }
-
-    
