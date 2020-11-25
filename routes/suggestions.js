@@ -3,8 +3,8 @@ const express = require('express');
 const router = express.Router();
 const DATABASE_FILENAME = 'database/db.json';
 const fs = require('fs');
-const suggestionUtil = require('../../util/suggestionCategory');
-const {Callback} = require('../../util/callback');
+const suggestionUtil = require('../util/suggestionCategory');
+const {Callback} = require('../util/callback');
 
 function handleFailedDatabaseReadAttempt(err, data) {
   console.log(err);
