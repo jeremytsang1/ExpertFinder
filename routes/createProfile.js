@@ -57,8 +57,6 @@ module.exports = function() {
     }
 
     function runCallbacksAfterRead() {
-      console.log("-------------------------------------------------------------------------------");
-      console.log(db);
       let callbacks = [
         new Callback(writeDatabase, redirectToSuccessPage),
         new Callback(saveImage, redirectToSuccessPage),
