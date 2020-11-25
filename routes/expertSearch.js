@@ -5,7 +5,6 @@ module.exports = function() {
 
   router.post('/', function (req, res) {
     var search_keyword = (req.body);
-
     var context = {};
     context.jsscripts = ["jquery.js"]
     context.experts = db_interface.getExperts(search_keyword);

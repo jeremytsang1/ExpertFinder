@@ -4,9 +4,9 @@
             "Id": 1,
             "Name": "John Doe",
             "TechSkills": ["Python", "Java"],
-            "Coursework": [{"course_num":"CS161","course_name": "Intro to Computer Science I"},
-                            {"course_num":"CS162","course_name": "Intro to Computer Science II"},
-                            {"course_num":"CS290","course_name": "Web Development"}
+            "Coursework": ["CS161 Intro to Computer Science I",
+                            "CS162 Intro to Computer Science II",
+                            "CS290 Web Development"
                         ],
             "Industry": ["Web Development"],
             "ContactInfo": {
@@ -22,11 +22,11 @@
             "Id": 2,
             "Name": "Lena Gregory",
             "TechSkills": ["React", "Angular"],
-            "Coursework": [{"course_num":"CS161","course_name": "Intro to Computer Science I"},
-                {"course_num":"CS162","course_name": "Intro to Computer Science II"},
-                {"course_num":"C271","course_name": "Computer Architecture and Assembly Language"},
-                {"course_num":"CS340","course_name": "Introduction to Databases"},
-                {"course_num":"CS372","course_name": "Intro to Computer Networks"}
+            "Coursework": ["CS161 Intro to Computer Science I",
+              "CS162 Intro to Computer Science II",
+                "C271 Computer Architecture and Assembly Language",
+                "CS340 Introduction to Databases",
+                "CS372 Intro to Computer Networks"
             ],
             "Industry": ["Networks", "Software Development"],
             "ContactInfo": {
