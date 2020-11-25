@@ -19,11 +19,7 @@ router.get('/', (req, res) => {
   const categories = [
     new suggestionUtil.SuggestionCategory('Industry', elt => elt),
     new suggestionUtil.SuggestionCategory('TechSkills', elt => elt),
-    new suggestionUtil.SuggestionCategory('Coursework', elt => {
-      const NUM = "course_num";
-      const NAME = "course_name";
-      return `${elt[NUM]} ${elt[NAME]}`;
-    })
+    new suggestionUtil.SuggestionCategory('Coursework', elt => elt)
   ];
 
   // all elements must have `complete` as parameter as the last callback to
