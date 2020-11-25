@@ -72,13 +72,13 @@ module.exports = function() {
 
     function writeDatabase(complete, actionIfLastCallback) {
       // TODO
-      console.log("Writing to database.");
+      console.log("Writing user creation form data to database.");
       complete(actionIfLastCallback);
     }
 
     function saveImage(complete, actionIfLastCallback) {
       // TODO
-      console.log("Saving image to server.");
+      console.log("Saving image from user creation form to server.");
       complete(actionIfLastCallback);
     }
 
@@ -92,6 +92,9 @@ module.exports = function() {
       res.redirect(`createProfile/success?email=${req.body.email}`);
       res.end();
     }
+
+    // -------------------------
+    // 2nd level callback helpers
   });
 
   function createNewUser(req, data) {
