@@ -20,9 +20,22 @@ class Suggester {
   }
 
   addUserSuggestions(suggestions) {
+    let ary = null;
+    let expertAry = this.db['Experts'];
+
+    for (let expert of expertAry) {
+      for (let field of this.fieldsToSuggestFor) {
+        ary = expert[field];
+        this.addAryEltsToSet(ary, suggestions[field]);
+      }
+    }
   }
 
   addKnownSuggestions(suggestions) {
+  }
+
+  addAryEltsToSet(ary, suggestionSet) {
+    ary.forEach(elt => suggestionSet.add(elt));
   }
 
   convertSetsToArrays(suggestions) {
