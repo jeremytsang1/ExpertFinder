@@ -9,8 +9,8 @@ class Suggester {
     let suggestions = this.initializeEmptySuggestionsSets();
     this.addUserSuggestions(suggestions);
     this.addKnownSuggestions(suggestions);
-
-    return this.convertSetsToArrays(suggestions);
+    this.convertSetsToArrays(suggestions);
+    return suggestions;
   }
 
   initializeEmptySuggestionsSets() {
@@ -46,6 +46,6 @@ class Suggester {
   }
 
   convertSetsToArrays(suggestions) {
-    return suggestions;
+    for (let field in suggestions) suggestions[field] = [...suggestions[field]];
   }
 }
