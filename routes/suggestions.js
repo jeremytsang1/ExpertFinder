@@ -25,7 +25,7 @@ function handleError(err, res, messageToSendToClient) {
 
 router.get('/', (req, res) => {
   let context = {"Categories": null};
-  let db = null; // take advantage of closure
+  let database = null; // take advantage of closure
 
   // all elements must have `complete` as parameter as the last callback to
   // complete will be the one responsible for rendering the template.
@@ -45,7 +45,7 @@ router.get('/', (req, res) => {
     // Needs to be a nested function to make sure parameter `complete()` gets
     // passed `actionIfLastCallback`.
     function handleProperlyFormattedDatabase(data) {
-      db = JSON.parse(data);
+      database = JSON.parse(data);
       let validationMsg = validateDatabaseBeforeSuggestions();
 
       if (validationMsg !== null) handleError(new Error(validationMsg), res, validationMsg);
@@ -57,13 +57,13 @@ router.get('/', (req, res) => {
   }
 
   function validateDatabaseBeforeSuggestions() {
-    const validator = new SuggestionValidator.Validator(SUGGESTION_FIELDS, db);
+    const validator = new SuggestionValidator.Validator(SUGGESTION_FIELDS, database);
     let validationMsg = validator.isDatabaseSafeForSuggestions();
     return validationMsg;
   }
 
   function addSuggestionsToContext() {
-    let suggester = new Suggester.Suggester(SUGGESTION_FIELDS, db);
+    let suggester = new Suggester.Suggester(SUGGESTION_FIELDS, database);
     context["Categories"] =  suggester.makeSuggestions();
   }
 
