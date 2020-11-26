@@ -34,6 +34,10 @@ function profileCreationTagsMain() {
 
   function handleFailedRequest(req) {
     console.log("Could not get suggestions!");
+    // Print contents of the server's error handler
+    // for example res.status(500).contentType("text/plain").end(messageToSendToClient);
+    // messageToSentToClient would req.response
+    console.log(`req.response: ${req.response}`);
   }
 }
 
