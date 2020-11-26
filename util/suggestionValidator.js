@@ -35,7 +35,7 @@ class SuggestionValidator {
 
   checkUser(user, userIndex) {
     let check;
-    for (let field of this.fieldsToSuggestFor.entries()) {
+    for (let field of this.fieldsToSuggestFor) {
       check =  this.checkFieldAry(user[field], field, `this.db["Expert"][${userIndex}]`);
       if (check !== null) return check;
     }
@@ -60,7 +60,7 @@ class SuggestionValidator {
 
   areValidKnowns(knowns) {
     let check;
-    for (let field of this.fieldsToSuggestFor.entries()) {
+    for (let field of this.fieldsToSuggestFor) {
       check = this.checkFieldAry(knowns[field], field, `this.db["Known"]`);
       if (check !== null) return check;
     }
