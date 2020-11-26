@@ -5,7 +5,7 @@ class SuggestionValidator {
   }
 
   static get MSG_PREFIX() {
-    return "Database is improperly formatted:";
+    return "WARNING Database is improperly formatted:";
   }
 
   isDatabaseSafeForSuggestions() {
