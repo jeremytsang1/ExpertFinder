@@ -1,6 +1,5 @@
 class Suggester {
   constructor(fieldsToSuggestFor, db) {
-    // TODO: Validate
     this.fieldsToSuggestFor = fieldsToSuggestFor;
     this.db = db;
   }
