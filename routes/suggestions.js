@@ -6,9 +6,10 @@ const {Callback} = require('../util/callback'); // Destructure for brevity.
 const Suggester = require('../util/suggester');
 const SuggestionValidator = require('../util/suggestionValidator');
 
+
 // ----------------------------------------------------------------------------
 // Constants
-
+const DB_INTERFACE = require('./database/db_interface');
 const DATABASE_FILENAME = 'database/db.json';
 const SUGGESTION_FIELDS = ['Industry', 'TechSkills', 'Coursework'];
 
