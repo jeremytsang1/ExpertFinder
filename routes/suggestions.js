@@ -5,7 +5,7 @@ const DATABASE_FILENAME = 'database/db.json';
 const fs = require('fs');
 const Suggester = require('../util/suggester');
 const {Callback} = require('../util/callback');
-const Validator = require('../util/suggestionValidator');
+const SuggestionValidator = require('../util/suggestionValidator');
 const SUGGESTION_FIELDS = ['Industry', 'TechSkills', 'Coursework'];
 
 
@@ -49,7 +49,7 @@ router.get('/', (req, res) => {
   }
 
   function validateDatabaseBeforeSuggestions() {
-    const validator = new Validator.SuggestionValidator(SUGGESTION_FIELDS, db);
+    const validator = new SuggestionValidator.Validator(SUGGESTION_FIELDS, db);
     let validationMsg = validator.isDatabaseSafeForSuggestions();
     return validationMsg;
   }
