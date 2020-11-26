@@ -9,10 +9,10 @@ class Validator {
   }
 
   isDatabaseSafeForSuggestions() {
-    let usrAry = this.db["Experts"];
+    let expertAry = this.db["Experts"];
     let knowns = this.db["Known"];
 
-    if (!Array.isArray(usrAry)) {
+    if (!Array.isArray(expertAry)) {
       return `${Validator.MSG_PREFIX} this.db["Experts"] is not an array`;
     } else if (typeof knowns !== 'object') {
       return `${Validator.MSG_PREFIX} this.db["Known"] is not an object`;
@@ -20,9 +20,9 @@ class Validator {
       return `${Validator.MSG_PREFIX} this.db["Known"] is null`;
     }
 
-    for (let [i, user] of this.db["Experts"].entries()) {
-      if (this.checkUser(user, i) !== null) {
-        return this.checkUser(user, i);
+    for (let [i, expert] of this.db["Experts"].entries()) {
+      if (this.checkExpert(expert, i) !== null) {
+        return this.checkExpert(expert, i);
       }
     }
 
@@ -33,10 +33,10 @@ class Validator {
     return null;
   }
 
-  checkUser(user, userIndex) {
+  checkExpert(expert, expertIndex) {
     let check;
     for (let field of this.fieldsToSuggestFor) {
-      check =  this.checkFieldAry(user[field], field, `this.db["Expert"][${userIndex}]`);
+      check =  this.checkFieldAry(expert[field], field, `this.db["Expert"][${expertIndex}]`);
       if (check !== null) return check;
     }
 
