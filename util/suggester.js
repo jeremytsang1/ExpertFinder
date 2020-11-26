@@ -32,6 +32,13 @@ class Suggester {
   }
 
   addKnownSuggestions(suggestions) {
+    let ary = null;
+    let known = this.db['Known'];
+
+    for (let field of this.fieldsToSuggestFor) {
+      ary = known[field];
+      this.addAryEltsToSet(ary, suggestions[field]);
+    }
   }
 
   addAryEltsToSet(ary, suggestionSet) {
