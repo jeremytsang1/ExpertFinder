@@ -1,5 +1,7 @@
 var test_db = require('./db')
 const FuzzySearch = require('fuzzy-search')
+const {Suggester} = require("./suggester");
+
 
 function getExperts(search) {
     var keyword = search.keyword
@@ -23,9 +25,16 @@ function deleteExperts(expert_id) {
     return
 }
 
+function getSuggestions() {
+    const suggester = new Suggester(['TechSkills', 'Coursework', 'Industry'], test_db);
+    return suggester.makeSuggestions();
+}
+
+
 module.exports = {
     getExperts,
     createExpert,
     updateExperts,
-    deleteExperts
+    deleteExperts,
+    getSuggestions
 }
