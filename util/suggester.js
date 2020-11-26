@@ -20,23 +20,25 @@ class Suggester {
   }
 
   addUserSuggestions(suggestions) {
-    let ary = null;
     let expertAry = this.db['Experts'];
-
-    for (let expert of expertAry) {
-      for (let field of this.fieldsToSuggestFor) {
-        ary = expert[field];
-        this.addAryEltsToSet(ary, suggestions[field]);
-      }
-    }
+    expertAry.forEach(expert => this.mergeFieldsInto(expert, suggestions))
   }
 
   addKnownSuggestions(suggestions) {
-    let ary = null;
-    let known = this.db['Known'];
+    this.mergeFieldsInto(this.db['Known'], suggestions);
+  }
 
+  /**
+   * Takes each field's array in `objectWithFields` and merges its contents
+   * into the corresponding field set in `suggestions`.
+   * @param {object} objectWithFields - object of arrays
+   * @param {object} suggestions - object of sets
+   * @return {undefined}
+   */
+  mergeFieldsInto(objectWithFields, suggestions) {
+    let ary = null;
     for (let field of this.fieldsToSuggestFor) {
-      ary = known[field];
+      ary = objectWithFields[field];
       this.addAryEltsToSet(ary, suggestions[field]);
     }
   }
