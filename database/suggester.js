@@ -1,9 +1,5 @@
-const {Validator} = require("./suggestionValidator");
-
 class Suggester {
   constructor(fieldsToSuggestFor, db) {
-    let msg = (new Validator(fieldsToSuggestFor, db)).isDatabaseSafeForSuggestions();
-    if (msg !== null) console.log(msg);
     this.fieldsToSuggestFor = fieldsToSuggestFor;
     this.db = db;
   }
