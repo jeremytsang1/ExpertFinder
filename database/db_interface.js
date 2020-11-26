@@ -1,5 +1,7 @@
 var test_db = require('./db')
 const FuzzySearch = require('fuzzy-search')
+const {Suggester} = require("./suggester");
+const {SuggestionValidator} = require("./suggestionValidator");
 
 function getExperts(search) {
     var keyword = search.keyword
@@ -23,9 +25,20 @@ function deleteExperts(expert_id) {
     return
 }
 
+function getSuggestions() {
+    const FIELDS = ['TechSkills', 'Coursework', 'Industry'];
+    const MSG = (new SuggestionValidator(FIELDS, test_db)).isDatabaseSafeForSuggestions();
+    if (MSG !== null) return {'success': false, 'message': MSG};
+
+    const SUGGESTER = new Suggester(FIELDS, test_db);
+    return {'success': true, ...SUGGESTER.makeSuggestions()};
+}
+
+
 module.exports = {
     getExperts,
     createExpert,
     updateExperts,
-    deleteExperts
+    deleteExperts,
+    getSuggestions
 }
