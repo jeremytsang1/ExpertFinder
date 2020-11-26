@@ -3,11 +3,15 @@ const express = require('express');
 const router = express.Router();
 const DATABASE_FILENAME = 'database/db.json';
 const fs = require('fs');
-const suggestionUtil = require('../../util/suggestionCategory');
-const {Callback} = require('../../util/callback');
+const suggestionUtil = require('../util/suggestionCategory');
+const {Callback} = require('../util/callback');
+const Validator = require('../util/suggestionValidator');
+const SUGGESTION_FIELDS = ['Industry', 'TechSkills', 'Coursework'];
 
-function handleFailedDatabaseReadAttempt(err, data) {
+
+function handleError(err, res, messageToSendToClient) {
   console.log(err);
+  res.status(500).contentType("text/plain").end(messageToSendToClient);
 }
 
 // ----------------------------------------------------------------------------
@@ -19,11 +23,7 @@ router.get('/', (req, res) => {
   const categories = [
     new suggestionUtil.SuggestionCategory('Industry', elt => elt),
     new suggestionUtil.SuggestionCategory('TechSkills', elt => elt),
-    new suggestionUtil.SuggestionCategory('Coursework', elt => {
-      const NUM = "course_num";
-      const NAME = "course_name";
-      return `${elt[NUM]} ${elt[NAME]}`;
-    })
+    new suggestionUtil.SuggestionCategory('Coursework', elt => elt)
   ];
 
   // all elements must have `complete` as parameter as the last callback to
@@ -37,10 +37,20 @@ router.get('/', (req, res) => {
 
   function readDatabase(complete, actionIfLastCallback) {
     fs.readFile(DATABASE_FILENAME, (err, data) => {
-      if (err) handleFailedDatabaseReadAttempt(res, err)
-      else categories.forEach(cat => cat.addSuggestionsToContext(context, data))
-      complete(actionIfLastCallback);
+      if (err) handleError(err, res, "fs.readFile() failed to read the JSON file!");
+      else handleProperlyFormattedDatabase(data);
     });
+
+    function handleProperlyFormattedDatabase(data) {
+      const validator = new Validator.SuggestionValidator(SUGGESTION_FIELDS, JSON.parse(data));
+      let validationMsg = validator.isDatabaseSafeForSuggestions();
+
+      if (validationMsg !== null) handleError(new Error(validationMsg), res, validationMsg);
+      else {
+        categories.forEach(cat => cat.addSuggestionsToContext(context, data))
+        complete(actionIfLastCallback);
+      }
+    }
   }
 
   function sentContextAsJSON() {

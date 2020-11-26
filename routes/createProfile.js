@@ -12,7 +12,8 @@ module.exports = function() {
     dest: IMG_DIR_TMP  // directory to place temporary uploads
   });
   const {Callback} = require('../util/callback');
-  const HTML_NAME_ATTR_OF_IMG_INPUT = "profile-picture"
+  const HTML_NAME_ATTR_OF_IMG_INPUT = "profile-picture";
+  const {TagifyBackend} = require('../util/tagifyBackend')
 
   function handleError(err, res) {
     console.log(err);
@@ -30,8 +31,7 @@ module.exports = function() {
         "tagify.min.js",
         "profileCreationTagifyCategory.js",
         "profileCreationTags.js",
-        "profileCreationForm.js",
-        "searchResponse.js"
+        "profileCreationForm.js"
       ]
     };
 
@@ -116,19 +116,12 @@ module.exports = function() {
     // -------------------------
     // 2nd level callback helpers
     function createNewUser(database) {
-      let processTagify = (tagifyData) => {
-        if (tagifyData !== "") return JSON.parse(tagifyData).map(elt => elt['value']);
-        else [];
-      };
-
-      // JSON.parse(req.body) will have data from the <form>
-
       let newUser = {
         "Id":database['NextID'],
         "Name":USER_FORM["name"],
-        "TechSkills":processTagify(USER_FORM['tech-skills']),
-        "Coursework":processTagify(USER_FORM['coursework']),
-        "Industry": processTagify(USER_FORM['industry']),
+        "TechSkills": TagifyBackend.getTagsAsArray(USER_FORM['tech-skills']),
+        "Coursework": TagifyBackend.getTagsAsArray(USER_FORM['coursework']),
+        "Industry": TagifyBackend.getTagsAsArray(USER_FORM['industry']),
         "ContactInfo":{
           "Email":USER_FORM['email'],
           "Github":USER_FORM['github'],
@@ -138,10 +131,11 @@ module.exports = function() {
         "ProfilePicture": imgFileTargetPath // from readDatabase()
       };
 
-      // add stuff to newUser
+      // Chose to use NextID instead of length in case of expert deletion. If
+      // we alloweddeletion we may get duplicate IDs and accidentally overwrite
+      // an existing expert.
       database['Experts'].push(newUser);
       database['NextID']++;
-      console.log("NEXT ID:", database['NextID'])
       return database;
     }
   });
