@@ -9,9 +9,9 @@ const Validator = require('../util/suggestionValidator');
 const SUGGESTION_FIELDS = ['Industry', 'TechSkills', 'Coursework']
 
 
-function handleError(err, res, msg) {
+function handleError(err, res, messageToSendToClient) {
   console.log(err);
-  res.status(500).contentType("text/plain").end(msg);
+  res.status(500).contentType("text/plain").end(messageToSendToClient);
 }
 
 // ----------------------------------------------------------------------------
@@ -37,19 +37,19 @@ router.get('/', (req, res) => {
 
   function readDatabase(complete, actionIfLastCallback) {
     fs.readFile(DATABASE_FILENAME, (err, data) => {
-      if (err) handleError(err, res, "Failed to read database!")
-      else {
-        try {handleProperlyFormattedDatabase(data)}
-        catch (formattingError) {handleError(formattingError, res,
-                                             "Database not properly formatted!");}
-      }
+      if (err) handleError(err, res, "Failed to read database!");
+      else handleProperlyFormattedDatabase(data);
     });
 
     function handleProperlyFormattedDatabase(data) {
       const validator = new Validator.SuggestionValidator(SUGGESTION_FIELDS, JSON.parse(data));
-      validator.isDatabaseSafeForSuggestions()
-      categories.forEach(cat => cat.addSuggestionsToContext(context, data))
-      complete(actionIfLastCallback);
+      let validationMsg = validator.isDatabaseSafeForSuggestions();
+
+      if (validationMsg !== null) handleError(new Error(validationMsg), res, validationMsg);
+      else {
+        categories.forEach(cat => cat.addSuggestionsToContext(context, data))
+        complete(actionIfLastCallback);
+      }
     }
   }
 

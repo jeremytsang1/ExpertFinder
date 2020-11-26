@@ -13,41 +13,59 @@ class SuggestionValidator {
     let knowns = this.db["Known"];
 
     if (!Array.isArray(usrAry)) {
-      throw `${SuggestionValidator.MSG_PREFIX} db["Experts"] is not an array`;
+      return `${SuggestionValidator.MSG_PREFIX} this.db["Experts"] is not an array`;
     } else if (typeof knowns !== 'object') {
-      throw `${SuggestionValidator.MSG_PREFIX} db["Known"] is not an object`;
+      return `${SuggestionValidator.MSG_PREFIX} this.db["Known"] is not an object`;
     } else if (knowns === null) {
-      throw `${SuggestionValidator.MSG_PREFIX} db["Known"] is null`;
+      return `${SuggestionValidator.MSG_PREFIX} this.db["Known"] is null`;
     }
 
-    this.db["Experts"].forEach((user, i) => this.checkUser(user, i));
-    this.areValidKnowns(this.db["Known"]);
+    for (let [i, user] of this.db["Experts"].entries()) {
+      if (this.checkUser(user, i) !== null) {
+        return this.checkUser(user, i);
+      }
+    }
+
+    if (this.areValidKnowns(this.db["Known"]) !== null) {
+      return this.areValidKnowns(this.db["Known"]);
+    }
+
+    return null;
   }
 
   checkUser(user, userIndex) {
-    this.fieldsToSuggestFor.forEach(field => {
-      this.checkFieldAry(user[field], field, `db["Expert"][${userIndex}]`);
-    });
+    let check;
+    for (let field of this.fieldsToSuggestFor.entries()) {
+      check =  this.checkFieldAry(user[field], field, `this.db["Expert"][${userIndex}]`);
+      if (check !== null) return check;
+    }
+
+    return null;
   }
 
   checkFieldAry(ary, field, description) {
     let suffix = "is not an array";
     if (!Array.isArray(ary)) {
-      throw new Error(`${SuggestionValidator.MSG_PREFIX} ${description}["${field}"] ${suffix}`);
+      return `${SuggestionValidator.MSG_PREFIX} ${description}["${field}"] ${suffix}`;
     }
 
     suffix = "is not a string";
-    ary.forEach((elt, i) => {
+    for (let [i, elt] of ary.entries()) {
       if (!(typeof elt == "string" || elt instanceof String)) {
-        throw `${SuggestionValidator.MSG_PREFIX} ${description}["${field}"][${i}] ${suffix}`;
+        return `${SuggestionValidator.MSG_PREFIX} ${description}["${field}"][${i}] ${suffix}`;
       }
-    });
+    }
+    return null;
   }
 
   areValidKnowns(knowns) {
-    this.fieldsToSuggestFor.forEach(field => {
-      this.checkFieldAry(knowns[field], field, `db["Known"]`);
-    });
+    let check;
+    for (let field of this.fieldsToSuggestFor.entries()) {
+      check = this.checkFieldAry(knowns[field], field, `this.db["Known"]`);
+      if (check !== null) return check;
+    }
+
+    return null;
   }
 }
 
