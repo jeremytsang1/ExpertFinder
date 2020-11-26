@@ -63,7 +63,9 @@ module.exports = function() {
         if (err) handleError(err, res);  // failed read of database file
         else {
           db = JSON.parse(data);
-          imgFileTargetPath = `${IMG_DIR}/profile-picture-user-id-${db['NextID']}.png`;
+          imgFileTargetPath = ((IMG_FILE_TMP_PATH !== null)
+                               ? `${IMG_DIR}/profile-picture-user-id-${db['NextID']}.png`
+                               : `${IMG_DIR}/female-default-profile-img.jpg`);
           complete(actionIfLastCallback);
         }
       });
