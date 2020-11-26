@@ -37,7 +37,7 @@ router.get('/', (req, res) => {
 
   function readDatabase(complete, actionIfLastCallback) {
     fs.readFile(DATABASE_FILENAME, (err, data) => {
-      if (err) handleError(err, res, "Failed to read database!");
+      if (err) handleError(err, res, "fs.readFile() failed to read the JSON file!");
       else handleProperlyFormattedDatabase(data);
     });
 
