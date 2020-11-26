@@ -6,7 +6,7 @@ const fs = require('fs');
 const suggestionUtil = require('../util/suggestionCategory');
 const {Callback} = require('../util/callback');
 const Validator = require('../util/suggestionValidator');
-const SUGGESTION_FIELDS = ['Industry', 'TechSkills', 'Coursework']
+const SUGGESTION_FIELDS = ['Industry', 'TechSkills', 'Coursework'];
 
 
 function handleError(err, res, messageToSendToClient) {
