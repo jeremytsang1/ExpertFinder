@@ -1,13 +1,19 @@
 const {request} = require('express');
 const express = require('express');
 const router = express.Router();
-const DATABASE_FILENAME = 'database/db.json';
 const fs = require('fs');
+const {Callback} = require('../util/callback'); // Destructure for brevity.
 const Suggester = require('../util/suggester');
-const {Callback} = require('../util/callback');
 const SuggestionValidator = require('../util/suggestionValidator');
+
+// ----------------------------------------------------------------------------
+// Constants
+
+const DATABASE_FILENAME = 'database/db.json';
 const SUGGESTION_FIELDS = ['Industry', 'TechSkills', 'Coursework'];
 
+// ----------------------------------------------------------------------------
+// Error handler
 
 function handleError(err, res, messageToSendToClient) {
   console.log(err);
