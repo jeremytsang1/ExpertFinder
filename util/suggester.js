@@ -51,3 +51,7 @@ class Suggester {
     for (let field in suggestions) suggestions[field] = [...suggestions[field]];
   }
 }
+
+module.exports = {
+  Suggester
+};

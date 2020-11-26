@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const DATABASE_FILENAME = 'database/db.json';
 const fs = require('fs');
-const suggestionUtil = require('../util/suggestionCategory');
+const Suggester = require('../util/suggester');
 const {Callback} = require('../util/callback');
 const Validator = require('../util/suggestionValidator');
 const SUGGESTION_FIELDS = ['Industry', 'TechSkills', 'Coursework'];
@@ -18,13 +18,8 @@ function handleError(err, res, messageToSendToClient) {
 // Routes
 
 router.get('/', (req, res) => {
-  let context = suggestionUtil.SuggestionCategory.prepareContext();
-
-  const categories = [
-    new suggestionUtil.SuggestionCategory('Industry', elt => elt),
-    new suggestionUtil.SuggestionCategory('TechSkills', elt => elt),
-    new suggestionUtil.SuggestionCategory('Coursework', elt => elt)
-  ];
+  let context = {"Categories": null};
+  let db = null; // take advantage of closure
 
   // all elements must have `complete` as parameter as the last callback to
   // complete will be the one responsible for rendering the template.
@@ -42,15 +37,26 @@ router.get('/', (req, res) => {
     });
 
     function handleProperlyFormattedDatabase(data) {
-      const validator = new Validator.SuggestionValidator(SUGGESTION_FIELDS, JSON.parse(data));
-      let validationMsg = validator.isDatabaseSafeForSuggestions();
+      db = JSON.parse(data);
+      let validationMsg = validateDatabaseBeforeSuggestions();
 
       if (validationMsg !== null) handleError(new Error(validationMsg), res, validationMsg);
       else {
-        categories.forEach(cat => cat.addSuggestionsToContext(context, data))
+        addSuggestionsToContext();
         complete(actionIfLastCallback);
       }
     }
+  }
+
+  function validateDatabaseBeforeSuggestions() {
+    const validator = new Validator.SuggestionValidator(SUGGESTION_FIELDS, db);
+    let validationMsg = validator.isDatabaseSafeForSuggestions();
+    return validationMsg;
+  }
+
+  function addSuggestionsToContext() {
+    let suggester = new Suggester.Suggester(SUGGESTION_FIELDS, db);
+    context["Categories"] =  suggester.makeSuggestions();
   }
 
   function sentContextAsJSON() {
