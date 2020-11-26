@@ -1,4 +1,4 @@
-class SuggestionValidator {
+class Validator {
   constructor(fieldsToSuggestFor, db) {
     this.fieldsToSuggestFor = fieldsToSuggestFor;
     this.db = db;
@@ -13,11 +13,11 @@ class SuggestionValidator {
     let knowns = this.db["Known"];
 
     if (!Array.isArray(usrAry)) {
-      return `${SuggestionValidator.MSG_PREFIX} this.db["Experts"] is not an array`;
+      return `${Validator.MSG_PREFIX} this.db["Experts"] is not an array`;
     } else if (typeof knowns !== 'object') {
-      return `${SuggestionValidator.MSG_PREFIX} this.db["Known"] is not an object`;
+      return `${Validator.MSG_PREFIX} this.db["Known"] is not an object`;
     } else if (knowns === null) {
-      return `${SuggestionValidator.MSG_PREFIX} this.db["Known"] is null`;
+      return `${Validator.MSG_PREFIX} this.db["Known"] is null`;
     }
 
     for (let [i, user] of this.db["Experts"].entries()) {
@@ -46,13 +46,13 @@ class SuggestionValidator {
   checkFieldAry(ary, field, description) {
     let suffix = "is not an array";
     if (!Array.isArray(ary)) {
-      return `${SuggestionValidator.MSG_PREFIX} ${description}["${field}"] ${suffix}`;
+      return `${Validator.MSG_PREFIX} ${description}["${field}"] ${suffix}`;
     }
 
     suffix = "is not a string";
     for (let [i, elt] of ary.entries()) {
       if (!(typeof elt == "string" || elt instanceof String)) {
-        return `${SuggestionValidator.MSG_PREFIX} ${description}["${field}"][${i}] ${suffix}`;
+        return `${Validator.MSG_PREFIX} ${description}["${field}"][${i}] ${suffix}`;
       }
     }
     return null;
@@ -70,5 +70,5 @@ class SuggestionValidator {
 }
 
 module.exports = {
-  SuggestionValidator
+  Validator
 };
