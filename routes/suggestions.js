@@ -36,6 +36,8 @@ router.get('/', (req, res) => {
       else handleProperlyFormattedDatabase(data);
     });
 
+    // Needs to be a nested function to make sure parameter `complete()` gets
+    // passed `actionIfLastCallback`.
     function handleProperlyFormattedDatabase(data) {
       db = JSON.parse(data);
       let validationMsg = validateDatabaseBeforeSuggestions();
