@@ -42,7 +42,7 @@ router.get('/success', (req, res) => {
   const context = {"email": req.query.email};
 
   res.render('createProfileSuccess', context)
-})
+});
 
 router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) {
   let callbacks = [new Callback(readDatabase, runCallbacksAfterRead)];
