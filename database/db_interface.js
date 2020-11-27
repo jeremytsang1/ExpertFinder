@@ -13,9 +13,13 @@ function getExperts(search) {
     return result
 }
 
+function getExpertCount() {
+    return test_db.Experts.length;
+}
+
 function createExpert(name, TechSkills, Coursework, Industry, ContactInfo, ProfilePicture) {
     // name, TechSkills, Coursework, Industry, ContactInfo
-    var new_id = test_db["Experts"].length + 1
+    var new_id = test_db.Experts.length + 1
     const expert = {
         "Id": new_id,
         "Name": name,
@@ -25,7 +29,9 @@ function createExpert(name, TechSkills, Coursework, Industry, ContactInfo, Profi
         "ContactInfo": ContactInfo,
         "ProfilePicture": ProfilePicture
     }
-    test_db["Experts"].push(expert);
+    test_db.Experts.push(expert);
+    console.log("Experts after createExpert():\n",
+                JSON.stringify(test_db.Experts, null, 2));
     return new_id
 }
 function updateExperts(id, name, TechSkills, Coursework, Industry, ContactInfo) {
@@ -47,6 +53,7 @@ function getSuggestions() {
 
 module.exports = {
     getExperts,
+    getExpertCount,
     createExpert,
     updateExperts,
     deleteExperts,
