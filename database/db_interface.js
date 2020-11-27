@@ -13,9 +13,19 @@ function getExperts(search) {
     return result
 }
 
-function createExpert() {
+function createExpert(name, TechSkills, Coursework, Industry, ContactInfo, ProfilePicture) {
     // name, TechSkills, Coursework, Industry, ContactInfo
     var new_id = test_db["Experts"].length + 1
+    const expert = {
+        "Id": new_id,
+        "Name": name,
+        "TechSkills": TechSkills,
+        "Coursework": Coursework,
+        "Industry": Industry,
+        "ContactInfo": ContactInfo,
+        "ProfilePicture": ProfilePicture
+    }
+    test_db["Experts"].push(expert);
     return new_id
 }
 function updateExperts(id, name, TechSkills, Coursework, Industry, ContactInfo) {
