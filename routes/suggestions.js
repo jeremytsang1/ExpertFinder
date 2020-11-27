@@ -5,7 +5,7 @@ const router = express.Router();
 // ----------------------------------------------------------------------------
 // Constants
 
-const DB_INTERFACE = require('../database/db_interface');
+const dbInterface = require('../database/db_interface');
 
 // ----------------------------------------------------------------------------
 // Error handler
@@ -20,10 +20,10 @@ function handleError(err, res, messageToSendToClient) {
 
 // Use to send suggestions to the client to use as tags.
 router.get('/', (req, res) => {
-  let context = {"Categories": DB_INTERFACE.getSuggestions()};
-  const MSG = context.Categories.message;
+  let context = {"Categories": dbInterface.getSuggestions()};
+  const message = context.Categories.message;
 
-  if (!context.Categories.success) handleError(new Error(MSG), res, MSG);
+  if (!context.Categories.success) handleError(new Error(message), res, message);
   else res.send(JSON.stringify(context));
 });
 
