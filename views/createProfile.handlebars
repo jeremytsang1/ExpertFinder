@@ -7,9 +7,60 @@
   <form id="expert-info-form"
         action="/createProfile"
         method="POST"
-        enctype="multipart/form-data">
+        enctype="multipart/form-data"> <!-- Attribute for uploading an image -->
     <h2>Contact Info</h2>
-    <div class="standard-fields"></div>
+    <div class="standard-fields">
+      <div class=" row">
+        <div class=" col-md-6">
+          <div class=" form-group">
+            <label for="name">Name</label>
+            <input id="name" class="form-control" type="text" name="name" required="required">
+          </div>
+        </div>
+        <div class=" col-md-6">
+          <div class=" form-group">
+            <label for="email">Email</label>
+            <input id="email" class="form-control" type="email" name="email" required="required">
+          </div>
+        </div>
+      </div>
+      <div class=" row">
+        <div class=" col-md-6">
+          <div class=" form-group">
+            <label for="twitter">Twitter</label>
+            <input id="twitter" class="form-control" type="text" name="twitter">
+          </div>
+        </div>
+        <div class=" col-md-6">
+          <div class=" form-group">
+            <label for="github">GitHub</label>
+            <input id="github" class="form-control" type="text" name="github">
+          </div>
+        </div>
+      </div>
+      <div class=" row">
+        <div class=" col-md-6">
+          <div class=" form-group">
+            <label for="linkedin">LinkedIn</label>
+            <input id="linkedin" class="form-control" type="text" name="linkedin">
+          </div>
+        </div>
+        <div class=" col-md-6">
+          <div class=" form-group">
+            <label for="stack-overflow">Stack Overflow</label>
+            <input id="stack-overflow" class="form-control" type="text" name="stack-overflow">
+          </div>
+        </div>
+      </div>
+      <div class=" row">
+        <div class=" col-md-6">
+          <div class=" form-group">
+            <label for="profile-picture">Profile Picture</label>
+            <input id="profile-picture" class="form-control" type="file" name="profile-picture">
+          </div>
+        </div>
+      </div>
+    </div>
 
     <h2>Expertise</h2>
     <p>
@@ -18,9 +69,29 @@
         <code>TAB</code>!
       </span>
     </p>
-    <div class="tagify-fields"></div>
+    <div class="tagify-fields">
+      <div class=" form-group">
+        <label for="tech-skills">Tech Skills</label>
+        <div class="form-inline multi-input">
+          <input id="tech-skills" class="form-control" type="text" name="tech-skills">
+        </div>
+      </div>
+      <div class=" form-group">
+        <label for="coursework">Coursework</label>
+        <div class="form-inline multi-input">
+          <input id="coursework" class="form-control" type="text" name="coursework">
+        </div>
+      </div>
+      <div class=" form-group">
+        <label for="industry">Industry</label>
+        <div class="form-inline multi-input">
+          <input id="industry" class="form-control" type="text" name="industry">
+        </div>
+      </div>
+    </div>
 
     <!-- register and cancel buttons -->
+
     <div class="row" id="registration-button-row">
       <div class="col-md-8">
         <button class="btn btn-success submit" id="register" type="submit">
