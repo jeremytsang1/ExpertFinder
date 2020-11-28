@@ -5,7 +5,7 @@ class ProfileCreationTagifyCategory {
   }
 
   getInput() {
-    return document.querySelector(`#${ProfileCreationTagifyCategory.INPUT_ID_PREFIX}${this.htmlName}`);
+    return document.querySelector(`#${this.htmlName}`);
   }
 
   getHtmlName() {
@@ -14,10 +14,6 @@ class ProfileCreationTagifyCategory {
 
   getDbName() {
     return this.dbName;
-  }
-
-  static get INPUT_ID_PREFIX () {
-    return "profile-creation-";
   }
 
   createTagify(suggestionAry) {

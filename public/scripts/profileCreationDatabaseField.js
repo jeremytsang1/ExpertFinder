@@ -36,14 +36,6 @@ class ProfileCreationDatabaseField {
   }
 
   idVal() {
-    return `${ProfileCreationDatabaseField.ID_PREFIX}${this.sourceName()}`;
-  }
-
-  static get ID_PREFIX () {
-    return "profile-creation-";
-  }
-
-  static makeID(databaseName) {
-    return `${ProfileCreationDatabaseField.ID_PREFIX()}${databaseName}`;
+    return `${this.sourceName()}`;
   }
 }
