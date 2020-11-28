@@ -54,11 +54,8 @@ router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) 
   // helpers
 
   function isEmailAlreadyTaken() {
-    console.log("foo");
     const existingEmails = dbInterface.getAllEmails();
     const emailFromUser = userForm.Email;
-    console.log(`existingEmails: ${existingEmails}`);
-    console.log(`emailFromUser: ${emailFromUser}`);
     return existingEmails.includes(emailFromUser);
   }
 
