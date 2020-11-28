@@ -10,7 +10,7 @@ function getExperts(search) {
     const result = searcher.search(keyword)
     
     //search expert courses and skills, and return expert json
-    return result
+    return result.filter(expert => expert.Active);
 }
 
 function getExpertCount() {
@@ -31,7 +31,8 @@ function createExpert(name, TechSkills, Coursework, Industry, ContactInfo, Profi
         "Coursework": Coursework,
         "Industry": Industry,
         "ContactInfo": ContactInfo,
-        "ProfilePicture": ProfilePicture
+        "ProfilePicture": ProfilePicture,
+        "Active": false
     }
     test_db.Experts.push(expert);
     console.log("Experts after createExpert():\n",
