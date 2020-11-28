@@ -21,9 +21,9 @@ function gmailPass() {
 
 // ----------------------------------------------------------------------------
 
-function sendEmail(emailAddress, expertInfo) {
+function sendEmailFromGmail(expertInfo) {
 }
 
 module.exports = {
-  sendEmail
+  sendEmailFromGmail
 };

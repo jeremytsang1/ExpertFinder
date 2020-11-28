@@ -13,7 +13,7 @@ const upload = multer({
 const {Callback} = require('../util/callback');
 const HTML_NAME_ATTR_OF_IMG_INPUT = "profile-picture";
 const {TagifyBackend} = require('../util/tagifyBackend')
-const {sendEmail} = require('../util/email');
+const {sendEmailFromGmail} = require('../util/email');
 const INVALID_EMAIL = "is already taken. Please enter a different email address.";
 
 function handleError(err, res) {
@@ -45,8 +45,10 @@ router.get('/success', (req, res) => {
 });
 
 router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) {
+  // Closure variables
   const [imgFileTmpPath, imgFileTargetPath] = createProfilePicturePath();
   const userForm = JSON.parse([JSON.stringify(req.body)]);
+  let expertInfo = null;
 
   if (isEmailAlreadyTaken()) informUserEmailIsAlreadyTaken();
   else saveUserToDatabase();
@@ -116,6 +118,7 @@ router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) 
   function sendEmail(complete, actionIfLastCallback) {
     // TODO
     console.log("Sending activation email to user.");
+    sendEmailFromGmail(expertInfo);
     complete(actionIfLastCallback);
   }
 
