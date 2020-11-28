@@ -25,11 +25,8 @@ router.get('/', function(req, res) {
       "public/css/tagify.css"
     ],
     jsscripts: [
-      "profileCreationDatabaseField.js",
-      "profileCreationStructure.js",
       "tagify.min.js",
-      "profileCreationTagifyCategory.js",
-      "profileCreationTags.js",
+      "tagifyClientRequest.js",
       "profileCreationForm.js"
     ]
   };
@@ -67,15 +64,16 @@ router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) 
   function createNewExpertFromUserForm() {
     console.log("Writing user creation form data to database.");
     return dbInterface.createExpert(
-      name=userForm["name"],
-      TechSkills=TagifyBackend.getTagsAsArray(userForm['tech-skills']),
-      Coursework=TagifyBackend.getTagsAsArray(userForm['coursework']),
-      Industry=TagifyBackend.getTagsAsArray(userForm['industry']),
+      Name=userForm.Name,
+      TechSkills=TagifyBackend.getTagsAsArray(userForm.TechSkills),
+      Coursework=TagifyBackend.getTagsAsArray(userForm.Coursework),
+      Industry=TagifyBackend.getTagsAsArray(userForm.Industry),
       ContactInfo={
-        "Email":userForm['email'],
-        "Github":userForm['github'],
-        "Linkedin":userForm['linkedin'],
-        "Twitter":userForm['twitter']
+        "Email":userForm.Email,
+        "Github":userForm.Github,
+        "Linkedin":userForm.Linkedin,
+        "Twitter":userForm.Twitter,
+        "Stackoverflow": userForm.Stackoverflow
       },
       ProfilePicture=imgFileTargetPath);
   }
