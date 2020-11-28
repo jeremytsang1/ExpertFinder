@@ -64,6 +64,7 @@ app.get('/expertDisplay', function(req,res){
 // Route for creating a new user account.
 app.use('/createProfile', require('./routes/createProfile.js'));
 app.use('/suggestions', require('./routes/suggestions.js'));
+app.use('/activateProfile', require('./routes/activateProfile.js'));
 var expertSearch = require('./routes/expertSearch.js');
 app.use('/expertSearch', expertSearch);
 
