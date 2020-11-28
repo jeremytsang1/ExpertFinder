@@ -26,7 +26,7 @@ router.get('/', function(req, res) {
     ],
     jsscripts: [
       "tagify.min.js",
-      "profileCreationTags.js",
+      "tagifyClientRequest.js",
       "profileCreationForm.js"
     ]
   };
