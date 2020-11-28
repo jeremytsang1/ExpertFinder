@@ -13,6 +13,7 @@ const upload = multer({
 const {Callback} = require('../util/callback');
 const HTML_NAME_ATTR_OF_IMG_INPUT = "profile-picture";
 const {TagifyBackend} = require('../util/tagifyBackend')
+const {sendEmail} = require('../util/email');
 const INVALID_EMAIL = "is already taken. Please enter a different email address.";
 
 function handleError(err, res) {
