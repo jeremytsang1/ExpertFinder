@@ -1,3 +1,12 @@
+/**
+ * Looks for a <div class="tagify-fields"> and for each <input> conatined
+ * inside, adds a Tagify <tag> element (built as specified by
+ * `fcnThatCreatesATagifyObject`) using tag suggestions requested (XHR) from
+ * the server.
+ * @param {} fcnThatCreatesATagifyObject - function that takes two parameters
+ * named (inputTag, suggestionAry) and returns a new object of type Tagify.
+ * @return
+ */
 function makeTagifyUsingBackendData(fcnThatCreatesATagifyObject) {
   const URL = "/suggestions";
   const CATEGORIES_KEY = "Categories";
