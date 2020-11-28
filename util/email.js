@@ -1,5 +1,7 @@
 require('dotenv').config();
 const nodemailer = require("nodemailer");
+const os = require('os');
+const PORT_NUM = 3500
 
 // ----------------------------------------------------------------------------
 // Gmail account credentials.
@@ -69,14 +71,16 @@ function makeTextMessage(expertInfo) {
       + "\n" + "If you want to activate your account click the following link, "
       +        "otherwise please disregard this message."
       + "\n"
-      + "\n" + `${makeLink()}`
+      + "\n" + `${makeLink(expertInfo)}`
+      + "\n"
       + "\n" + `${makeFooter()}`
   );
 }
 
-function makeLink() {
-  let link = "";
-  return link;
+function makeLink(expertInfo) {
+  const baseUrl = `http://${os.hostname()}:${PORT_NUM}`;
+  let route = `activateProfile?Id=${expertInfo.Id}`;
+  return `${baseUrl}/${route}`;
 }
 
 function makeFooter() {
