@@ -13,6 +13,7 @@ const upload = multer({
 const {Callback} = require('../util/callback');
 const HTML_NAME_ATTR_OF_IMG_INPUT = "profile-picture";
 const {TagifyBackend} = require('../util/tagifyBackend')
+const {sendEmailFromGmail} = require('../util/email');
 const INVALID_EMAIL = "is already taken. Please enter a different email address.";
 
 function handleError(err, res) {
@@ -30,11 +31,14 @@ router.get('/', function(req, res) {
       "tagifyClientRequest.js",
       "profileCreationForm.js"
     ],
-    errorMessage: req.query.errorMessage
+    errorMessage: null
   };
 
-  res.render('createProfile', context);
+  if (req.query.email) {
+    context.errorMessage = `${req.query.email} ${INVALID_EMAIL}`;
+  }
 
+  res.render('createProfile', context);
 });
 
 router.get('/success', (req, res) => {
@@ -44,33 +48,16 @@ router.get('/success', (req, res) => {
 });
 
 router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) {
+  // Closure variables
   const [imgFileTmpPath, imgFileTargetPath] = createProfilePicturePath();
   const userForm = JSON.parse([JSON.stringify(req.body)]);
+  let expertInfo = getExpertInfoFromUser();
 
   if (isEmailAlreadyTaken()) informUserEmailIsAlreadyTaken();
   else saveUserToDatabase();
 
   // ----------------------------------------
   // helpers
-
-  function isEmailAlreadyTaken() {
-    const existingEmails = dbInterface.getAllEmails();
-    const emailFromUser = userForm.Email;
-    return existingEmails.includes(emailFromUser);
-  }
-
-  function informUserEmailIsAlreadyTaken() {
-    let errorMessage = `${userForm.Email} ${INVALID_EMAIL}`;
-    res.redirect(`createProfile?errorMessage=${errorMessage}`);
-    res.end();
-  }
-
-  function saveUserToDatabase() {
-    createNewExpertFromUserForm();
-    let callbacks = [new Callback(saveImage, redirectToSuccessPage),
-                     new Callback(sendEmail, redirectToSuccessPage)];
-    Callback.runCallbacks(callbacks);
-  }
 
   function createProfilePicturePath() {
     const tmpPath = (req.file) ? req.file.path : null;
@@ -81,21 +68,51 @@ router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) 
     return [tmpPath, permPath];
   }
 
-  function createNewExpertFromUserForm() {
-    console.log("Writing user creation form data to database.");
-    return dbInterface.createExpert(
-      Name=userForm.Name,
-      TechSkills=TagifyBackend.getTagsAsArray(userForm.TechSkills),
-      Coursework=TagifyBackend.getTagsAsArray(userForm.Coursework),
-      Industry=TagifyBackend.getTagsAsArray(userForm.Industry),
-      ContactInfo={
+  function getExpertInfoFromUser() {
+    return {
+      Id: null,
+      Name: userForm.Name,
+      TechSkills: TagifyBackend.getTagsAsArray(userForm.TechSkills),
+      Coursework: TagifyBackend.getTagsAsArray(userForm.Coursework),
+      Industry: TagifyBackend.getTagsAsArray(userForm.Industry),
+      ContactInfo: {
         "Email":userForm.Email,
         "Github":userForm.Github,
         "Linkedin":userForm.Linkedin,
         "Twitter":userForm.Twitter,
         "Stackoverflow": userForm.Stackoverflow
       },
-      ProfilePicture=imgFileTargetPath);
+      ProfilePicture: imgFileTargetPath
+    }
+  }
+
+  function isEmailAlreadyTaken() {
+    const existingEmails = dbInterface.getAllEmails();
+    return existingEmails.includes(expertInfo.ContactInfo.Email);
+  }
+
+  function informUserEmailIsAlreadyTaken() {
+    res.redirect(`createProfile?email=${expertInfo.ContactInfo.Email}`);
+    res.end();
+  }
+
+  function saveUserToDatabase() {
+    expertInfo.Id = createNewExpertFromUserForm(); // call the API
+    let callbacks = [new Callback(saveImage, redirectToSuccessPage),
+                     new Callback(sendEmail, redirectToSuccessPage)];
+    Callback.runCallbacks(callbacks);
+  }
+
+  function createNewExpertFromUserForm() {
+    console.log("Writing user creation form data to database.");
+    return dbInterface.createExpert(
+      name=expertInfo.Name,
+      TechSkills=expertInfo.TechSkills,
+      Coursework=expertInfo.Coursework,
+      Industry=expertInfo.Industry,
+      ContactInfo=expertInfo.ContactInfo,
+      ProfilePicture=expertInfo.ProfilePicture,
+    );
   }
 
   // ----------------------------------------
@@ -115,6 +132,7 @@ router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) 
   function sendEmail(complete, actionIfLastCallback) {
     // TODO
     console.log("Sending activation email to user.");
+    sendEmailFromGmail(expertInfo);
     complete(actionIfLastCallback);
   }
 

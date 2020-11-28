@@ -16,7 +16,8 @@
                 "Stackoverflow": "stackoverflow.com/users/jdoe",
                 "Twitter": "twitter.com/johndoe"
             },
-            "ProfilePicture": "/public/images/male-default-profile-img.jpg"
+            "ProfilePicture": "/public/images/male-default-profile-img.jpg",
+            "Active": true
         },
         {
             "Id": 2,
@@ -35,7 +36,8 @@
                 "Linkedin": "linkedin.com/lenagregory",
                 "Twitter": "twitter.com/lenagregory"
             },
-            "ProfilePicture": "/public/images/female-default-profile-img.jpg"
+            "ProfilePicture": "/public/images/female-default-profile-img.jpg",
+            "Active": true
         }
     ],
     "Known": {
