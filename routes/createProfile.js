@@ -100,7 +100,7 @@ router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) 
   }
 
   function redirectToSuccessPage() {
-    const emailAddress = userForm['email'];
+    const emailAddress = userForm.Email;
     res.redirect(`createProfile/success?email=${emailAddress}`);
     res.end();
   }
