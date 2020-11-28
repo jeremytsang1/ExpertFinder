@@ -1,6 +1,9 @@
 function profileCreationTagsMain(createTagify) {
   const URL = "/suggestions";
   const CATEGORIES_KEY = "Categories";
+
+  // ASSUMPTION: <input> `name` attributes must be identical to the FIELDS in
+  // getSuggestions() from database/db_interface.js
   const inputTags = document.querySelectorAll(".tagify-fields input");
 
   getSuggestionsFromServerAndCreateTagifyElements();
