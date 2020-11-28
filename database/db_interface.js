@@ -17,6 +17,10 @@ function getExpertCount() {
     return test_db.Experts.length;
 }
 
+function getAllEmails() {
+    return test_db.Experts.map(expert => expert.ContactInfo.Email);
+}
+
 function createExpert(name, TechSkills, Coursework, Industry, ContactInfo, ProfilePicture) {
     // name, TechSkills, Coursework, Industry, ContactInfo
     var new_id = test_db.Experts.length + 1
@@ -54,6 +58,7 @@ function getSuggestions() {
 module.exports = {
     getExperts,
     getExpertCount,
+    getAllEmails,
     createExpert,
     updateExperts,
     deleteExperts,
