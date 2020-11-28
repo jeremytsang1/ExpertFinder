@@ -48,7 +48,7 @@ router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) 
   // Closure variables
   const [imgFileTmpPath, imgFileTargetPath] = createProfilePicturePath();
   const userForm = JSON.parse([JSON.stringify(req.body)]);
-  let expertInfo = null;
+  let expertInfo = getExpertInfoFromUser();
 
   if (isEmailAlreadyTaken()) informUserEmailIsAlreadyTaken();
   else saveUserToDatabase();
@@ -58,18 +58,17 @@ router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) 
 
   function isEmailAlreadyTaken() {
     const existingEmails = dbInterface.getAllEmails();
-    const emailFromUser = userForm.Email;
-    return existingEmails.includes(emailFromUser);
+    return existingEmails.includes(expertInfo.ContactInfo.Email);
   }
 
   function informUserEmailIsAlreadyTaken() {
-    let errorMessage = `${userForm.Email} ${INVALID_EMAIL}`;
+    let errorMessage = `${expertInfo.ContactInfo.Email} ${INVALID_EMAIL}`;
     res.redirect(`createProfile?errorMessage=${errorMessage}`);
     res.end();
   }
 
   function saveUserToDatabase() {
-    createNewExpertFromUserForm();
+    expertInfo.Id = createNewExpertFromUserForm(); // call the API
     let callbacks = [new Callback(saveImage, redirectToSuccessPage),
                      new Callback(sendEmail, redirectToSuccessPage)];
     Callback.runCallbacks(callbacks);
@@ -84,21 +83,35 @@ router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) 
     return [tmpPath, permPath];
   }
 
-  function createNewExpertFromUserForm() {
-    console.log("Writing user creation form data to database.");
-    return dbInterface.createExpert(
-      Name=userForm.Name,
-      TechSkills=TagifyBackend.getTagsAsArray(userForm.TechSkills),
-      Coursework=TagifyBackend.getTagsAsArray(userForm.Coursework),
-      Industry=TagifyBackend.getTagsAsArray(userForm.Industry),
-      ContactInfo={
+  function getExpertInfoFromUser() {
+    return {
+      Id: null,
+      Name: userForm.Name,
+      TechSkills: TagifyBackend.getTagsAsArray(userForm.TechSkills),
+      Coursework: TagifyBackend.getTagsAsArray(userForm.Coursework),
+      Industry: TagifyBackend.getTagsAsArray(userForm.Industry),
+      ContactInfo: {
         "Email":userForm.Email,
         "Github":userForm.Github,
         "Linkedin":userForm.Linkedin,
         "Twitter":userForm.Twitter,
         "Stackoverflow": userForm.Stackoverflow
       },
-      ProfilePicture=imgFileTargetPath);
+      ProfilePicture: imgFileTargetPath
+    }
+  }
+
+
+  function createNewExpertFromUserForm() {
+    console.log("Writing user creation form data to database.");
+    return dbInterface.createExpert(
+      name=expertInfo.Name,
+      TechSkills=expertInfo.TechSkills,
+      Coursework=expertInfo.Coursework,
+      Industry=expertInfo.Industry,
+      ContactInfo=expertInfo.ContactInfo,
+      ProfilePicture=expertInfo.ProfilePicture,
+    );
   }
 
   // ----------------------------------------
