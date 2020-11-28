@@ -56,24 +56,6 @@ router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) 
   // ----------------------------------------
   // helpers
 
-  function isEmailAlreadyTaken() {
-    const existingEmails = dbInterface.getAllEmails();
-    return existingEmails.includes(expertInfo.ContactInfo.Email);
-  }
-
-  function informUserEmailIsAlreadyTaken() {
-    let errorMessage = `${expertInfo.ContactInfo.Email} ${INVALID_EMAIL}`;
-    res.redirect(`createProfile?errorMessage=${errorMessage}`);
-    res.end();
-  }
-
-  function saveUserToDatabase() {
-    expertInfo.Id = createNewExpertFromUserForm(); // call the API
-    let callbacks = [new Callback(saveImage, redirectToSuccessPage),
-                     new Callback(sendEmail, redirectToSuccessPage)];
-    Callback.runCallbacks(callbacks);
-  }
-
   function createProfilePicturePath() {
     const tmpPath = (req.file) ? req.file.path : null;
     const newUserID = dbInterface.getExpertCount() + 1;
@@ -101,6 +83,23 @@ router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) 
     }
   }
 
+  function isEmailAlreadyTaken() {
+    const existingEmails = dbInterface.getAllEmails();
+    return existingEmails.includes(expertInfo.ContactInfo.Email);
+  }
+
+  function informUserEmailIsAlreadyTaken() {
+    let errorMessage = `${expertInfo.ContactInfo.Email} ${INVALID_EMAIL}`;
+    res.redirect(`createProfile?errorMessage=${errorMessage}`);
+    res.end();
+  }
+
+  function saveUserToDatabase() {
+    expertInfo.Id = createNewExpertFromUserForm(); // call the API
+    let callbacks = [new Callback(saveImage, redirectToSuccessPage),
+                     new Callback(sendEmail, redirectToSuccessPage)];
+    Callback.runCallbacks(callbacks);
+  }
 
   function createNewExpertFromUserForm() {
     console.log("Writing user creation form data to database.");
