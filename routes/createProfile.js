@@ -31,11 +31,14 @@ router.get('/', function(req, res) {
       "tagifyClientRequest.js",
       "profileCreationForm.js"
     ],
-    errorMessage: req.query.errorMessage
+    errorMessage: null
   };
 
-  res.render('createProfile', context);
+  if (req.query.email) {
+    context.errorMessage = `${req.query.email} ${INVALID_EMAIL}`;
+  }
 
+  res.render('createProfile', context);
 });
 
 router.get('/success', (req, res) => {
@@ -89,8 +92,7 @@ router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) 
   }
 
   function informUserEmailIsAlreadyTaken() {
-    let errorMessage = `${expertInfo.ContactInfo.Email} ${INVALID_EMAIL}`;
-    res.redirect(`createProfile?errorMessage=${errorMessage}`);
+    res.redirect(`createProfile?email=${expertInfo.ContactInfo.Email}`);
     res.end();
   }
 
