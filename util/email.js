@@ -37,9 +37,8 @@ async function sendEmailFromGmail(expertInfo) {
   const mailOptions = {
     from: `"Expert Finder" <${gmailUser()}>`,
     to: `${expertInfo.ContactInfo.Email}`,
-    subject: "Activate your Expert Finder Account!", // Subject line
-    text: "Hello world?", // plain text body
-    html: "<b>Hello world?</b>", // html body
+    subject: "Activate your Expert Finder Account!",
+    text: makeTextMessage(expertInfo)
   };
 
   // send mail with defined transport object
@@ -51,6 +50,46 @@ async function sendEmailFromGmail(expertInfo) {
   // Preview only available when sending through an Ethereal account
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+}
+
+function makeTextMessage(expertInfo) {
+  return (
+    ""
+      + "\n" + "An account for an expert with the following will be created."
+      + "\n"
+      + "\n" + `TechSkills: ${expertInfo.TechSkills}`
+      + "\n" + `Coursework: ${expertInfo.Coursework}`
+      + "\n" + `Industry: ${expertInfo.Industry}`
+      + "\n" + `Email: ${expertInfo.ContactInfo.Email}`
+      + "\n" + `Github: ${expertInfo.ContactInfo.Github}`
+      + "\n" + `LinkedIn: ${expertInfo.ContactInfo.Linkedin}`
+      + "\n" + `Twitter: ${expertInfo.ContactInfo.Twitter}`
+      + "\n" + `StackOverflow: ${expertInfo.ContactInfo.Stackoverflow}`
+      + "\n"
+      + "\n" + "If you want to activate your account click the following link, "
+      +        "otherwise please disregard this message."
+      + "\n"
+      + "\n" + `${makeLink()}`
+      + "\n" + `${makeFooter()}`
+  );
+}
+
+function makeLink() {
+  let link = "";
+  return link;
+}
+
+function makeFooter() {
+  // Append the current time of the message to the end to prevent folding the
+  // content by Gmail. Strategy taken from: https://stackoverflow.com/a/14585963
+  const date = new Date();
+  const hours = date.getHours();
+  const min = date.getMinutes();
+  const sec = date.getSeconds();
+  const month = date.getMonth();
+  const day = date.getDate();
+  const year = date.getFullYear();
+  return `[${hours}:${min}:${sec} ${month}/${day}/${year}] End of message.`;
 }
 
 module.exports = {
