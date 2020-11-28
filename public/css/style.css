@@ -10,6 +10,11 @@
     text-align: center;
 }
 
+#expert-info-container .error-message {
+    color: red;
+    padding: 1em 0em;
+}
+
 #expert-info-form label {
     color: #527896;
 }
