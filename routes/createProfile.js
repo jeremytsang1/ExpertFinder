@@ -28,7 +28,8 @@ router.get('/', function(req, res) {
       "tagify.min.js",
       "tagifyClientRequest.js",
       "profileCreationForm.js"
-    ]
+    ],
+    errorMessage: req.query.errorMessage
   };
 
   res.render('createProfile', context);
