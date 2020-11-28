@@ -13,6 +13,7 @@ const upload = multer({
 const {Callback} = require('../util/callback');
 const HTML_NAME_ATTR_OF_IMG_INPUT = "profile-picture";
 const {TagifyBackend} = require('../util/tagifyBackend')
+const INVALID_EMAIL = "is already taken. Please enter a different email address.";
 
 function handleError(err, res) {
   console.log(err);
@@ -28,7 +29,8 @@ router.get('/', function(req, res) {
       "tagify.min.js",
       "tagifyClientRequest.js",
       "profileCreationForm.js"
-    ]
+    ],
+    errorMessage: req.query.errorMessage
   };
 
   res.render('createProfile', context);
@@ -44,14 +46,32 @@ router.get('/success', (req, res) => {
 router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) {
   const [imgFileTmpPath, imgFileTargetPath] = createProfilePicturePath();
   const userForm = JSON.parse([JSON.stringify(req.body)]);
-  createNewExpertFromUserForm();
 
-  let callbacks = [new Callback(saveImage, redirectToSuccessPage),
-                   new Callback(sendEmail, redirectToSuccessPage)];
-  Callback.runCallbacks(callbacks);
+  if (isEmailAlreadyTaken()) informUserEmailIsAlreadyTaken();
+  else saveUserToDatabase();
 
   // ----------------------------------------
   // helpers
+
+  function isEmailAlreadyTaken() {
+    const existingEmails = dbInterface.getAllEmails();
+    const emailFromUser = userForm.Email;
+    return existingEmails.includes(emailFromUser);
+  }
+
+  function informUserEmailIsAlreadyTaken() {
+    let errorMessage = `${userForm.Email} ${INVALID_EMAIL}`;
+    res.redirect(`createProfile?errorMessage=${errorMessage}`);
+    res.end();
+  }
+
+  function saveUserToDatabase() {
+    createNewExpertFromUserForm();
+    let callbacks = [new Callback(saveImage, redirectToSuccessPage),
+                     new Callback(sendEmail, redirectToSuccessPage)];
+    Callback.runCallbacks(callbacks);
+  }
+
   function createProfilePicturePath() {
     const tmpPath = (req.file) ? req.file.path : null;
     const newUserID = dbInterface.getExpertCount() + 1;
@@ -99,7 +119,7 @@ router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) 
   }
 
   function redirectToSuccessPage() {
-    const emailAddress = userForm['email'];
+    const emailAddress = userForm.Email;
     res.redirect(`createProfile/success?email=${emailAddress}`);
     res.end();
   }
