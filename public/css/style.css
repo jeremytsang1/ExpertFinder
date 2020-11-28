@@ -22,11 +22,6 @@
     padding-top: 5em;
 }
 
-#expert-info-form .multi-input input {
-    width: 80%;
-    margin-right: 5%;
-}
-
 #expert-info-form .multi-input button {
     width: 15%;
 }
