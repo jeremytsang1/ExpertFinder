@@ -140,6 +140,7 @@ a.btn.home {
 Source: https://stackoverflow.com/questions/21181621/displaying-some-text-when-mouse-is-over-an-input-text-box/21181893 */
 
 #link-display {
+  margin-left: 10px;
   position: relative;
 }
 
@@ -151,14 +152,14 @@ Source: https://stackoverflow.com/questions/21181621/displaying-some-text-when-m
 #link-display:hover #links {
   background: rgb(189, 215, 228);
   border-radius: 3px;
-  bottom: -99px;
+  bottom: -50px;
   color: rgb(0, 0, 0);
   display: inline;
   left: 100;
   line-height: 30px;
   position: absolute;
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
 }
 
 #link-display:hover #links:before {
