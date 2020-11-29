@@ -57,7 +57,9 @@ module.exports = function(){
     router.get('/', function(req, res){
         var callbackCount = 0;
         var context = {};
-        context.jsscripts = ["jquery.js"]; // add script names here to load in web page if needed
+        context.cssstyles = ["public/css/tagify.css];
+        context.jsscripts = ["jquery.js", "tagify.min.js", "SuggestEditsForm.js"] //add script names here to load in web page if needed
+        
         //console.log(context)
         getAllUsers(res, context, complete);
 
