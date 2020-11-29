@@ -152,10 +152,10 @@ Source: https://stackoverflow.com/questions/21181621/displaying-some-text-when-m
 #link-display:hover #links {
   background: rgb(189, 215, 228);
   border-radius: 3px;
-  bottom: -50px;
+  bottom: -45px;
   color: rgb(0, 0, 0);
   display: inline;
-  left: 100;
+  left: -100;
   line-height: 30px;
   position: absolute;
   width: 150px;
