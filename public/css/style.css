@@ -134,35 +134,34 @@ a.btn.home {
   box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.25);
 }
 
+/* -------------------------------------------------------------------------- */
+
 /* Styling for the github hover over box. 
 Source: https://stackoverflow.com/questions/21181621/displaying-some-text-when-mouse-is-over-an-input-text-box/21181893 */
-* {
-  font-family: Arial;
-}
 
-.input {
+#link-display {
   position: relative;
 }
 
-.tooltip {
+#links {
   display: none;
   padding: 10px;
 }
 
-.input:hover .tooltip {
+#link-display:hover #links {
   background: rgb(189, 215, 228);
   border-radius: 3px;
-  bottom: -220px;
+  bottom: -99px;
   color: rgb(0, 0, 0);
   display: inline;
-  left: 0;
+  left: 100;
   line-height: 30px;
   position: absolute;
   width: 200px;
   height: 200px;
 }
 
-.input:hover .tooltip:before {
+#link-display:hover #links:before {
   display: block;
   content: "";
   position: absolute;
@@ -175,7 +174,7 @@ Source: https://stackoverflow.com/questions/21181621/displaying-some-text-when-m
 border-bottom: 5px solid blue;
 }
 
-
+/* -------------------------------------------------------------------------- */
 
 /* Just incase I need this stuff back*/
 

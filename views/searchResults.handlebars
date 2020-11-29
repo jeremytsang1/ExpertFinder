@@ -85,8 +85,9 @@
                                   </td>
                                 </tr>
                               {{else}}
-                                <tr class="collapse collapseme{{../Id}}">
-                                  <th scope="row">{{@key}}:</th>
+                                <tr id="link-display" class="collapse collapseme{{../Id}}">
+                                  <th scope="row">{{@key}}: <p id="links"> potatoes</p></th>
+                                  
                                   <td>
                                       <a href="https://www.{{this}}" target="_blank">{{this}}</a>
                                   </td>
