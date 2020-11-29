@@ -1,7 +1,10 @@
-module.exports = function(){
 
-    var express = require('express');
+module.exports = function(){
+    var index = require('./index')
+    var express = require('express')
     var router = express.Router();
+    var db_interface = require('./database/db_interface')
+
     const fs = require('fs'); 
 
     // souce: https://www.geeksforgeeks.org/how-to-read-and-write-json-file-using-node-js/
@@ -67,6 +70,18 @@ module.exports = function(){
             }
         }
     });
+
+    router.post('/', function(req,res){
+        var search_keyword = (req.body);
+        console.log(search_keyword)
+        var context = {};
+        context.jsscripts = ["jquery.js"]
+        context.experts = db_interface.getExperts(search_keyword);
+        console.log(context)
+            // res.send(context)
+        res.set('Content-type', 'text/html')
+        res.render('searchResults', context);
+    })
     
     return router;
 }();

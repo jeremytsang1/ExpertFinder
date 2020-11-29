@@ -6,47 +6,51 @@
 /* -------------------------------------------------------------------------- */
 /* Styles for profile creation page */
 
-#profile-creation-container h1 {
+#expert-info-container h1 {
     text-align: center;
 }
 
-#profile-creation-form label {
+#expert-info-container .error-message {
+    color: red;
+    padding: 1em 0em;
+}
+
+#expert-info-form label {
     color: #527896;
 }
 
-#profile-creation-form input {
+#expert-info-form input {
     background-color: #E9ECF5;
 }
 
-#profile-creation-form #registration-button-row {
+#expert-info-form #registration-button-row {
     padding-top: 5em;
 }
 
-#profile-creation-form .multi-input input {
-    width: 80%;
-    margin-right: 5%;
-}
-
-#profile-creation-form .multi-input button {
+#expert-info-form .multi-input button {
     width: 15%;
 }
 
-#profile-creation-form .submit, #profile-creation-form .cancel {
+#expert-info-form .submit, #expert-info-form .cancel {
     width: 100%;
 }
 
-#profile-creation-form .btn-success, #profile-creation-form .btn {
+#expert-info-form .btn-success, #expert-info-form .btn {
     background-color: #333E50;
     color: #FFFFFF;
 }
 
-#profile-creation-form .cancel {
+#expert-info-form .cancel {
     color: #546D80;
     background-color: #FFFFFF;
     border-color: #000;
 }
 
 .deemphasized { color: #a9a9a9; font-size: 0.9em; }
+
+#expert-info-form {
+    padding-bottom: 6em;
+}
 
 /* -------------------------------------------------------------------------- */
 /* Styles for tagify*/

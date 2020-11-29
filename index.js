@@ -1,5 +1,5 @@
 var express = require('express');
-
+var db_interface = require('./database/db_interface')
 var app = express();
 var cors = require('cors')
 var path = require('path');
@@ -24,9 +24,9 @@ var handlebars = require('express-handlebars');
 var hbs = handlebars.create({
   // Specify helpers which are only registered on this instance.
   helpers: {
-  //     // for testing
-  //     // foo: function () { return 'FOO!'; },
-  //     // bar: function () { return 'BAR!'; },
+      // for testing
+      // foo: function () { return 'FOO!'; },
+      // bar: function () { return 'BAR!'; },
       ifEquals: function(arg1, arg2, options) {
         console.log("Testing ", arg1, " == ", arg2, ": ", arg1 == arg2)
         return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
@@ -50,8 +50,12 @@ app.use('/searchResults', require('./searchResults.js'));
 // specify route path for expert-api
 
 app.get('/', function(req,res){
-  const context = {jsscripts: ['searchResponse.js']};
-  res.render('home', context);
+  var context = {
+    jsscripts: [    
+      "getKeyword.js"
+    ]
+  };
+    res.render('home', context);
   });
 
 app.get('/expertDisplay', function(req,res){
@@ -59,7 +63,8 @@ app.get('/expertDisplay', function(req,res){
 });
 // Route for creating a new user account.
 app.use('/createProfile', require('./routes/createProfile.js'));
-app.use('/suggestions', require('./routes/api/suggestions.js'));
+app.use('/suggestions', require('./routes/suggestions.js'));
+app.use('/activateProfile', require('./routes/activateProfile.js'));
 var expertSearch = require('./routes/expertSearch.js');
 app.use('/expertSearch', expertSearch);
 

@@ -1,44 +1,86 @@
 var test_db = require('./db')
+const FuzzySearch = require('fuzzy-search')
+const {Suggester} = require("./suggester");
+const {SuggestionValidator} = require("./suggestionValidator");
 
-function getExperts(search){
+function getExperts(search) {
     var keyword = search.keyword
     var results = []
-    for (var i=0; i < test_db["Experts"].length; i++){
-        var expert = (test_db["Experts"][i])
-
-        for (var tech_skill of expert.TechSkills){
-            if (keyword == tech_skill){
-                results.push(expert)
-            }
-        }
-        for (var course of expert.Coursework){
-            if (course.course_num.includes(keyword) || course.course_name.includes(keyword)){
-                results.push(expert)
-            }
-        }
-        
-    }
+    const searcher = new FuzzySearch(test_db.Experts, ['TechSkills', 'Coursework', 'Industry'], { caseSensitive: false }  )
+    const result = searcher.search(keyword)
+    
     //search expert courses and skills, and return expert json
-    return results
+    return result.filter(expert => expert.Active);
 }
 
-function createExpert(){
+function getExpertCount() {
+    return test_db.Experts.length;
+}
+
+function getExpertById(Id) {
+    const experts = test_db.Experts;
+    let results = experts.filter(expert => expert.Id === Id);
+    switch (results.length) {
+    case 0:
+        return null;
+    case 1:
+        return results[0];
+    default:
+        throw new Error(`Multiple experts found with Id = ${Id}`);
+    }
+}
+
+function activateExpert(Id) {
+    getExpertById(Id).Active = true;
+}
+
+function getAllEmails() {
+    return test_db.Experts.map(expert => expert.ContactInfo.Email);
+}
+
+function createExpert(name, TechSkills, Coursework, Industry, ContactInfo, ProfilePicture) {
     // name, TechSkills, Coursework, Industry, ContactInfo
-    var new_id = test_db["Experts"].length + 1
+    var new_id = test_db.Experts.length + 1
+    const expert = {
+        "Id": new_id,
+        "Name": name,
+        "TechSkills": TechSkills,
+        "Coursework": Coursework,
+        "Industry": Industry,
+        "ContactInfo": ContactInfo,
+        "ProfilePicture": ProfilePicture,
+        "Active": false
+    }
+    test_db.Experts.push(expert);
+    console.log("Experts after createExpert():\n",
+                JSON.stringify(test_db.Experts, null, 2));
     return new_id
 }
-function updateExperts(id, name, TechSkills, Coursework, Industry, ContactInfo){
+function updateExperts(id, name, TechSkills, Coursework, Industry, ContactInfo) {
     return expert_id
 }
-function deleteExperts(expert_id){
-    return 
+function deleteExperts(expert_id) {
+    return
 }
+
+function getSuggestions() {
+    const FIELDS = ['TechSkills', 'Coursework', 'Industry'];
+    const MSG = (new SuggestionValidator(FIELDS, test_db)).isDatabaseSafeForSuggestions();
+    if (MSG !== null) return {'success': false, 'message': MSG};
+
+    const SUGGESTER = new Suggester(FIELDS, test_db);
+    return {'success': true, ...SUGGESTER.makeSuggestions()};
+}
+
 
 module.exports = {
     getExperts,
+    getExpertCount,
+    getExpertById,
+    activateExpert,
+    getAllEmails,
     createExpert,
     updateExperts,
-    deleteExperts
+    deleteExperts,
+    getSuggestions
 }
-
-    

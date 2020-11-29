@@ -1,65 +1,146 @@
-module.exports = function() {
-  var express = require('express');
-  var router = express.Router();
+var express = require('express');
+var router = express.Router();
+const dbInterface = require('../database/db_interface');
+const IMG_DIR = 'public/images';
+const IMG_DIR_TMP = `${IMG_DIR}/tmp`
+const fs = require('fs');
+const http = require("http");
+const path = require("path");
+const multer = require("multer");
+const upload = multer({
+  dest: IMG_DIR_TMP  // directory to place temporary uploads
+});
+const {Callback} = require('../util/callback');
+const HTML_NAME_ATTR_OF_IMG_INPUT = "profile-picture";
+const {TagifyBackend} = require('../util/tagifyBackend')
+const {sendEmailFromGmail} = require('../util/email');
+const INVALID_EMAIL = "is already taken. Please enter a different email address.";
 
-  router.get('/', function(req, res) {
-    var context = {
-      cssstyles: [
-        "public/css/tagify.css"
-      ],
-      jsscripts: [
-        "profileCreationDatabaseField.js",
-        "profileCreationStructure.js",
-        "tagify.min.js",
-        "profileCreationTagifyCategory.js",
-        "profileCreationTags.js",
-        "profileCreationForm.js",
-        "searchResponse.js"
-      ]
-    };
+function handleError(err, res) {
+  console.log(err);
+  res.status(500).contentType("text/plain").end("Something went wrong!");
+}
 
-    res.render('createProfile', context);
+router.get('/', function(req, res) {
+  var context = {
+    cssstyles: [
+      "public/css/tagify.css"
+    ],
+    jsscripts: [
+      "tagify.min.js",
+      "tagifyClientRequest.js",
+      "profileCreationForm.js"
+    ],
+    errorMessage: null
+  };
 
-  });
+  if (req.query.email) {
+    context.errorMessage = `${req.query.email} ${INVALID_EMAIL}`;
+  }
 
-  router.get('/success', (req, res) => {
-    const context = {"email": req.query.email};
+  res.render('createProfile', context);
+});
 
-    res.render('createProfileSuccess', context)
-  })
-     
-  router.post('/', function(req, res) {
-    var qParams = [];
-    // for (var p in req.body) {
-        // qParams.push(JSON.stringify({'first-name':p, 'value':req.body[p]}))
-    // }
-    // console.log(qParams);
+router.get('/success', (req, res) => {
+  const context = {"email": req.query.email};
 
-     // writing to a file code is based on https://stackabuse.com/writing-to-files-in-node-js/
-    const fs = require('fs');
+  res.render('createProfileSuccess', context)
+});
 
-    var newProfile = JSON.stringify(req.body);
+router.post('/', upload.single(HTML_NAME_ATTR_OF_IMG_INPUT), function(req, res) {
+  // Closure variables
+  const [imgFileTmpPath, imgFileTargetPath] = createProfilePicturePath();
+  const userForm = JSON.parse([JSON.stringify(req.body)]);
+  let expertInfo = getExpertInfoFromUser();
 
-    // write to a new file
-    fs.appendFile('testDB.json', newProfile, (err) => {
-        // throws an error, you could also catch it here
-        if (err) throw err;
+  if (isEmailAlreadyTaken()) informUserEmailIsAlreadyTaken();
+  else saveUserToDatabase();
 
-        // success case, the file was saved
-        console.log('profile saved!');
-    });
+  // ----------------------------------------
+  // helpers
 
-    
-    console.log(req.body);
-    console.log("PPPPPOOOOOOOSSSSSTTT");
-    var context = {};
-    // context.dataList = qParams;
-    res.redirect(`createProfile/success?email=${req.body.email}`);
+  function createProfilePicturePath() {
+    const tmpPath = (req.file) ? req.file.path : null;
+    const newUserID = dbInterface.getExpertCount() + 1;
+    const permPath = ((tmpPath !== null)
+                      ? `${IMG_DIR}/id-${newUserID}.png`
+                      : `${IMG_DIR}/female-default-profile-img.jpg`);
+    return [tmpPath, permPath];
+  }
+
+  function getExpertInfoFromUser() {
+    return {
+      Id: null,
+      Name: userForm.Name,
+      TechSkills: TagifyBackend.getTagsAsArray(userForm.TechSkills),
+      Coursework: TagifyBackend.getTagsAsArray(userForm.Coursework),
+      Industry: TagifyBackend.getTagsAsArray(userForm.Industry),
+      ContactInfo: {
+        "Email":userForm.Email,
+        "Github":userForm.Github,
+        "Linkedin":userForm.Linkedin,
+        "Twitter":userForm.Twitter,
+        "Stackoverflow": userForm.Stackoverflow
+      },
+      ProfilePicture: imgFileTargetPath
+    }
+  }
+
+  function isEmailAlreadyTaken() {
+    const existingEmails = dbInterface.getAllEmails();
+    return existingEmails.includes(expertInfo.ContactInfo.Email);
+  }
+
+  function informUserEmailIsAlreadyTaken() {
+    res.redirect(`createProfile?email=${expertInfo.ContactInfo.Email}`);
     res.end();
-  });
+  }
 
-  //   document.getElementById('register').addEventListener('click', saveUserData);
-  // });
+  function saveUserToDatabase() {
+    expertInfo.Id = createNewExpertFromUserForm(); // call the API
+    let callbacks = [new Callback(saveImage, redirectToSuccessPage),
+                     new Callback(sendEmail, redirectToSuccessPage)];
+    Callback.runCallbacks(callbacks);
+  }
 
-  return router;
-}();
+  function createNewExpertFromUserForm() {
+    console.log("Writing user creation form data to database.");
+    return dbInterface.createExpert(
+      name=expertInfo.Name,
+      TechSkills=expertInfo.TechSkills,
+      Coursework=expertInfo.Coursework,
+      Industry=expertInfo.Industry,
+      ContactInfo=expertInfo.ContactInfo,
+      ProfilePicture=expertInfo.ProfilePicture,
+    );
+  }
+
+  // ----------------------------------------
+  // callbacks
+
+  function saveImage(complete, actionIfLastCallback) {
+    console.log("Saving image from user creation form to server.");
+    if (imgFileTmpPath === null) complete(actionIfLastCallback);
+    else {
+      fs.rename(imgFileTmpPath, imgFileTargetPath, err =>  {
+        if (err) handleError()
+        else complete(actionIfLastCallback);
+      });
+    }
+  }
+
+  function sendEmail(complete, actionIfLastCallback) {
+    // TODO
+    console.log("Sending activation email to user.");
+    sendEmailFromGmail(expertInfo);
+    complete(actionIfLastCallback);
+  }
+
+  function redirectToSuccessPage() {
+    const emailAddress = userForm.Email;
+    res.redirect(`createProfile/success?email=${emailAddress}`);
+    res.end();
+  }
+});
+
+module.exports = router;

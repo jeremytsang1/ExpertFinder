@@ -180,3 +180,8 @@ dist
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/vscode,emacs,node,database
+database/dbTesting.json
+testDB.json
+
+# Temporary Profile Pictures
+public/images/tmp/
