@@ -58,22 +58,18 @@
                             <tr>
                               <th scope="row">Tech Skills:</th>
 
-                                <td> <input id="edit" type="text" value="{{this.TechSkills}}"> </td>
-				                <button type="button" class="btn btn-primary suggest-edits-button">Edit</button>
+                                <td> <input id="edit" type="text" value="{{this.TechSkills}}">   <button type="button" class="btn btn-primary suggest-edits-button">Edit</button> </td>
 
                             </tr>
                             <tr>
                                 <input id="edit" type="text" value="{{#each this.Coursework}}
                                        {{this.course_num}} : {{course_name}} ,
-                                       {{/each}}">
-                            </tr>
-				            <button type="button" class="btn btn-primary suggest-edits-button">Edit</button>
+                                       {{/each}}"> <button type="button" class="btn btn-primary suggest-edits-button">Edit</button>
                             </tr>
 
                             <tr>
                               <th scope="row">Industry:</th>
-                                  <td> <input id="edit" type="text" value="{{this.Industry}}"> </td>
-				                <button type="button" class="btn btn-primary suggest-edits-button">Edit</button>
+                                  <td> <input id="edit" type="text" value="{{this.Industry}}">  <button type="button" class="btn btn-primary suggest-edits-button">Edit</button> <td>
                             </tr>
 
                             {{!-- check if contact info is the email. If yes, use appropriate html code block --}}
