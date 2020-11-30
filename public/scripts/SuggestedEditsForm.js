@@ -3,10 +3,11 @@ SuggestEditsButton.addEventListener("click", updateForm);
 
 function updateForm(event)
 {
-  {{this.TechSkills}}: row.querySelector("input[name=Techskills]").value,
-  {{this.Coursework}}: row.querySelector("input[name=Coursework]").value,
-  {{this.Industry}}: row.querySelector("input[name=Industry]").value,
-  
+    let tagify = new Tagify(document.querySelector("#edit"))
+{
+  {{this.TechSkills}}: document.querySelectorAll("input[value=Techskills]").value,
+  {{this.Coursework}}: document.querySelectorAll("input[value=Coursework]").value,
+  {{this.Industry}}: document.querySelectorAll("input[value=Industry]").value,
 }
-  
-let tagify = new Tagify(document.querySelector("#foobar"))
+}
+
