@@ -121,7 +121,7 @@ a.btn.home {
 
 /* Styles for suggest edits*/
 
-#suggest-edits-button {
+.suggest-edits-button {
     position: relative;
     right: 0px;
     width: 200px;
