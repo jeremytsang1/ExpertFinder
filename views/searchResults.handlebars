@@ -62,14 +62,15 @@
 
                             </tr>
                             <tr>
-                                <input id="edit" type="text" value="{{#each this.Coursework}}
+			    	<th scope="row">Coursework:</th>
+                                <td><input id="edit" type="text" value="{{#each this.Coursework}}
                                        {{this.course_num}} : {{course_name}} ,
-                                       {{/each}}"> <button type="button" class="btn btn-primary suggest-edits-button">Edit</button>
+                                       {{/each}}"> <button type="button" class="btn btn-primary suggest-edits-button">Edit</button></td>
                             </tr>
 
                             <tr>
                               <th scope="row">Industry:</th>
-                                  <td> <input id="edit" type="text" value="{{this.Industry}}">  <button type="button" class="btn btn-primary suggest-edits-button">Edit</button> <td>
+                                  <td> <input id="edit" type="text" value="{{this.Industry}}">  <button type="button" class="btn btn-primary suggest-edits-button">Edit</button> </td>
                             </tr>
 
                             {{!-- check if contact info is the email. If yes, use appropriate html code block --}}
