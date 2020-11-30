@@ -125,7 +125,7 @@ a.btn.home {
     position: relative;
     right: 0px;
     width: 50px;
-    border: 3px solid1;
+    border: 3px solid;
     padding: 10px;
     box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.25);
 }
