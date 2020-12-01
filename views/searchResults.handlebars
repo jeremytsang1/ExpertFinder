@@ -1,120 +1,103 @@
-<h2><title>Search Results</title></h2>
-
-<h3>[TO BE COMPLETED] In this page the profiles will appear after a search based on OSU coursework or tech stack has been executed by the application user.</h3>
-
-<table id="resultsTable">
- 	<col style="width:15%"> 
- 	<col style="width:15%">
-	<col style="width:15%">
+<h1>Search Results</h1>
 
 
-  <thead >
-      <th>Name</th>
-      <th>Industry</th>
-      <th>Coursework</th>
-      <th>Skills</th>
-      <th>More Info</th>
-  </thead>
-  <tbody>
-    {{#each experts}} 
-      <tr id="searchResults">
-          <td class="userDetails">{{this.Name}}</td> 
-          {{!-- modal example source: https://getbootstrap.com/docs/4.0/components/modal/ --}}
-          <!-- Button trigger modal -->
-          <td class="userDetails">{{this.Industry}}</td>
-   
-          <td class="userDetails">{{this.Coursework}}</td>  
+{{#each experts}}
+  <div class="container w-75" >
+      <button type="button" class="btn btn-primary btn-lg btn-block text-left resultsBtn" data-toggle="modal" data-target="#exampleModalCenter{{this.Id}}">
+        <div class="container">
 
-          <td class="userDetails">{{this.TechSkills}}</td>
+          <h2>
+            {{this.Name}}
+          </h2>
 
-          <td class="userDetails">
-            <div id="getInfoButton">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter{{this.Id}}">Get Info</button>
+          <div class="row" style="">
+            <div class="col-4 align-self-start text-left">
+              <div style="white-space: pre-wrap;"><b>Tech Skills:</b> {{this.TechSkills}}</div>
+              <div style="white-space: pre-wrap;"><b>Industry:</b> {{this.Industry}}</div>
+            </div>
 
-              <!-- Modal -->
-              <div class="modal fade" id="exampleModalCenter{{this.Id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-body">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                      <div>
-                        <div class="text-center">
-                          <img src="{{this.ProfilePicture}}" class="img-thumbnail img-fluid " alt="...">
-                        </div>
-                        <div class="text-center">
-                          <h3 class="modal-title" id="exampleModalLongTitle">{{this.Name}}</h3>
-                        </div>
-                      </div>
-                      <table>
-                        <tbody>
-                            <tr>
-                              <th scope="row">Tech Skills:</th>
-                                <td> <input id="edit" type="text" value="{{this.TechSkills}}">   <button type="button" class="btn btn-primary suggest-edits-button">Edit</button> </td>
-                            </tr>
-                            <tr>
+            <div class="col align-self-start text-left"> 
+              <div style="white-space: pre-wrap;"><b>Coursework:</b> {{this.Coursework}}</div>
+            </div>
+          </div>
 
-                            <tr>
-                              <th scope="row">Coursework:</th>
-                                  <td> <input id="edit" type="text" value="{{this.Coursework}}">   <button type="button" class="btn btn-primary suggest-edits-button">Edit</button> </td>
-                            </tr>
+        </div>
+      </button>
+  </div>
 
-                            <tr>
-                              <th scope="row">Industry:</th>
-                                  <td> <input id="edit" type="text" value="{{this.Industry}}">  <button type="button" class="btn btn-primary suggest-edits-button">Edit</button> </td>
-                            </tr>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter{{this.Id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div>
+            <div class="text-center">
+              <img src="{{this.ProfilePicture}}" class="img-thumbnail img-fluid " alt="...">
+            </div>
+            <div class="text-center">
+              <h3 class="modal-title" id="exampleModalLongTitle">{{this.Name}}</h3>
+            </div>
+          </div>
+          <table>
+            <tbody>
+                <tr>
+                  <th scope="row">Tech Skills:</th>
+                    <td> <input id="edit" type="text" value="{{this.TechSkills}}">   <button type="button" class="btn btn-primary suggest-edits-button">Edit</button> </td>
+                </tr>
+                <tr>
+                  <th scope="row">Coursework:</th>
+                    <td> <input id="edit" type="text" value="{{this.Coursework}}">   <button type="button" class="btn btn-primary suggest-edits-button">Edit</button> </td>
+                </tr>
+                <tr>
+                  <th scope="row">Industry:</th>
+                      <td> <input id="edit" type="text" value="{{this.Industry}}">  <button type="button" class="btn btn-primary suggest-edits-button">Edit</button> </td>
+                </tr>
 
-                            {{!-- check if contact info is the email. If yes, use appropriate html code block --}}
-                            {{!-- https://stackoverflow.com/questions/34252817/handlebarsjs-check-if-a-string-is-equal-to-a-value --}}
-                            {{#each this.ContactInfo}}
-                              {{#ifEquals  @key "Email"}}
-                                <tr>
-                                  <th scope="row">{{@key}}:</th>
-                                  <td>
-                                      <a href = "mailto: {{this}}">{{this}}</a>
-                                  </td>
-                                </tr>
-                              {{else}}
-                                <tr class="collapse collapseme{{../Id}}">
-                                  <th scope="row">{{@key}}:</th>
-                                  <td>
-                                      <a href="https://www.{{this}}" target="_blank">{{this}}</a>
-                                  </td>
-                                </tr>
-                              {{/ifEquals}}
-                            {{/each}}
+                {{!-- check if contact info is the email. If yes, use appropriate html code block --}}
+                {{!-- https://stackoverflow.com/questions/34252817/handlebarsjs-check-if-a-string-is-equal-to-a-value --}}
+                {{#each this.ContactInfo}}
+                  {{#ifEquals  @key "Email"}}
+                    <tr>
+                      <th scope="row">{{@key}}:</th>
+                      <td>
+                          <a href = "mailto: {{this}}">{{this}}</a>
+                      </td>
+                    </tr>
+                  {{else}}
+                    <tr class="collapse collapseme{{../Id}}">
+                      <th scope="row">{{@key}}:</th>
+                      <td>
+                          <a href="https://www.{{this}}" target="_blank">{{this}}</a>
+                      </td>
+                    </tr>
+                  {{/ifEquals}}
+                {{/each}}
 
-                            <tr>
-                              <td>
-                                <button id="" class="btn btn-link showMoreLessBtn" data-toggle="collapse" data-target=".collapseme{{Id}}" data-text-alt="-Show Less">
-                                  +Show More
-                                </button>
-                              </td>
-                            </tr>
- 
-                        </tbody>  
-                      </table>
-                    </div>
-                    <div class="modal-footer">
-                      <div class="container">
-                        <div class="row">
-                          <div class="col text-center">
-                            <button class="btn btn-primary" data-dismiss="modal">OK, got it!</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                <tr>
+                  <td>
+                    <button id="" class="btn btn-link showMoreLessBtn" data-toggle="collapse" data-target=".collapseme{{Id}}" data-text-alt="-Show Less">
+                      +Show More
+                    </button>
+                  </td>
+                </tr>
 
-                  </div>
-                </div>
+            </tbody>  
+          </table>
+        </div>
+        <div class="modal-footer">
+          <div class="container">
+            <div class="row">
+              <div class="col text-center">
+                <button class="btn btn-primary" data-dismiss="modal">OK, got it!</button>
               </div>
             </div>
-        </td>
-      </tr> 
-    {{/each}} 
-  </tbody>  
-</table> 
-<hr>
-<br>
+          </div>
+        </div>
 
+      </div>
+    </div>
+  </div>
+{{/each}} 
