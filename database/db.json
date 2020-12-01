@@ -2,7 +2,7 @@
     "Experts": [
         {
             "Id": 1,
-            "Name": "John Doe",
+            "Name": "Kyle Bell",
             "TechSkills": ["Python", "Java"],
             "Coursework": ["CS161 Intro to Computer Science I",
                             "CS162 Intro to Computer Science II",
@@ -11,7 +11,7 @@
             "Industry": ["Web Development"],
             "ContactInfo": {
                 "Email": "johnDoe33@gmail.com",
-                "Github": "github.com/johndoe6",
+                "Github": "github.com/kylebell3",
                 "Linkedin": "linkedin.com/johndoe",
                 "Stackoverflow": "stackoverflow.com/users/jdoe",
                 "Twitter": "twitter.com/johndoe"
