@@ -23,17 +23,39 @@
             const response = await fetch(url)
             const result = await response.json()
 
-            console.log(await fourRepos)
+            // console.log(result[0].html_url)
+
+
+            var repoList = []
+                      
+            
+
+                if (result.length < 4) {
+                    for (i = 0; i < result.length; i++) {
+                        repoList.push(result[i].html_url)
+                    }
+                }
+
+                else {
+                    for (i = 0; i < 4; i++) {
+                repoList.push(result[i].html_url)
+                }
+
+                }
+
+            console.log(repoList)    
+            console.log('hi')
+
         }
 
         // function to iterate to grab first 4 github links
-        function fourRepos(result) {
-            var repoList = []
-            for (i = 0; i < 4; i++) {
-                repoList.push(result[i].html_url)
-            }
-            return repoList
-        }
+        // function fourRepos(result) {
+        //     var repoList = []
+        //     for (i = 0; i < 4; i++) {
+        //         repoList.push(result[i].html_url)
+        //     }
+        //     return repoList
+        // }
 
     </script>
 
