@@ -24,9 +24,6 @@ var handlebars = require('express-handlebars');
 var hbs = handlebars.create({
   // Specify helpers which are only registered on this instance.
   helpers: {
-      // for testing
-      // foo: function () { return 'FOO!'; },
-      // bar: function () { return 'BAR!'; },
       ifEquals: function(arg1, arg2, options) {
         console.log("Testing ", arg1, " == ", arg2, ": ", arg1 == arg2)
         return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
@@ -45,7 +42,7 @@ app.use(cors())
 
 //init public folder
 app.use("/public", express.static('./public/'));
-app.use('/searchResults', require('./searchResults.js'));
+app.use('/searchResults', require('./routes/searchResults.js'));
 
 // specify route path for expert-api
 

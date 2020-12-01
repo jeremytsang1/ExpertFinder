@@ -23,13 +23,7 @@
           <!-- Button trigger modal -->
           <td class="userDetails">{{this.Industry}}</td>
    
-
-          <td class="userDetails">
-            {{#each this.Coursework}}
-            {{this.course_num}}: {{course_name}},
-            {{/each}}
-          </td>
-     
+          <td class="userDetails">{{this.Coursework}}</td>  
 
           <td class="userDetails">{{this.TechSkills}}</td>
 
@@ -57,15 +51,13 @@
                         <tbody>
                             <tr>
                               <th scope="row">Tech Skills:</th>
-
                                 <td> <input id="edit" type="text" value="{{this.TechSkills}}">   <button type="button" class="btn btn-primary suggest-edits-button">Edit</button> </td>
-
                             </tr>
                             <tr>
-			    	<th scope="row">Coursework:</th>
-                                <td><input id="edit" type="text" value="{{#each this.Coursework}}
-                                       {{this.course_num}} : {{course_name}} ,
-                                       {{/each}}"> <button type="button" class="btn btn-primary suggest-edits-button">Edit</button></td>
+
+                            <tr>
+                              <th scope="row">Coursework:</th>
+                                  <td> <input id="edit" type="text" value="{{this.Coursework}}">   <button type="button" class="btn btn-primary suggest-edits-button">Edit</button> </td>
                             </tr>
 
                             <tr>
