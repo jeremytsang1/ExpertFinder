@@ -11,7 +11,7 @@
 
 
     <script>
-        // SOURCE: https://www.youtube.com/watch?v=5QlE6o-iYcE
+        // SOURCE: started with some code from https://www.youtube.com/watch?v=5QlE6o-iYcE
         const user = "kylebell3"
 
         const divResult = document.getElementById("divResult")
@@ -23,13 +23,8 @@
             const response = await fetch(url)
             const result = await response.json()
 
-            // console.log(result[0].html_url)
-
-
             var repoList = []
                       
-            
-
                 if (result.length < 4) {
                     for (i = 0; i < result.length; i++) {
                         repoList.push(result[i].html_url)
@@ -39,8 +34,7 @@
                 else {
                     for (i = 0; i < 4; i++) {
                 repoList.push(result[i].html_url)
-                }
-
+                    }
                 }
 
             console.log(repoList)    

@@ -5,6 +5,7 @@ module.exports = function(){
     var router = express.Router();
     var db_interface = require('./database/db_interface')
 
+    const fetch = require('node-fetch');
     const fs = require('fs'); 
 
     // souce: https://www.geeksforgeeks.org/how-to-read-and-write-json-file-using-node-js/
@@ -60,6 +61,39 @@ module.exports = function(){
         context.jsscripts = ["jquery.js"]; // add script names here to load in web page if needed
         //console.log(context)
         getAllUsers(res, context, complete);
+        
+
+        // --------------------------------------------
+        //  Kyle's code to load in github data   
+        // SOURCE: started with some code from https://www.youtube.com/watch?v=5QlE6o-iYcE
+        const user = "kylebell3"
+
+        git()
+
+        async function git() {
+            const url = "https://api.github.com/users/" + user + "/repos"
+            const response = await fetch(url)
+            const result = await response.json()
+
+            var repoList = []
+                        
+                if (result.length < 4) {
+                    for (i = 0; i < result.length; i++) {
+                        repoList.push(result[i].html_url)
+                    }
+                }
+
+                else {
+                    for (i = 0; i < 4; i++) {
+                repoList.push(result[i].html_url)
+                    }
+                }
+
+            console.log(repoList)    
+            console.log('hi')
+
+        }
+        // ------------------------------------------
 
         function complete(){
             callbackCount++;
