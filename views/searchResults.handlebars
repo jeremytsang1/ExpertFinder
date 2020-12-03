@@ -2,12 +2,12 @@
 
 <div class="container w-75">
   <div class="row justify-content-end">
-    <div class="col-10">
+    <div class="col-8">
       <!-- Search form -->
       <form class="navbar-form navbar-left" role="search" action='/searchResults' method="POST">
         <div class="input-group">
-            <span class="input-group-btn">
-              <button type="submit" id="col" class="btn btn-info">Search</button>
+            <span class="input-group-btn" >
+              <button type="submit" id="results-search-btn" class="btn btn-info" style="background-color: rgb(51, 62, 80);border-color: rgb(51, 62, 80)">Search</button>
             </span>
             
             <label for="search" class="sr-only">Search</label>
@@ -17,7 +17,7 @@
       </form>
     </div>
 
-    <div class="col">
+    <div class="col-2">
       <a tabindex="0" id="popover-help" class="btn btn-warning" role="button" 
         data-toggle="popover" data-trigger="focus"
         data-content="Please type in a search term and then click the 'Search' 

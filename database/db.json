@@ -38,6 +38,86 @@
             },
             "ProfilePicture": "/public/images/female-default-profile-img.jpg",
             "Active": true
+        },
+        {
+            "Id": 3,
+            "Name": "Missy Sparks",
+            "TechSkills": ["PHP", "Go"],
+            "Coursework": ["CS161 Introduction To Computer Science I"
+            ],
+            "Industry": ["Web Development", "Apple"],
+            "ContactInfo": {
+                "Email": "msparks@gmail.com",
+                "Github": "github.com/msparks",
+                "Linkedin": "linkedin.com/missy1",
+                "Twitter": "twitter.com/msparks1"
+            },
+            "ProfilePicture": "/public/images/female-default-profile-img.jpg",
+            "Active": true
+        },
+        {
+            "Id": 4,
+            "Name": "Remi Sanderson",
+            "TechSkills": ["Azure", "AWS", "Docker", "git"],
+            "Coursework": [          
+                "CS165 Accelerated Introduction To Computer Science",
+                "CS175 Communications Security And Social Movements",
+                "CS195 Website Design",
+                "CS199 Special Topics/Computer Science",
+                "CS201 Computer Programming For Non-Cs Majors",
+                "CS225 Discrete Structures In Computer Science",
+                "CS261 Data Structures",
+                "CS262 Programming Projects In C++",
+                "CS271 Computer Architecture And Assembly Language",
+                "CS290 Web Development",
+                "CS321 Introduction To Theory Of Computation",
+                "CS325 Analysis Of Algorithms",
+                "CS325H Analysis Of Algorithms",
+                "CS331 Introduction To Artificial Intelligence",
+                "CS340 Introduction To Databases",
+                "CS344 Operating Systems I",
+                "CS352 Introduction To Usability Engineering"
+            ],
+            "Industry": ["Machine Learning", "Data Science", "Amazon"],
+            "ContactInfo": {
+                "Email": "rsands@gmail.com",
+                "Github": "github.com/remtsand",
+                "Linkedin": "linkedin.com/remi_sanderson",
+                "Twitter": "twitter.com/sandsrem"
+            },
+            "ProfilePicture": "/public/images/male-default-profile-img.jpg",
+            "Active": true
+        },
+        {
+            "Id": 5,
+            "Name": "Abid Albert",
+            "TechSkills": ["Perl", "Rust", "Scala", "Matlab", "Ruby", "Redux JS", "Spring", "Bash", "Powershell", "BASIC", "Fortran"],
+            "Coursework": [          
+                "CS165 Accelerated Introduction To Computer Science",
+                "CS175 Communications Security And Social Movements",
+                "CS195 Website Design",
+                "CS199 Special Topics/Computer Science",
+                "MTH482 Applied Partial Differential Equations",
+                "MTH483 Complex Variables",
+                "CS261 Data Structures",
+                "CS262 Programming Projects In C++",
+                "CS271 Computer Architecture And Assembly Language",
+                "CS290 Web Development",
+                "CS321 Introduction To Theory Of Computation",
+                "CS410 Occupational Internship",
+                "CS325H Analysis Of Algorithms",
+                "CS582 Programming Languages II",
+                "CS583 Advanced Functional Programming"
+            ],
+            "Industry": ["Lenovo", "Internet of Things", "Cloud Computing"],
+            "ContactInfo": {
+                "Email": "a_albert@gmail.com",
+                "Github": "github.com/albert20",
+                "Linkedin": "linkedin.com/abalbert",
+                "Stackoverflow": "stackoverflow.com/users/albert2"
+            },
+            "ProfilePicture": "/public/images/male-default-profile-img.jpg",
+            "Active": true
         }
     ],
     "Known": {
