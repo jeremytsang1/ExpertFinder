@@ -20,7 +20,7 @@
         },
         {
             "Id": 2,
-            "Name": "Lena Gregory",
+            "Name": "Jeremy Tsang",
             "TechSkills": ["React", "Angular"],
             "Coursework": ["CS161 Intro to Computer Science I",
               "CS162 Intro to Computer Science II",
@@ -31,7 +31,7 @@
             "Industry": ["Networks", "Software Development"],
             "ContactInfo": {
                 "Email": "lgregory@gmail.com",
-                "Github": "github.com/lenagregory",
+                "Github": "github.com/jeremytsang1",
                 "Linkedin": "linkedin.com/lenagregory",
                 "Twitter": "twitter.com/lenagregory"
             },

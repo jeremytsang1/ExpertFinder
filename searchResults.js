@@ -71,10 +71,6 @@ module.exports = function(){
 
 
 
-
-
-        const user = "kylebell3"
-
         git()
 
         async function git() {
@@ -88,24 +84,35 @@ module.exports = function(){
             console.log()
             console.log()
 
+            // console.log(context.experts[0]["ContactInfo"]["Github"].slice(11))
+
             for (x = 0; x < context.experts.length; x ++) {
-                var user  = context.experts[x].Name
-                console.log(user)
+                // const url = "https://api.github.com/users/" + user + "/repos"
+                // const response = await fetch(url)
+                // const result = await response.json()
+
+                var user  = context.experts[x]["ContactInfo"]["Github"].slice(11)
+                // console.log(user)
+
+                const url = "https://api.github.com/users/" + user + "/repos"
+                const response = await fetch(url)
+                const result = await response.json()
+
                 var repoList = []
                         
-                if (result.length < 4) {
+                if (result.length < 6) {
                     for (i = 0; i < result.length; i++) {
                         repoList.push(result[i].html_url)
                     }
                 }
 
                 else {
-                    for (i = 0; i < 4; i++) {
+                    for (i = 0; i < 5; i++) {
                 repoList.push(result[i].html_url)
                     }
                 }
 
-                console.log(repoList)    
+                console.log(user, repoList)    
 
                 
             }
