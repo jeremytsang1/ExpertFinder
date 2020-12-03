@@ -1,4 +1,34 @@
-<h1>Search Results</h1>
+<br>
+
+<div class="container w-75">
+  <div class="row justify-content-end">
+    <div class="col-8">
+      <!-- Search form -->
+      <form class="navbar-form navbar-left" role="search" action='/searchResults' method="POST">
+        <div class="input-group">
+            <span class="input-group-btn" >
+              <button type="submit" id="results-search-btn" class="btn btn-info" style="background-color: rgb(51, 62, 80);border-color: rgb(51, 62, 80)">Search</button>
+            </span>
+            
+            <label for="search" class="sr-only">Search</label>
+            <input name="keyword" type="text" id="search" class= "form-control" placeholder="Enter keyword" >
+            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-2">
+      <a tabindex="0" id="popover-help" class="btn btn-warning" role="button" 
+        data-toggle="popover" data-trigger="focus"
+        data-content="Please type in a search term and then click the 'Search' 
+                      button to search through the list of registered experts! 
+                      Search term categories include an expert's industry, 
+                      coursework, and tech skills (programming languages, 
+                      frameworks, technologies, etc)."><b>Help</b> 
+      </a>
+    </div>
+  </div>
+</div>
 
 
 {{#each experts}}
