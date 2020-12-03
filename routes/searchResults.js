@@ -94,7 +94,7 @@ module.exports = function(){
         expertUpdateSet.add("TechSkills")
         expertUpdateSet.add("Coursework")
         expertUpdateSet.add("Industry")
-        test_db.Experts.push(expert);
+        test_db.Experts.push(expertUpdateSet);
     }
         
     }
