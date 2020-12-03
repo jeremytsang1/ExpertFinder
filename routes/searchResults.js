@@ -79,19 +79,22 @@ module.exports = function(){
                              "getKeyword.js"];
         var experts = db_interface.getExperts(search_keyword);
         context.experts = experts;
-        checkInfoUnique(context, experts, search_keyword.keyword);
+        userInfoUpdate(context, experts, search_keyword.keyword);
         addSuggestedEditsContext(context, experts, search_keyword.keyword);
             // res.send(context)
         res.set('Content-type', 'text/html')
         res.render('searchResults/update', context);
     })
     
-    function checkInfoUnique(context, experts, keyword){
+    function userInfoUpdate(context, experts, keyword){
+        expertInfo.Id = createExpert();
        //prevents duplicates hopefully
-        HashSet expertUpdateSet = new Set(db_interface);
+        JSON.parse(expert) 
+        HashSet expertUpdateSet = new Set(expert);
         expertUpdateSet.add("TechSkills")
         expertUpdateSet.add("Coursework")
         expertUpdateSet.add("Industry")
+        test_db.Experts.push(expert);
     }
         
     }
