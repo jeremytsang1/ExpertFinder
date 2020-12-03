@@ -65,17 +65,33 @@ module.exports = function(){
 
         // --------------------------------------------
         //  Kyle's code to load in github data   
-        // SOURCE: started with some code from https://www.youtube.com/watch?v=5QlE6o-iYcE
+        // SOURCE: started with some code from https://www.youtube.com/watch?v=5QlE6o-iYcE then added onto it
+
+    
+
+
+
+
+
         const user = "kylebell3"
 
         git()
 
         async function git() {
+
             const url = "https://api.github.com/users/" + user + "/repos"
             const response = await fetch(url)
             const result = await response.json()
 
-            var repoList = []
+            console.log()
+            console.log()
+            console.log()
+            console.log()
+
+            for (x = 0; x < context.experts.length; x ++) {
+                var user  = context.experts[x].Name
+                console.log(user)
+                var repoList = []
                         
                 if (result.length < 4) {
                     for (i = 0; i < result.length; i++) {
@@ -89,8 +105,12 @@ module.exports = function(){
                     }
                 }
 
-            console.log(repoList)    
-            console.log('hi')
+                console.log(repoList)    
+
+                
+            }
+
+
 
         }
         // ------------------------------------------
