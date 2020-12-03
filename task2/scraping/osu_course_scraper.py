@@ -153,6 +153,8 @@ class OSUCourseScraper():
         for course in scraped_and_not_known:
             known_courses.append(course)
 
+        known_courses.sort()
+
         return scraped_and_not_known
 
     def _get_all_scraped_courses(self, desired_type):
@@ -204,7 +206,7 @@ class OSUCourseScraper():
 
         new_course_count_line = (f'Found {new_course_count} new courses'
                                  + ('.' if new_course_count == 0 else ':'))
-        new_courses_lines = '\n'.join(new_courses_from_scraping)
+        new_courses_lines = '\n'.join(sorted(list(new_courses_from_scraping)))
         updating_database_line = ('' if len(new_courses_from_scraping) == 0
                                   else 'Added said courses to database.')
 
