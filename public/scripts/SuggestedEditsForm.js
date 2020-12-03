@@ -71,7 +71,7 @@ function setDismissButtonAppearance(dismissButton, appearAsDismiss) {
     if (appearAsDismiss) {
         dismissButton.classList.remove('btn-primary');
         dismissButton.classList.add('btn-secondary');
-        dismissButton.textContent = "Discard Suggestions";
+        dismissButton.textContent = "Back";
     } else {
         dismissButton.classList.remove('btn-secondary');
         dismissButton.classList.add('btn-primary');
