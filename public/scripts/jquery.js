@@ -9,5 +9,9 @@ $(document).ready(function() {
       .data('text-alt', $(this).data('text-original'));
     });
 
+    $('#popover-help').popover({
+      trigger: 'focus'
+    })
+
 // document ready  
 });

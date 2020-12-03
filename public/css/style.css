@@ -117,6 +117,18 @@ a.btn.home {
     padding: 0;
 }
 
+.resultsBtn {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin: 50px;
+  background-color: rgb(51, 62, 80);
+  border-color: rgb(51, 62, 80);
+}
+
+#results-search-btn:hover {
+  background-color: #007bff !important;
+}
+
 /* -------------------------------------------------------------------------- */
 
 /* Styles for suggest edits*/
