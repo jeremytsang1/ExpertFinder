@@ -64,6 +64,40 @@ module.exports = function(){
         res.set('Content-type', 'text/html')
         res.render('searchResults', context);
     })
+    
+     router.post('/', function(req,res){
+        var search_keyword = (req.body);
+        console.log(search_keyword)
+        var context = {};
+
+        console.log(context)
+        context.cssstyles = ["public/css/tagify.css"];
+        context.jsscripts = ["jquery.js",
+                             "tagify.min.js",
+                             "tagifyClientRequest.js",
+                             "SuggestedEditsForm.js",
+                             "getKeyword.js"];
+        var experts = db_interface.getExperts(search_keyword);
+        context.experts = experts;
+        userInfoUpdate(context, experts, search_keyword.keyword);
+        addSuggestedEditsContext(context, experts, search_keyword.keyword);
+            // res.send(context)
+        res.set('Content-type', 'text/html')
+        res.render('searchResults/update', context);
+    })
+    
+    function userInfoUpdate(context, experts, keyword){
+        expertInfo.Id = createExpert();
+       //prevents duplicates hopefully
+        JSON.parse(expert) 
+        HashSet expertUpdateSet = new Set(expert);
+        expertUpdateSet.add("TechSkills")
+        expertUpdateSet.add("Coursework")
+        expertUpdateSet.add("Industry")
+        test_db.Experts.push(expert);
+    }
+        
+    }
 
     function addSuggestedEditsContext(context, experts, keyword) {
         // prevent edits from deleting existing skills, coursework, industries
