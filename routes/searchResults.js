@@ -4,6 +4,7 @@ module.exports = function(){
     var express = require('express')
     var router = express.Router();
     var db_interface = require('../database/db_interface')
+    var {addReadonlyTags} = require('../util/readonlyTags');
 
     const fs = require('fs'); 
 
@@ -30,7 +31,7 @@ module.exports = function(){
         var context = {};
         context.cssstyles = ["public/css/tagify.css"];
         context.jsscripts = ["jquery.js", "tagify.min.js", "SuggestedEditsForm.js", "getKeyword.js"] //add script names here to load in web page if needed
-        
+
         //console.log(context)
         getAllUsers(res, context, complete);
 
@@ -48,15 +49,28 @@ module.exports = function(){
         var search_keyword = (req.body);
         console.log(search_keyword)
         var context = {};
-        context.cssstyles = ["public/css/tagify.css"];
-        context.jsscripts = ["jquery.js", "tagify.min.js", "SuggestedEditsForm.js", "getKeyword.js"] //add script names here to load in web page if needed
-        
-        context.experts = db_interface.getExperts(search_keyword);
+
         console.log(context)
+        context.cssstyles = ["public/css/tagify.css"];
+        context.jsscripts = ["jquery.js",
+                             "tagify.min.js",
+                             "tagifyClientRequest.js",
+                             "SuggestedEditsForm.js",
+                             "getKeyword.js"];
+        var experts = db_interface.getExperts(search_keyword);
+        context.experts = experts;
+        addSuggestedEditsContext(context, experts, search_keyword.keyword);
             // res.send(context)
         res.set('Content-type', 'text/html')
         res.render('searchResults', context);
     })
-    
+
+    function addSuggestedEditsContext(context, experts, keyword) {
+        // prevent edits from deleting existing skills, coursework, industries
+        experts.map(expert => addReadonlyTags(expert));
+        // allows modal to re-display search
+        context.keyword = keyword;
+    }
+
     return router;
 }();
