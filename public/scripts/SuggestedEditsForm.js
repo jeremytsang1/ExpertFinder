@@ -1,5 +1,5 @@
 var SuggestEditsButton = document.getElementsByClassName("suggest-edits-button")[0];
-SuggestEditsButton.addEventListener("click", updateForm);
+// SuggestEditsButton.addEventListener("click", updateForm);
 
 function updateForm(event) {
     let tagify = new Tagify(document.querySelector("#edit"));
@@ -28,6 +28,40 @@ function createTagifyObjectForSuggestedEditsForm(input, suggestionAry) {
 }
 
 function setupEditsButton(input) {
+    const editsButton = input.parentElement.querySelector("button");
+    const modalFooterButtonsDiv = getModalSubmitButton(input);
+
+    editsButton.addEventListener('click', event => {
+        setReadOnly(input);
+        // modalCollapseButton.removeAttribute('data-dismiss');
+        // modalCollapseButton.setAttribute('type', 'submit');
+        const dismissButton = modalFooterButtonsDiv.querySelector('button[data-dismiss]');
+        const submitButton = createSubmitButton(modalFooterButtonsDiv);
+        configureModalFooterButtons(submitButton, dismissButton)
+    });
+}
+
+function createSubmitButton(divToAttachTo) {
+    const submitButton = document.createElement('button');
+    divToAttachTo.prepend(submitButton);
+    return submitButton;
+}
+
+function configureModalFooterButtons(submitButton, dismissButton) {
+    submitButton.className = "btn btn-primary";
+    submitButton.setAttribute("type", "submit");
+    submitButton.textContent = "Submit Suggestions"
+
+    dismissButton.classList.remove('btn-primary');
+    dismissButton.classList.remove('btn-secondary');
+    dismissButton.textContent = "Discard Suggestions";
+
+}
+
+function getModalSubmitButton(input) {
+    const expertId = input.getAttribute('data-id');
+    const modal = document.querySelector(`#exampleModalCenter${expertId}`);
+    return modal.querySelector('.modal-footer div.col');
 }
 
 
