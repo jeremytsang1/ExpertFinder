@@ -23,11 +23,11 @@ function createTagifyObjectForSuggestedEditsForm(input, suggestionAry) {
         }
     });
     setReadOnly(input, true);
-    setupToggleButton(input);
+    setupEditsButton(input);
     return tagify;
 }
 
-function setupToggleButton(input) {
+function setupEditsButton(input) {
 }
 
 
@@ -36,7 +36,7 @@ function setReadOnly(input, toBeReadOnly) {
 
     // simple toggling
     if (typeof(toBeReadOnly) !== 'boolean') {
-        tags.toggleAttributes('readonly');
+        tags.toggleAttribute('readonly');
         return;
     }
 
