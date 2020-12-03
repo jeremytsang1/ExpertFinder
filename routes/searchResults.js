@@ -83,7 +83,7 @@ module.exports = function(){
         addSuggestedEditsContext(context, experts, search_keyword.keyword);
             // res.send(context)
         res.set('Content-type', 'text/html')
-        res.render('searchResults/update', context);
+        res.render('searchResults', context);
     })
     
     function userInfoUpdate(context, experts, keyword){
