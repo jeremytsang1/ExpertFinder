@@ -39,10 +39,6 @@ function setupButtons(input) {
         configureModalFooterButtons(submitButton, dismissButton)
     });
 
-    dismissButton.addEventListener('click', event => {
-        // resetModal(expertId);
-    });
-
     function getSubmitButton() {
         const firstChild = modalFooterButtonsDiv.firstElementChild;
         let submitButton = null;
@@ -91,7 +87,6 @@ function getModalSubmitButton(input) {
     const modal = document.querySelector(`#exampleModalCenter${expertId}`);
     return modal.querySelector('.modal-footer div.col');
 }
-
 
 function setReadOnly(input, toBeReadOnly) {
     const tags = input.parentElement.querySelector("tags");
