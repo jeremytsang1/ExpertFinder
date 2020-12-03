@@ -35,9 +35,6 @@ function setupButtons(input) {
 
     editsButton.addEventListener('click', event => {
         configureEditsButton(input, editsButton);
-        // modalCollapseButton.removeAttribute('data-dismiss');
-        // modalCollapseButton.setAttribute('type', 'submit');
-
         const submitButton = getSubmitButton(modalFooterButtonsDiv);
         configureModalFooterButtons(submitButton, dismissButton)
     });
