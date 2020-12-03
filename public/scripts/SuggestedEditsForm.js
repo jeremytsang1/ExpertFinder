@@ -32,18 +32,24 @@ function setupEditsButton(input) {
     const modalFooterButtonsDiv = getModalSubmitButton(input);
 
     editsButton.addEventListener('click', event => {
-        setReadOnly(input);
+        configureEditsButton(input, editsButton);
         // modalCollapseButton.removeAttribute('data-dismiss');
         // modalCollapseButton.setAttribute('type', 'submit');
         const dismissButton = modalFooterButtonsDiv.querySelector('button[data-dismiss]');
-        const submitButton = createSubmitButton(modalFooterButtonsDiv);
+        const submitButton = getSubmitButton(modalFooterButtonsDiv);
         configureModalFooterButtons(submitButton, dismissButton)
     });
 }
 
-function createSubmitButton(divToAttachTo) {
-    const submitButton = document.createElement('button');
-    divToAttachTo.prepend(submitButton);
+function getSubmitButton(divToAttachTo) {
+    const firstChild = divToAttachTo.firstElementChild;
+    let submitButton = null;
+    if (firstChild.getAttribute('type') == 'submit') {
+        submitButton = firstChild;
+    } else { // create the submit button
+        submitButton = document.createElement('button');
+        divToAttachTo.prepend(submitButton);
+    }
     return submitButton;
 }
 
@@ -56,6 +62,12 @@ function configureModalFooterButtons(submitButton, dismissButton) {
     dismissButton.classList.remove('btn-secondary');
     dismissButton.textContent = "Discard Suggestions";
 
+}
+
+function configureEditsButton(input, editsButton) {
+    const readOnly = setReadOnly(input);
+    if (readOnly) editsButton.textContent = "Edit";
+    else editsButton.textContent = "Finish";
 }
 
 function getModalSubmitButton(input) {
@@ -71,14 +83,16 @@ function setReadOnly(input, toBeReadOnly) {
     // simple toggling
     if (typeof(toBeReadOnly) !== 'boolean') {
         tags.toggleAttribute('readonly');
-        return;
+        return tags.hasAttribute('readonly');
     }
 
     // setting
     if (toBeReadOnly) {
         tags.setAttribute('readonly', 'readonly');
+        return true;
     } else {
         tags.removeAttribute('readonly');
+        return false;
     }
 }
 
