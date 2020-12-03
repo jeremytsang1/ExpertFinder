@@ -57,8 +57,8 @@
 
   <!-- Modal -->
   <div class="modal fade" id="exampleModalCenter{{this.Id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content"><form action="/searchResults/update" method="POST">
         <div class="modal-body">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -71,19 +71,19 @@
               <h3 class="modal-title" id="exampleModalLongTitle">{{this.Name}}</h3>
             </div>
           </div>
-          <table>
+          <table id="expert-{{this.Id}}" class="tagify-fields">
             <tbody>
                 <tr>
                   <th scope="row">Tech Skills:</th>
-                    <td> <input id="edit" type="text" value="{{this.TechSkills}}">   <button type="button" class="btn btn-primary suggest-edits-button">Edit</button> </td>
+                    <td> <input name="TechSkills" type="text" value="{{this.Readonly.TechSkills}}" data-id="{{this.Id}}">   <button type="button" class="btn btn-primary suggest-edits-button">Edit</button> </td>
                 </tr>
                 <tr>
                   <th scope="row">Coursework:</th>
-                    <td> <input id="edit" type="text" value="{{this.Coursework}}">   <button type="button" class="btn btn-primary suggest-edits-button">Edit</button> </td>
+                    <td> <input name="Coursework" type="text" value="{{this.Readonly.Coursework}}" data-id="{{this.Id}}">   <button type="button" class="btn btn-primary suggest-edits-button">Edit</button> </td>
                 </tr>
                 <tr>
                   <th scope="row">Industry:</th>
-                      <td> <input id="edit" type="text" value="{{this.Industry}}">  <button type="button" class="btn btn-primary suggest-edits-button">Edit</button> </td>
+                    <td> <input name="Industry" type="text" value="{{this.Readonly.Industry}}" data-id="{{this.Id}}">  <button type="button" class="btn btn-primary suggest-edits-button">Edit</button> </td>
                 </tr>
 
                 {{!-- check if contact info is the email. If yes, use appropriate html code block --}}
@@ -116,6 +116,8 @@
 
             </tbody>  
           </table>
+          <!-- hidden field used to redo search after updating the experts -->
+          <input name="keyword" type="hidden" value="{{../keyword}}"/>
         </div>
         <div class="modal-footer">
           <div class="container">
@@ -127,7 +129,7 @@
           </div>
         </div>
 
-      </div>
+      </form></div>
     </div>
   </div>
 {{/each}} 
