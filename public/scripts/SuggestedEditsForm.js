@@ -10,10 +10,10 @@ function updateForm(event) {
     // }
 }
 
-function createTagifyObjectForSuggestedEditsForm(inputTag, suggestionAry) {
+function createTagifyObjectForSuggestedEditsForm(input, suggestionAry) {
     // Taken from Official tagify repo:
     // https://github.com/yairEO/tagify/blob/bd4cb069b1cacb6b8bdd34457de5f86752015a9c/index.html#L1456
-    const tagify = new Tagify(inputTag, {
+    const tagify = new Tagify(input, {
         whitelist: suggestionAry.sort(),
         dropdown: {
             maxItems: 20,           // <- mixumum allowed rendered suggestions
@@ -22,9 +22,15 @@ function createTagifyObjectForSuggestedEditsForm(inputTag, suggestionAry) {
             closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
         }
     });
-    setReadOnly(inputTag, true);
+    setReadOnly(input, true);
+    setupToggleButton(input);
     return tagify;
 }
+
+function setupToggleButton(input) {
+
+}
+
 
 function setReadOnly(input, toBeReadOnly) {
     tags = input.parentElement.querySelector("tags");
