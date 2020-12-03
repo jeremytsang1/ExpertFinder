@@ -4,6 +4,7 @@ module.exports = function(){
     var express = require('express')
     var router = express.Router();
     var db_interface = require('../database/db_interface')
+    var {addReadonlyTags} = require('../util/readonlyTags');
 
     const fs = require('fs'); 
 
@@ -49,8 +50,10 @@ module.exports = function(){
         console.log(search_keyword)
         var context = {};
         context.jsscripts = ["jquery.js"]
-        context.experts = db_interface.getExperts(search_keyword);
         console.log(context)
+        var experts = db_interface.getExperts(search_keyword);
+        experts.map(expert => addReadonlyTags(expert));
+        context.experts = experts;
             // res.send(context)
         res.set('Content-type', 'text/html')
         res.render('searchResults', context);
