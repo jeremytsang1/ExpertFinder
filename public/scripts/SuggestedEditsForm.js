@@ -28,12 +28,11 @@ function createTagifyObjectForSuggestedEditsForm(input, suggestionAry) {
 }
 
 function setupToggleButton(input) {
-
 }
 
 
 function setReadOnly(input, toBeReadOnly) {
-    tags = input.parentElement.querySelector("tags");
+    const tags = input.parentElement.querySelector("tags");
 
     // simple toggling
     if (typeof(toBeReadOnly) !== 'boolean') {
