@@ -23,21 +23,27 @@ function createTagifyObjectForSuggestedEditsForm(input, suggestionAry) {
         }
     });
     setReadOnly(input, true);
-    setupEditsButton(input);
+    setupButtons(input);
     return tagify;
 }
 
-function setupEditsButton(input) {
+function setupButtons(input) {
     const editsButton = input.parentElement.querySelector("button");
+    const expertId = input.getAttribute('data-id');
     const modalFooterButtonsDiv = getModalSubmitButton(input);
+    const dismissButton = modalFooterButtonsDiv.querySelector('button[data-dismiss]');
 
     editsButton.addEventListener('click', event => {
         configureEditsButton(input, editsButton);
         // modalCollapseButton.removeAttribute('data-dismiss');
         // modalCollapseButton.setAttribute('type', 'submit');
-        const dismissButton = modalFooterButtonsDiv.querySelector('button[data-dismiss]');
+
         const submitButton = getSubmitButton(modalFooterButtonsDiv);
         configureModalFooterButtons(submitButton, dismissButton)
+    });
+
+    dismissButton.addEventListener('click', event => {
+        // resetModal(expertId);
     });
 }
 
@@ -58,11 +64,21 @@ function configureModalFooterButtons(submitButton, dismissButton) {
     submitButton.setAttribute("type", "submit");
     submitButton.textContent = "Submit Suggestions"
 
-    dismissButton.classList.remove('btn-primary');
-    dismissButton.classList.remove('btn-secondary');
-    dismissButton.textContent = "Discard Suggestions";
-
+    toggleDismissButton(dismissButton, true);
 }
+
+function toggleDismissButton(dismissButton, appearAsDismiss) {
+    if (appearAsDismiss) {
+        dismissButton.classList.remove('btn-primary');
+        dismissButton.classList.add('btn-secondary');
+        dismissButton.textContent = "Discard Suggestions";
+    } else {
+        dismissButton.classList.remove('btn-secondary');
+        dismissButton.classList.add('btn-primary');
+        dismissButton.textContent = "OK, got it!";
+    }
+}
+
 
 function configureEditsButton(input, editsButton) {
     const readOnly = setReadOnly(input);
