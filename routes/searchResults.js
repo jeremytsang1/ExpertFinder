@@ -29,7 +29,7 @@ module.exports = function(){
         var callbackCount = 0;
         var context = {};
         context.cssstyles = ["public/css/tagify.css"];
-        context.jsscripts = ["jquery.js", "tagify.min.js", "SuggestEditsForm.js"] //add script names here to load in web page if needed
+        context.jsscripts = ["jquery.js", "tagify.min.js", "SuggestedEditsForm.js", "getKeyword.js"] //add script names here to load in web page if needed
         
         //console.log(context)
         getAllUsers(res, context, complete);
@@ -48,7 +48,9 @@ module.exports = function(){
         var search_keyword = (req.body);
         console.log(search_keyword)
         var context = {};
-        context.jsscripts = ["jquery.js"]
+        context.cssstyles = ["public/css/tagify.css"];
+        context.jsscripts = ["jquery.js", "tagify.min.js", "SuggestedEditsForm.js", "getKeyword.js"] //add script names here to load in web page if needed
+        
         context.experts = db_interface.getExperts(search_keyword);
         console.log(context)
             // res.send(context)
