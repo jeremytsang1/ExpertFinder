@@ -56,12 +56,19 @@ module.exports = function(){
                              "tagifyClientRequest.js",
                              "SuggestedEditsForm.js"];
         var experts = db_interface.getExperts(search_keyword);
-        experts.map(expert => addReadonlyTags(expert));
         context.experts = experts;
+        addSuggestedEditsContext(context, experts, search_keyword.keyword);
             // res.send(context)
         res.set('Content-type', 'text/html')
         res.render('searchResults', context);
     })
-    
+
+    function addSuggestedEditsContext(context, experts, keyword) {
+        // prevent edits from deleting existing skills, coursework, industries
+        experts.map(expert => addReadonlyTags(expert));
+        // allows modal to re-display search
+        context.keyword = keyword;
+    }
+
     return router;
 }();
