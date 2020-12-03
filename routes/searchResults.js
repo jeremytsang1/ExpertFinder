@@ -90,7 +90,7 @@ module.exports = function(){
         expertInfo.Id = createExpert();
        //prevents duplicates hopefully
         JSON.parse(expert) 
-        HashSet expertUpdateSet = new Set(expert);
+        let expertUpdateSet = new Set(expert);
         expertUpdateSet.add("TechSkills")
         expertUpdateSet.add("Coursework")
         expertUpdateSet.add("Industry")
