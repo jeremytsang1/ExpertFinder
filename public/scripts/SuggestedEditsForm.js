@@ -45,29 +45,32 @@ function setupButtons(input) {
     dismissButton.addEventListener('click', event => {
         // resetModal(expertId);
     });
-}
 
-function getSubmitButton(divToAttachTo) {
-    const firstChild = divToAttachTo.firstElementChild;
-    let submitButton = null;
-    if (firstChild.getAttribute('type') == 'submit') {
-        submitButton = firstChild;
-    } else { // create the submit button
-        submitButton = document.createElement('button');
-        divToAttachTo.prepend(submitButton);
+    function getSubmitButton() {
+        const firstChild = modalFooterButtonsDiv.firstElementChild;
+        let submitButton = null;
+        if (firstChild.getAttribute('type') == 'submit') {
+            submitButton = firstChild;
+        } else { // create the submit button
+            submitButton = document.createElement('button');
+            modalFooterButtonsDiv.prepend(submitButton);
+        }
+        return submitButton;
     }
-    return submitButton;
 }
 
 function configureModalFooterButtons(submitButton, dismissButton) {
+    setSubmitButtonAppearance(submitButton);
+    setDismissButtonAppearance(dismissButton, true);
+}
+
+function setSubmitButtonAppearance(submitButton) {
     submitButton.className = "btn btn-primary";
     submitButton.setAttribute("type", "submit");
     submitButton.textContent = "Submit Suggestions"
-
-    toggleDismissButton(dismissButton, true);
 }
 
-function toggleDismissButton(dismissButton, appearAsDismiss) {
+function setDismissButtonAppearance(dismissButton, appearAsDismiss) {
     if (appearAsDismiss) {
         dismissButton.classList.remove('btn-primary');
         dismissButton.classList.add('btn-secondary');
