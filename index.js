@@ -25,7 +25,7 @@ var hbs = handlebars.create({
   // Specify helpers which are only registered on this instance.
   helpers: {
       ifEquals: function(arg1, arg2, options) {
-        console.log("Testing ", arg1, " == ", arg2, ": ", arg1 == arg2)
+        // console.log("Testing ", arg1, " == ", arg2, ": ", arg1 == arg2)
         return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
     }
   }
