@@ -13,7 +13,7 @@ function updateForm(event) {
 function createTagifyObjectForSuggestedEditsForm(inputTag, suggestionAry) {
     // Taken from Official tagify repo:
     // https://github.com/yairEO/tagify/blob/bd4cb069b1cacb6b8bdd34457de5f86752015a9c/index.html#L1456
-    return new Tagify(inputTag, {
+    const tagify = new Tagify(inputTag, {
         whitelist: suggestionAry.sort(),
         dropdown: {
             maxItems: 20,           // <- mixumum allowed rendered suggestions
@@ -22,6 +22,8 @@ function createTagifyObjectForSuggestedEditsForm(inputTag, suggestionAry) {
             closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
         }
     });
+    setReadOnly(inputTag, true);
+    return tagify;
 }
 
 function setReadOnly(input, toBeReadOnly) {
@@ -45,10 +47,6 @@ function prepareInputs() {
     // Assumes tagifyClientRequest.js is executed before this file to get tag
     // completions.
     makeTagifyUsingBackendData(createTagifyObjectForSuggestedEditsForm);
-
-    inputs = Array.from(document.querySelectorAll('tagify-fields input'));
-    inputs.forEach(input => setReadOnly(input, true));
 }
-
 
 prepareInputs();
