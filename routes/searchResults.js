@@ -97,7 +97,7 @@ module.exports = function(){
         test_db.Experts.push(expertUpdateSet);
     }
         
-    }
+    
 
     function addSuggestedEditsContext(context, experts, keyword) {
         // prevent edits from deleting existing skills, coursework, industries
