@@ -49,8 +49,12 @@ module.exports = function(){
         var search_keyword = (req.body);
         console.log(search_keyword)
         var context = {};
-        context.jsscripts = ["jquery.js"]
         console.log(context)
+        context.cssstyles = ["public/css/tagify.css"];
+        context.jsscripts = ["jquery.js",
+                             "tagify.min.js",
+                             "tagifyClientRequest.js",
+                             "SuggestedEditsForm.js"];
         var experts = db_interface.getExperts(search_keyword);
         experts.map(expert => addReadonlyTags(expert));
         context.experts = experts;
