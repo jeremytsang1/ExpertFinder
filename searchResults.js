@@ -66,11 +66,6 @@ module.exports = function(){
         // --------------------------------------------
         //  Kyle's code to load in github data   
         // SOURCE: started with some code from https://www.youtube.com/watch?v=5QlE6o-iYcE then added onto it
-
-    
-
-
-
         git()
 
         async function git() {
@@ -114,13 +109,11 @@ module.exports = function(){
 
                 console.log(user, repoList)    
 
-                
             }
-
-
-
         }
         // ------------------------------------------
+
+
 
         function complete(){
             callbackCount++;
