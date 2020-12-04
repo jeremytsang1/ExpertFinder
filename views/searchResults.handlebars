@@ -104,13 +104,13 @@
 
                                      <td>
                                       <a href="https://www.{{this}}" target="_blank">{{this}}</a>
-                                 
+                                      <ul id="links">
                                       {{#each ../this.Repos}}
-                                        <ul id="links">
-                                        {{this}}
-                                      </ul></th>
+                                        <li><a href="{{this}}">{{this}}</a></li>
+                                    </th>
                                       {{/each}}
-                                    </td>
+                                      </ul>
+                                     </td>
 
                                   </tr>
 

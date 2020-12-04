@@ -170,8 +170,8 @@ Source: https://stackoverflow.com/questions/21181621/displaying-some-text-when-m
   display: inline;
   line-height: 30px;
   position: absolute;
-  width: 150px;
-  height: 150px;
+  /* width: 100%; */
+  /* height: 150px; */
 }
 
 #link-display:hover #links:before {
