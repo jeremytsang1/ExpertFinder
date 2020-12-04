@@ -10,11 +10,32 @@ function getExperts(search) {
     const result = searcher.search(keyword)
     
     //search expert courses and skills, and return expert json
-    return result
+    return result.filter(expert => expert.Active);
 }
 
 function getExpertCount() {
     return test_db.Experts.length;
+}
+
+function getExpertById(Id) {
+    const experts = test_db.Experts;
+    let results = experts.filter(expert => expert.Id === Id);
+    switch (results.length) {
+    case 0:
+        return null;
+    case 1:
+        return results[0];
+    default:
+        throw new Error(`Multiple experts found with Id = ${Id}`);
+    }
+}
+
+function activateExpert(Id) {
+    getExpertById(Id).Active = true;
+}
+
+function getAllEmails() {
+    return test_db.Experts.map(expert => expert.ContactInfo.Email);
 }
 
 function createExpert(name, TechSkills, Coursework, Industry, ContactInfo, ProfilePicture) {
@@ -27,7 +48,8 @@ function createExpert(name, TechSkills, Coursework, Industry, ContactInfo, Profi
         "Coursework": Coursework,
         "Industry": Industry,
         "ContactInfo": ContactInfo,
-        "ProfilePicture": ProfilePicture
+        "ProfilePicture": ProfilePicture,
+        "Active": false
     }
     test_db.Experts.push(expert);
     console.log("Experts after createExpert():\n",
@@ -54,6 +76,9 @@ function getSuggestions() {
 module.exports = {
     getExperts,
     getExpertCount,
+    getExpertById,
+    activateExpert,
+    getAllEmails,
     createExpert,
     updateExperts,
     deleteExperts,

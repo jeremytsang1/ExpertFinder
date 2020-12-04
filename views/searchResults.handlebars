@@ -1,81 +1,93 @@
-<h2><title>Search Results</title></h2>
+<br>
 
-<h3>[TO BE COMPLETED] In this page the profiles will appear after a search based on OSU coursework or tech stack has been executed by the application user.</h3>
+<div class="container w-75">
+  <div class="row justify-content-end">
+    <div class="col-8">
+      <!-- Search form -->
+      <form class="navbar-form navbar-left" role="search" action='/searchResults' method="POST">
+        <div class="input-group">
+            <span class="input-group-btn" >
+              <button type="submit" id="results-search-btn" class="btn btn-info" style="background-color: rgb(51, 62, 80);border-color: rgb(51, 62, 80)">Search</button>
+            </span>
+            
+            <label for="search" class="sr-only">Search</label>
+            <input name="keyword" type="text" id="search" class= "form-control" placeholder="Enter keyword" >
+            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+        </div>
+      </form>
+    </div>
 
-<table id="resultsTable">
- 	<col style="width:15%"> 
- 	<col style="width:15%">
-	<col style="width:15%">
+    <div class="col-2">
+      <a tabindex="0" id="popover-help" class="btn btn-warning" role="button" 
+        data-toggle="popover" data-trigger="focus"
+        data-content="Please type in a search term and then click the 'Search' 
+                      button to search through the list of registered experts! 
+                      Search term categories include an expert's industry, 
+                      coursework, and tech skills (programming languages, 
+                      frameworks, technologies, etc)."><b>Help</b> 
+      </a>
+    </div>
+  </div>
+</div>
 
 
-  <thead >
-      <th>Name</th>
-      <th>Industry</th>
-      <th>Coursework</th>
-      <th>Skills</th>
-      <th>More Info</th>
-  </thead>
-  <tbody>
-    {{#each experts}} 
-      <tr id="searchResults">
-          <td class="userDetails">{{this.Name}}</td> 
-          {{!-- modal example source: https://getbootstrap.com/docs/4.0/components/modal/ --}}
-          <!-- Button trigger modal -->
-          <td class="userDetails">{{this.Industry}}</td>
-   
+{{#each experts}}
+  <div class="container w-75" >
+      <button type="button" class="btn btn-primary btn-lg btn-block text-left resultsBtn" data-toggle="modal" data-target="#exampleModalCenter{{this.Id}}">
+        <div class="container">
 
-          <td class="userDetails">
-            {{#each this.Coursework}}
-            {{this.course_num}}: {{course_name}},
-            {{/each}}
-          </td>
-     
+          <h2>
+            {{this.Name}}
+          </h2>
 
-          <td class="userDetails">{{this.TechSkills}}</td>
+          <div class="row" style="">
+            <div class="col-4 align-self-start text-left">
+              <div style="white-space: pre-wrap;"><b>Tech Skills:</b> {{this.TechSkills}}</div>
+              <div style="white-space: pre-wrap;"><b>Industry:</b> {{this.Industry}}</div>
+            </div>
 
-          <td class="userDetails">
-            <div id="getInfoButton">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter{{this.Id}}">Get Info</button>
+            <div class="col align-self-start text-left"> 
+              <div style="white-space: pre-wrap;"><b>Coursework:</b> {{this.Coursework}}</div>
+            </div>
+          </div>
 
-              <!-- Modal -->
-              <div class="modal fade" id="exampleModalCenter{{this.Id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-body">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                      <div>
-                        <div class="text-center">
-                          <img src="{{this.ProfilePicture}}" class="img-thumbnail img-fluid " alt="...">
-                        </div>
-                        <div class="text-center">
-                          <h3 class="modal-title" id="exampleModalLongTitle">{{this.Name}}</h3>
-                        </div>
-                      </div>
-                      <table>
-                        <tbody>
-                            <tr>
-                              <th scope="row">Tech Skills:</th>
-                                <td> <input id="foobar" type="text" value={{this.TechSkills}} </td>
-				<button type="button" class="suggest-edits-button">Suggest Edit</button>
-                            </tr>
-                            <tr>
-                              {{#each this.Coursework}}
-                                {{this.course_num}}: {{course_name}},
-                              {{/each}}
-                            </tr>
-				<button type="button" class="suggest-edits-button">Suggest Edit</button>
-                            </tr>
+        </div>
+      </button>
+  </div>
 
-                            <tr>
-                              <th scope="row">Industry:</th>
-                                  <td> {{this.Industry}} </td>
-				  <button type="button" class="suggest-edits-button">Suggest Edit</button>
-                            </tr>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter{{this.Id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content"><form action="/searchResults/update" method="POST">
+        <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div>
+            <div class="text-center">
+              <img src="{{this.ProfilePicture}}" class="img-thumbnail img-fluid " alt="...">
+            </div>
+            <div class="text-center">
+              <h3 class="modal-title" id="exampleModalLongTitle">{{this.Name}}</h3>
+            </div>
+          </div>
+          <table id="expert-{{this.Id}}" class="tagify-fields">
+            <tbody>
+                <tr>
+                  <th scope="row">Tech Skills:</th>
+                    <td> <input name="TechSkills" type="text" value="{{this.Readonly.TechSkills}}" data-id="{{this.Id}}">   <button type="button" class="btn btn-primary suggest-edits-button">Edit</button> </td>
+                </tr>
+                <tr>
+                  <th scope="row">Coursework:</th>
+                    <td> <input name="Coursework" type="text" value="{{this.Readonly.Coursework}}" data-id="{{this.Id}}">   <button type="button" class="btn btn-primary suggest-edits-button">Edit</button> </td>
+                </tr>
+                <tr>
+                  <th scope="row">Industry:</th>
+                    <td> <input name="Industry" type="text" value="{{this.Readonly.Industry}}" data-id="{{this.Id}}">  <button type="button" class="btn btn-primary suggest-edits-button">Edit</button> </td>
+                </tr>
 
-                            {{!-- check if contact info is the email. If yes, use appropriate html code block --}}
-                            {{!-- https://stackoverflow.com/questions/34252817/handlebarsjs-check-if-a-string-is-equal-to-a-value --}}
+                {{!-- check if contact info is the email. If yes, use appropriate html code block --}}
+                {{!-- https://stackoverflow.com/questions/34252817/handlebarsjs-check-if-a-string-is-equal-to-a-value --}}
                             {{#each this.ContactInfo}}
                               {{#ifEquals @key "Email"}}
                                 <tr>
@@ -93,15 +105,15 @@
                                      <td>
                                       <a href="https://www.{{this}}" target="_blank">{{this}}</a>
                                  
-                                      {{#each this.Repos}}
+                                      {{!-- {{#each ../this}} --}}
                                       <ul id="links"> 
-                                      {{this}}
-                                      github repo 11
+                                      {{../this.Repos}}
+                                      {{!-- github repo 11
                                       github repo 22
                                       github repo 33
-                                      github repo 44
+                                      github repo 44 --}}
                                     </ul></th>
-                                    {{/each}}
+                                    {{!-- {{/each}} --}}
                                     </td>
 
                                   </tr>
@@ -118,43 +130,30 @@
                               {{/ifEquals}}
                             {{/each}}
 
-                            <tr>
-                              <td>
-                                <button id="" class="btn btn-link showMoreLessBtn" data-toggle="collapse" data-target=".collapseme{{Id}}" data-text-alt="-Show Less">
-                                  +Show More
-                                </button>
-                              </td>
-                            </tr>
- 
-                        </tbody>  
-                      </table>
-                    </div>
-                    <div class="modal-footer">
-                      <div class="container">
-                        <div class="row">
-                          <div class="col text-center">
-                            <button class="btn btn-primary" data-dismiss="modal">OK, got it!</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                <tr>
+                  <td>
+                    <button id="" type="button" class="btn btn-link showMoreLessBtn" data-toggle="collapse" data-target=".collapseme{{Id}}" data-text-alt="-Show Less">
+                      +Show More
+                    </button>
+                  </td>
+                </tr>
 
-                  </div>
-                </div>
+            </tbody>  
+          </table>
+          <!-- hidden field used to redo search after updating the experts -->
+          <input name="keyword" type="hidden" value="{{../keyword}}"/>
+        </div>
+        <div class="modal-footer">
+          <div class="container">
+            <div class="row">
+              <div class="col text-center">
+                <button class="btn btn-primary" data-dismiss="modal">OK, got it!</button>
               </div>
             </div>
-        </td>
-      </tr> 
-    {{/each}} 
-  </tbody>  
-</table> 
-<hr>
-<br>
+          </div>
+        </div>
 
-{{!-- <script>
-  window.addEventListener('DOMContentLoaded', (event) => {
-      console.log(document.querySelectorAll("#link-display")[0].textContent);
-      console.log(template({experts}))
-
-  });
-</script> --}}
+      </form></div>
+    </div>
+  </div>
+{{/each}} 
