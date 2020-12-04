@@ -36,10 +36,44 @@ module.exports = function(){
         //console.log(context)
         getAllUsers(res, context, complete);
 
-         // --------------------------------------------
-        //  Kyle's code to load in github data   
-        // SOURCE: started with some code from https://www.youtube.com/watch?v=5QlE6o-iYcE then added onto it
+        function complete(){
+            callbackCount++;
+            // callbackCount++;
+            if(callbackCount >= (context.experts.length)){
+                // console.log("In get method");
+                // console.log(context);
+                res.render('searchResults', context)
+            }
+        }
+    });
+
+    router.post('/', function(req,res){
+        var callbackCount = 0;
+
+        var search_keyword = (req.body);
+        console.log(search_keyword)
+        var context = {};
+
+        console.log(context)
+        context.cssstyles = ["public/css/tagify.css"];
+        context.jsscripts = ["jquery.js",
+                             "tagify.min.js",
+                             "tagifyClientRequest.js",
+                             "SuggestedEditsForm.js",
+                             "getKeyword.js"];
+        var experts = db_interface.getExperts(search_keyword);
+        context.experts = experts;
+        addSuggestedEditsContext(context, experts, search_keyword.keyword);
+        // res.send(context)
         git()
+
+         // --------------------------------------------
+        //  Kyle's code to load in github data
+        // SOURCE: started with some code from https://www.youtube.com/watch?v=5QlE6o-iYcE then added onto it
+
+        // ------------------------------------------
+
+        
 
         async function git() {
 
@@ -69,7 +103,7 @@ module.exports = function(){
                 const result = await response.json()
 
                 var repoList = []
-                        
+
                 if (result.length < 5) {
                     for (i = 0; i < result.length; i++) {
                         repoList.push(result[i].html_url)
@@ -84,50 +118,20 @@ module.exports = function(){
 
                 console.log(user, repoList)
 
-                context.experts[x]["Repos"] = repoList   
+                context.experts[x]["Repos"] = repoList
 
                 // console.log(context.experts[x])
                 callbackCount++;
-
+                if (callbackCount >= context.experts.length) {
+                    res.set('Content-type', 'text/html')
+                    res.render('searchResults', context);
+                }
                 // complete()
             }
         }
-        // ------------------------------------------
-
-
-
-        function complete(){
-            callbackCount++;
-            // callbackCount++;
-            if(callbackCount >= (context.experts.length)){
-                // console.log("In get method");
-                // console.log(context);
-                res.render('searchResults', context)
-            }
-        }
-    });
-
-    router.post('/', function(req,res){
-        var search_keyword = (req.body);
-        console.log(search_keyword)
-        var context = {};
-
-        console.log(context)
-        context.cssstyles = ["public/css/tagify.css"];
-        context.jsscripts = ["jquery.js",
-                             "tagify.min.js",
-                             "tagifyClientRequest.js",
-                             "SuggestedEditsForm.js",
-                             "getKeyword.js"];
-        var experts = db_interface.getExperts(search_keyword);
-        context.experts = experts;
-        addSuggestedEditsContext(context, experts, search_keyword.keyword);
-            // res.send(context)
-        res.set('Content-type', 'text/html')
-        res.render('searchResults', context);
     })
     
-     router.post('/', function(req,res){
+     router.post('/update', function(req,res){
         var search_keyword = (req.body);
         console.log(search_keyword)
         var context = {};
