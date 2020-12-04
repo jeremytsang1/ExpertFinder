@@ -108,7 +108,7 @@
 
                 <tr>
                   <td>
-                    <button id="" class="btn btn-link showMoreLessBtn" data-toggle="collapse" data-target=".collapseme{{Id}}" data-text-alt="-Show Less">
+                    <button id="" type="button" class="btn btn-link showMoreLessBtn" data-toggle="collapse" data-target=".collapseme{{Id}}" data-text-alt="-Show Less">
                       +Show More
                     </button>
                   </td>
@@ -118,6 +118,7 @@
           </table>
           <!-- hidden field used to redo search after updating the experts -->
           <input name="keyword" type="hidden" value="{{../keyword}}"/>
+          <input name="Id" type="hidden" value="{{this.Id}}/>
         </div>
         <div class="modal-footer">
           <div class="container">
