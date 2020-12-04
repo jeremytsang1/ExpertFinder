@@ -70,7 +70,7 @@ module.exports = function(){
 
                 var repoList = []
                         
-                if (result.length < 6) {
+                if (result.length < 5) {
                     for (i = 0; i < result.length; i++) {
                         repoList.push(result[i].html_url)
                     }
@@ -89,7 +89,7 @@ module.exports = function(){
                 // console.log(context.experts[x])
                 callbackCount++;
 
-                complete()
+                // complete()
             }
         }
         // ------------------------------------------
