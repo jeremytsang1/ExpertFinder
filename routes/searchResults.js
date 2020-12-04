@@ -46,32 +46,18 @@ module.exports = function(){
     });
 
     router.post('/', function(req,res){
-        var search_keyword = (req.body);
-        console.log(search_keyword)
-        var context = {};
-
-        console.log(context)
-        context.cssstyles = ["public/css/tagify.css"];
-        context.jsscripts = ["jquery.js",
-                             "tagify.min.js",
-                             "tagifyClientRequest.js",
-                             "SuggestedEditsForm.js",
-                             "getKeyword.js"];
-        var experts = db_interface.getExperts(search_keyword);
-        context.experts = experts;
-        addSuggestedEditsContext(context, experts, search_keyword.keyword);
-            // res.send(context)
-        res.set('Content-type', 'text/html')
-        res.render('searchResults', context);
+        contextCode(req, res);
     })
     
     router.post('/update', function(req,res){
         userInfoUpdate(req);
-
+        contextCode(req, res);
+    })
+    
+    function contextCode(req, res){
         var search_keyword = (req.body);
-        console.log(search_keyword)
-        var context = {};
 
+        var context = {};
         console.log(context)
         context.cssstyles = ["public/css/tagify.css"];
         context.jsscripts = ["jquery.js",
@@ -81,12 +67,12 @@ module.exports = function(){
                              "getKeyword.js"];
         var experts = db_interface.getExperts(search_keyword);
         context.experts = experts;
+
         addSuggestedEditsContext(context, experts, search_keyword.keyword);
-            // res.send(context)
         res.set('Content-type', 'text/html')
         res.render('searchResults', context);
-    })
-    
+    }
+
     function userInfoUpdate(req){
         const FIELD_NAMES = ["TechSkills", "Coursework", "Industry"];
         const Id = parseInt(req.body.Id);
