@@ -2,7 +2,7 @@
     "Experts": [
         {
             "Id": 1,
-            "Name": "John Doe",
+            "Name": "Kyle Bell",
             "TechSkills": ["Python", "Java"],
             "Coursework": ["CS161 Introduction To Computer Science I",
                            "CS162 Introduction To Computer Science II",
@@ -11,7 +11,7 @@
             "Industry": ["Web Development"],
             "ContactInfo": {
                 "Email": "johnDoe33@gmail.com",
-                "Github": "github.com/johndoe6",
+                "Github": "github.com/kylebell3",
                 "Linkedin": "linkedin.com/johndoe",
                 "Stackoverflow": "stackoverflow.com/users/jdoe",
                 "Twitter": "twitter.com/johndoe"
@@ -21,22 +21,22 @@
         },
         {
             "Id": 2,
-            "Name": "Lena Gregory",
+            "Name": "Jeremy Tsang",
             "TechSkills": ["React", "Angular"],
             "Coursework": ["CS161 Introduction To Computer Science I",
                            "CS162 Introduction To Computer Science II",
                            "CS271 Computer Architecture And Assembly Language",
                            "CS340 Introduction To Databases",
-                           "CS340 Introduction to Databases"
+                           "MTH644 Abstract Algebra I"
             ],
             "Industry": ["Networks", "Software Development"],
             "ContactInfo": {
-                "Email": "lgregory@gmail.com",
-                "Github": "github.com/lenagregory",
-                "Linkedin": "linkedin.com/lenagregory",
-                "Twitter": "twitter.com/lenagregory"
+                "Email": "foo@helloWorld.com",
+                "Github": "github.com/jeremytsang1",
+                "Linkedin": "linkedin.com/helloWorld",
+                "Twitter": "twitter.com/helloWorld"
             },
-            "ProfilePicture": "/public/images/female-default-profile-img.jpg",
+            "ProfilePicture": "/public/images/male-default-profile-img.jpg",
             "Active": true
         },
         {
@@ -81,7 +81,7 @@
             "Industry": ["Machine Learning", "Data Science", "Amazon"],
             "ContactInfo": {
                 "Email": "rsands@gmail.com",
-                "Github": "github.com/remtsand",
+                "Github": "github.com/chavemar",
                 "Linkedin": "linkedin.com/remi_sanderson",
                 "Twitter": "twitter.com/sandsrem"
             },
@@ -112,7 +112,7 @@
             "Industry": ["Lenovo", "Internet of Things", "Cloud Computing"],
             "ContactInfo": {
                 "Email": "a_albert@gmail.com",
-                "Github": "github.com/albert20",
+                "Github": "github.com/hnasr",
                 "Linkedin": "linkedin.com/abalbert",
                 "Stackoverflow": "stackoverflow.com/users/albert2"
             },

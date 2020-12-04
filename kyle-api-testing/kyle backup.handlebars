@@ -1,0 +1,43 @@
+{{!-- check if contact info is the email. If yes, use appropriate html code block --}}
+                            {{!-- https://stackoverflow.com/questions/34252817/handlebarsjs-check-if-a-string-is-equal-to-a-value --}}
+                            {{#each this.ContactInfo}}
+                              {{#ifEquals @key "Email"}}
+                                <tr>
+                                  <th scope="row">{{@key}}:</th>
+                                  <td>
+                                      <a href = "mailto: {{this}}">{{this}}</a>
+                                  </td>
+                                </tr>
+
+                              {{else}}
+                                {{#ifEquals @key "Github"}}
+                                  <tr id="link-display" class="collapse collapseme{{../Id}}">
+                                    <th scope="row">{{@key}}: 
+
+                                     <td>
+                                      <a href="https://www.{{this}}" target="_blank">{{this}}</a>
+                                 
+                                      {{#each this.Repos}}
+                                      <ul id="links"> 
+                                      {{this}}
+                                      github repo 11
+                                      github repo 22
+                                      github repo 33
+                                      github repo 44
+                                    </ul></th>
+                                    {{/each}}
+                                    </td>
+
+                                  </tr>
+
+                                {{else}}
+                                <tr class="collapse collapseme{{../Id}}">
+                                  <th scope="row">{{@key}}: </th>
+                                  
+                                  <td>
+                                      <a href="https://www.{{this}}" target="_blank">{{this}}</a>
+                                  </td>
+                                </tr>
+                                {{/ifEquals}}
+                              {{/ifEquals}}
+                            {{/each}}
