@@ -65,7 +65,9 @@ module.exports = function(){
         res.render('searchResults', context);
     })
     
-     router.post('/', function(req,res){
+    router.post('/update', function(req,res){
+        userInfoUpdate(req);
+
         var search_keyword = (req.body);
         console.log(search_keyword)
         var context = {};
@@ -79,26 +81,23 @@ module.exports = function(){
                              "getKeyword.js"];
         var experts = db_interface.getExperts(search_keyword);
         context.experts = experts;
-        userInfoUpdate(context, experts, search_keyword.keyword);
         addSuggestedEditsContext(context, experts, search_keyword.keyword);
             // res.send(context)
         res.set('Content-type', 'text/html')
         res.render('searchResults', context);
     })
     
-    function userInfoUpdate(context, experts, keyword){
-        expertInfo.Id = createExpert();
-       //prevents duplicates hopefully
-        JSON.parse(expert) 
-        let expertUpdateSet = new Set(expert);
-        expertUpdateSet.add("TechSkills")
-        expertUpdateSet.add("Coursework")
-        expertUpdateSet.add("Industry")
-        test_db.Experts.push(expertUpdateSet);
+    function userInfoUpdate(req){
+        const FIELD_NAMES = ["TechSkills", "Coursework", "Industry"];
+        const Id = parseInt(req.body.Id);
+        const incomingArrays = FIELD_NAMES.map(fieldName => {
+            let usrInputValuesArray = JSON.parse(req.body[fieldName]);
+            return usrInputValuesArray.map(obj => obj.value);
+        });
+
+        db_interface.updateExperts(Id, ...incomingArrays)
     }
         
-    
-
     function addSuggestedEditsContext(context, experts, keyword) {
         // prevent edits from deleting existing skills, coursework, industries
         experts.map(expert => addReadonlyTags(expert));
