@@ -56,9 +56,21 @@ function createExpert(name, TechSkills, Coursework, Industry, ContactInfo, Profi
                 JSON.stringify(test_db.Experts, null, 2));
     return new_id
 }
-function updateExperts(id, name, TechSkills, Coursework, Industry, ContactInfo) {
-    return expert_id
+
+function updateExperts(Id, TechSkills, Coursework, Industry) {
+    const expert = test_db.Experts.filter(expert => expert.Id === Id)[0];
+    const incoming = {"TechSkills": TechSkills,
+                      "Coursework": Coursework,
+                      "Industry": Industry};
+
+    // Use Sets to prevent duplicate values.
+    for (let field in incoming) {
+        let fieldSet = new Set(expert[field]);
+        incoming[field].forEach(elt => fieldSet.add(elt));
+        expert[field] = [...fieldSet].sort()
+    }
 }
+
 function deleteExperts(expert_id) {
     return
 }
