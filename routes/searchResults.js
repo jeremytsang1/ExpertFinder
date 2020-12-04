@@ -83,21 +83,21 @@ module.exports = function(){
         addSuggestedEditsContext(context, experts, search_keyword.keyword);
             // res.send(context)
         res.set('Content-type', 'text/html')
-        res.render('searchResults/update', context);
+        res.render('searchResults', context);
     })
     
     function userInfoUpdate(context, experts, keyword){
         expertInfo.Id = createExpert();
        //prevents duplicates hopefully
         JSON.parse(expert) 
-        HashSet expertUpdateSet = new Set(expert);
+        let expertUpdateSet = new Set(expert);
         expertUpdateSet.add("TechSkills")
         expertUpdateSet.add("Coursework")
         expertUpdateSet.add("Industry")
-        test_db.Experts.push(expert);
+        test_db.Experts.push(expertUpdateSet);
     }
         
-    }
+    
 
     function addSuggestedEditsContext(context, experts, keyword) {
         // prevent edits from deleting existing skills, coursework, industries
