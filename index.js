@@ -3,6 +3,7 @@ var db_interface = require('./database/db_interface')
 var app = express();
 var cors = require('cors')
 var path = require('path');
+const os = require('os');
 //Body Parser middleware
 var bodyParser = require('body-parser');
 
@@ -79,5 +80,5 @@ app.use(function(err, req, res, next){
 });
 
 app.listen(app.get('port'), function(){
-  console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
+  console.log(`Express started on http://${os.hostname()}:` + app.get('port') + '; press Ctrl-C to terminate.');
 });
