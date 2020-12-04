@@ -46,19 +46,7 @@ module.exports = function(){
     });
 
     router.post('/', function(req,res){
-        var search_keyword = (req.body);
-        console.log(search_keyword)
-        var context = {};
-
-        console.log(context)
-        context.cssstyles = ["public/css/tagify.css"];
-        context.jsscripts = ["jquery.js",
-                             "tagify.min.js",
-                             "tagifyClientRequest.js",
-                             "SuggestedEditsForm.js",
-                             "getKeyword.js"];
-        var experts = db_interface.getExperts(search_keyword);
-        context.experts = experts;
+        contextCode();
         addSuggestedEditsContext(context, experts, search_keyword.keyword);
             // res.send(context)
         res.set('Content-type', 'text/html')
@@ -66,6 +54,15 @@ module.exports = function(){
     })
     
      router.post('/update', function(req,res){
+        contextCode();
+        userInfoUpdate(context, experts, search_keyword.keyword);
+        addSuggestedEditsContext(context, experts, search_keyword.keyword);
+            // res.send(context)
+        res.set('Content-type', 'text/html')
+        res.render('searchResults', context);
+    })
+    
+    function contextCode(){
         var search_keyword = (req.body);
         console.log(search_keyword)
         var context = {};
@@ -79,12 +76,7 @@ module.exports = function(){
                              "getKeyword.js"];
         var experts = db_interface.getExperts(search_keyword);
         context.experts = experts;
-        userInfoUpdate(context, experts, search_keyword.keyword);
-        addSuggestedEditsContext(context, experts, search_keyword.keyword);
-            // res.send(context)
-        res.set('Content-type', 'text/html')
-        res.render('searchResults', context);
-    })
+    }
     
     function userInfoUpdate(context, experts, keyword){
         expertInfo.Id = updateExpert();
