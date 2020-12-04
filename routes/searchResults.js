@@ -87,7 +87,7 @@ module.exports = function(){
     })
     
     function userInfoUpdate(context, experts, keyword){
-        expertInfo.Id = createExpert();
+        expertInfo.Id = updateExpert();
        //prevents duplicates hopefully
         JSON.parse(expert) 
         let expertUpdateSet = new Set(expert);
