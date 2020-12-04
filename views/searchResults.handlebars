@@ -65,7 +65,11 @@
           </button>
           <div>
             <div class="text-center">
-              <img src="{{this.ProfilePicture}}" class="img-thumbnail img-fluid " alt="...">
+              {{#if this.ProfilePicture }}
+                <img src="{{this.ProfilePicture}}" class="img-thumbnail img-fluid " alt="...">
+              {{else}}
+                <img src="/public/images/male-default-profile-img.jpg" class="img-thumbnail img-fluid " alt="...">
+              {{/if}}
             </div>
             <div class="text-center">
               <h3 class="modal-title" id="exampleModalLongTitle">{{this.Name}}</h3>
