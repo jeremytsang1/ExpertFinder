@@ -62,9 +62,10 @@ function updateExperts(Id, TechSkills, Coursework, Industry) {
     const incoming = {"TechSkills": TechSkills,
                       "Coursework": Coursework,
                       "Industry": Industry};
-    let fieldSet; // prevent duplicate values
+
+    // Use Sets to prevent duplicate values.
     for (let field in incoming) {
-        fieldSet = new Set(expert[field]);
+        let fieldSet = new Set(expert[field]);
         incoming[field].forEach(elt => fieldSet.add(elt));
         expert[field] = [...fieldSet].sort()
     }
