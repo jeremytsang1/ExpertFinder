@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <button id = 'btnRepos'>Repos</button>
+
+
+    <script>
+        // SOURCE: started with some code from https://www.youtube.com/watch?v=5QlE6o-iYcE
+        const user = "kylebell3"
+
+        const divResult = document.getElementById("divResult")
+        btnRepos.addEventListener("click", getRepos)
+
+
+        async function getRepos() {
+             const url = "https://api.github.com/users/" + user + "/repos"
+            const response = await fetch(url)
+            const result = await response.json()
+
+            var repoList = []
+                      
+                if (result.length < 4) {
+                    for (i = 0; i < result.length; i++) {
+                        repoList.push(result[i].html_url)
+                    }
+                }
+
+                else {
+                    for (i = 0; i < 4; i++) {
+                repoList.push(result[i].html_url)
+                    }
+                }
+
+            console.log(repoList)    
+            console.log('hi')
+
+        }
+
+        // function to iterate to grab first 4 github links
+        // function fourRepos(result) {
+        //     var repoList = []
+        //     for (i = 0; i < 4; i++) {
+        //         repoList.push(result[i].html_url)
+        //     }
+        //     return repoList
+        // }
+
+    </script>
+
+</body>
+
+</html>

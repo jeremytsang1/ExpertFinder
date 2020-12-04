@@ -6,6 +6,7 @@ module.exports = function(){
     var db_interface = require('../database/db_interface')
     var {addReadonlyTags} = require('../util/readonlyTags');
 
+    const fetch = require('node-fetch');
     const fs = require('fs'); 
 
     // souce: https://www.geeksforgeeks.org/how-to-read-and-write-json-file-using-node-js/
@@ -37,7 +38,8 @@ module.exports = function(){
 
         function complete(){
             callbackCount++;
-            if(callbackCount >= 1){
+            // callbackCount++;
+            if(callbackCount >= (context.experts.length)){
                 // console.log("In get method");
                 // console.log(context);
                 res.render('searchResults', context)
@@ -55,22 +57,73 @@ module.exports = function(){
     })
     
     function contextCode(req, res){
+        var callbackCount = 0;
         var search_keyword = (req.body);
-
         var context = {};
-        console.log(context)
+
         context.cssstyles = ["public/css/tagify.css"];
         context.jsscripts = ["jquery.js",
                              "tagify.min.js",
                              "tagifyClientRequest.js",
                              "SuggestedEditsForm.js",
                              "getKeyword.js"];
+
         var experts = db_interface.getExperts(search_keyword);
         context.experts = experts;
-
         addSuggestedEditsContext(context, experts, search_keyword.keyword);
-        res.set('Content-type', 'text/html')
-        res.render('searchResults', context);
+        git()
+
+        // --------------------------------------------
+        //  Kyle's code to load in github data
+        // SOURCE: started with some code from https://www.youtube.com/watch?v=5QlE6o-iYcE then added onto it
+
+        async function git() {
+            const url = "https://api.github.com/users/" + user + "/repos"
+            const response = await fetch(url)
+            const result = await response.json()
+
+            // console.log(context.experts[0]["ContactInfo"]["Github"].slice(11))
+
+            for (x = 0; x < context.experts.length; x ++) {
+
+                // const url = "https://api.github.com/users/" + user + "/repos"
+                // const response = await fetch(url)
+                // const result = await response.json()
+
+                var user  = context.experts[x]["ContactInfo"]["Github"].slice(11)
+                // console.log(user)
+
+                const url = "https://api.github.com/users/" + user + "/repos"
+                const response = await fetch(url)
+                const result = await response.json()
+
+                var repoList = []
+
+                if (result.length < 5) {
+                    for (i = 0; i < result.length; i++) {
+                        repoList.push(result[i].html_url)
+                    }
+                }
+
+                else {
+                    for (i = 0; i < 5; i++) {
+                        repoList.push(result[i].html_url)
+                    }
+                }
+
+                console.log(user, repoList)
+
+                context.experts[x]["Repos"] = repoList
+
+                // console.log(context.experts[x])
+                callbackCount++;
+                if (callbackCount >= context.experts.length) {
+                    res.set('Content-type', 'text/html')
+                    res.render('searchResults', context);
+                }
+                // complete()
+            }
+        }
     }
 
     function userInfoUpdate(req){
