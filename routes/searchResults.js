@@ -65,7 +65,7 @@ module.exports = function(){
         res.render('searchResults', context);
     })
     
-     router.post('/', function(req,res){
+    router.post('/update', function(req,res){
         var search_keyword = (req.body);
         console.log(search_keyword)
         var context = {};
