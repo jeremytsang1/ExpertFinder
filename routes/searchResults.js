@@ -98,8 +98,6 @@ module.exports = function(){
         db_interface.updateExperts(Id, ...incomingArrays)
     }
         
-    
-
     function addSuggestedEditsContext(context, experts, keyword) {
         // prevent edits from deleting existing skills, coursework, industries
         experts.map(expert => addReadonlyTags(expert));
