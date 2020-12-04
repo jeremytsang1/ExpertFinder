@@ -107,7 +107,12 @@ module.exports = function(){
                     }
                 }
 
-                console.log(user, repoList)    
+                // console.log(user, repoList)
+
+                context.experts[x]["Repos"] = repoList   
+
+                console.log(context.experts[x])
+                callbackCount++;
 
             }
         }
@@ -117,7 +122,7 @@ module.exports = function(){
 
         function complete(){
             callbackCount++;
-            if(callbackCount >= 1){
+            if(callbackCount >= (context.experts.length)){
                 // console.log("In get method");
                 // console.log(context);
                 res.render('searchResults', context)

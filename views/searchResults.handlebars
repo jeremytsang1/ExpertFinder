@@ -93,12 +93,15 @@
                                      <td>
                                       <a href="https://www.{{this}}" target="_blank">{{this}}</a>
                                  
+                                      {{#each this.Repos}}
                                       <ul id="links"> 
+                                      {{this}}
                                       github repo 11
                                       github repo 22
                                       github repo 33
                                       github repo 44
                                     </ul></th>
+                                    {{/each}}
                                     </td>
 
                                   </tr>
